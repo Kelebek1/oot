@@ -143,7 +143,8 @@ typedef struct {
     }                         fw;
     /* 0x0E8C */ char         unk_E8C[0x0010];
     /* 0x0E9C */ u8           gsFlags[24];
-    /* 0x0EB4 */ char         unk_EB4[0x0010];
+    /* 0x0EB4 */ char         unk_EB4[0x000C];
+    /* 0x0EC0 */ s32          unk_EC0;
     /* 0x0EC4 */ s32          unk_EC4;
     /* 0x0EC8 */ char         unk_EC8[0x000C];
     /* 0x0ED4 */ u16          eventChkInf[14]; // "event_chk_inf"
@@ -1249,7 +1250,7 @@ typedef struct GlobalContext {
     /* 0x11E04 */ UNK_PTR setupExitList;
     /* 0x11E08 */ Path* setupPathList;
     /* 0x11E0C */ ElfMessage* cUpElfMsgs;
-    /* 0x11E10 */ char unk_11E10[0x4];
+    /* 0x11E10 */ u8* unk_11E10;
     /* 0x11E14 */ u8 skyboxId;
     /* 0x11E15 */ s8 sceneLoadFlag; // "fade_direction"
     /* 0x11E16 */ s16 unk_11E16;
