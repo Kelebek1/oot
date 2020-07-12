@@ -832,7 +832,7 @@ s32 CollisionCheck_GeneralLineOcCheck(GlobalContext* globalCtx, CollisionCheckCo
                                       Vec3f* arg3, Actor** arg4, s32 arg5);
 // ? func_800626B0(?);
 void Collider_CylinderUpdate(Actor* actor, ColliderCylinder* collider);
-// ? func_80062734(?);
+void func_80062734(ColliderQuad* collider, Vec3f* a, Vec3f* b, Vec3f* c, Vec3f* d);
 void func_800627A0(ColliderTris* collider, s32 index, Vec3f* a, Vec3f* b, Vec3f* c);
 void func_80062A28(GlobalContext*, Vec3f*);
 void func_80062B80(GlobalContext*, Vec3f*);
