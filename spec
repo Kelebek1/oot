@@ -2816,8 +2816,11 @@ endseg
 beginseg
     name "ovl_En_Kanban"
     include "build/src/overlays/actors/ovl_En_Kanban/z_en_kanban.o"
-    include "build/data/overlays/actors/z_en_kanban.data.o"
+#ifdef NON_MATCHING
+    include "build/src/overlays/actors/ovl_En_Kanban/ovl_En_Kanban_reloc.o"
+#else
     include "build/data/overlays/actors/z_en_kanban.reloc.o"
+#endif
 endseg
 
 beginseg
