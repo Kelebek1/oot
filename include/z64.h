@@ -142,7 +142,7 @@ typedef struct {
         /* 0x0E88 */ s32  tempCollectFlags;
     }                         fw;
     /* 0x0E8C */ char         unk_E8C[0x0010];
-    /* 0x0E9C */ u8           gsFlags[24];
+    /* 0x0E9C */ u32          gsFlags[6];
     /* 0x0EB4 */ char         unk_EB4[0x0010];
     /* 0x0EC4 */ s32          unk_EC4;
     /* 0x0EC8 */ char         unk_EC8[0x000C];
@@ -532,8 +532,8 @@ typedef struct {
 } DbgCamera; // size = 0x10CC;
 
 typedef struct {
-    /* 0x00 */ u8   musicSeq;
-    /* 0x01 */ u8   nighttimeSFX;
+    /* 0x00 */ u8   seqIndex;
+    /* 0x01 */ u8   nightSeqIndex;
     /* 0x02 */ char unk_02[0x2];
 } SoundContext; // size = 0x4
 
@@ -702,7 +702,8 @@ typedef struct {
     /* 0xE3E5 */ u8     choiceIndex;
     /* 0xE3E6 */ char   unk_E3E6[0x01];
     /* 0xE3E7 */ u8     unk_E3E7;
-    /* 0xE3E8 */ char   unk_E3E8[0x6];
+    /* 0xE3E8 */ char   unk_E3E8[0x04];
+    /* 0xE3EC */ u16    unk_E3EC;
     /* 0xE3EE */ u16    unk_E3EE;
     /* 0xE3F0 */ u16    unk_E3F0;
     /* 0xE3F2 */ char   unk_E3F2[0x02];
@@ -903,7 +904,8 @@ typedef struct {
     /* 0xBD */ u8       unk_BD;
     /* 0xBE */ char     unk_BE;
     /* 0xBF */ u8       unk_BF;
-    /* 0xC0 */ char     unk_C0[0x18];
+    /* 0xC0 */ char     unk_C0[0x16];
+    /* 0xD6 */ s16      unk_D6;
     /* 0xD8 */ f32      unk_D8;
     /* 0xDC */ u8       unk_DC;
     /* 0xDD */ u8       gloomySkyEvent;
@@ -1155,6 +1157,8 @@ typedef struct {
     /* 0x01E2 */ char unk_1E2[0x06];
 } TitleContext; // size = 0x1E8
 
+struct SelectContext;
+
 typedef struct {
     u32 unk_0[0x20];
 } KanFont_unk3C88; // size = 0x80
@@ -1268,7 +1272,7 @@ typedef struct {
     /* 0x08 */ s32 entranceIndex;
 } SceneSelectEntry; // size = 0xC
 
-typedef struct {
+typedef struct SelectContext {
     /* 0x0000 */ GameState state;
     /* 0x00A4 */ s32 unk_A4;
     /* 0x00A8 */ View view;
