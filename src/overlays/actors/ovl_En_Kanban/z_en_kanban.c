@@ -280,7 +280,7 @@ void func_80A921C0(EnKanban* this, GlobalContext* globalCtx) {
 }
 
 #ifdef NON_MATCHING
-// Small ordering, stack, regalloc
+// j loop, and the part with sp74 broken
 void EnKanban_Update(Actor* thisx, GlobalContext* globalCtx) {
     u8 spFF = 0;
     EnKanban* this = THIS;
@@ -354,21 +354,20 @@ void EnKanban_Update(Actor* thisx, GlobalContext* globalCtx) {
                     }
 
                     actor->unk_156 &= D_80A946B8[this->unk_194];
-                    if (!(actor->unk_156)) {
+                    if (actor->unk_156 == 0) {
                         Actor_Kill(&actor->actor);
                         return;
                     }
 
-                    actor->unk_158 = 0;
-
-                    for (j = 0; j < 11; j++) {
+                    //actor->unk_158 = 0;
+                    for (actor->unk_158 = 0, j = 0; j < 11; j++) {
                         if (this->unk_156 & D_80A944BC[j]) {
-                            actor->unk_158++;
+                            actor->unk_158 += 1;
                         }
                     }
 
                     this->unk_156 &= ~D_80A946B8[this->unk_194];
-                    if (!(this->unk_156 & 0x3FF)) {
+                    if ((this->unk_156 & 0x3FF) == 0) {
                         this->unk_19A = 10;
                     }
 
@@ -490,9 +489,10 @@ void EnKanban_Update(Actor* thisx, GlobalContext* globalCtx) {
             func_8002E4B4(globalCtx, &this->actor, 30.0f, 30.0f, 50.0f, 5);
 
             
-            spC4.z = this->actor.posRot.pos.z;
-            spC4.y = this->actor.posRot.pos.y;
+            
             spC4.x = this->actor.posRot.pos.x;
+            spC4.y = this->actor.posRot.pos.y;
+            spC4.z = this->actor.posRot.pos.z;
             
             tmpu16 = this->actor.bgCheckFlags;
             spC0 = this->actor.waterY;
@@ -744,18 +744,21 @@ void EnKanban_Update(Actor* thisx, GlobalContext* globalCtx) {
                         this->actor.gravity = -1.0f;
                         this->actor.posRot.rot.y = (s32)(Math_atan2f(tmpf2, tmpf4) * 10430.378f);
                         if (this->unk_158 >= 4) {
+                            tmpf1 = sp74;
                             this->unk_176 = (s32)Math_Rand_ZeroFloat(10.0f) + 6;
                             this->unk_178 = (s32)Math_Rand_ZeroFloat(10.0f) + 6;
-                            tmpf1 = sp74;
                             this->actor.velocity.y = 2.5f + tmpf1;
                             this->actor.speedXZ = 3.0f + tmpf1;
                         } else {
+                            tmpf1 = sp74;
                             this->unk_176 = (s32)Math_Rand_ZeroFloat(7.0f) + 3;
                             this->unk_178 = (s32)Math_Rand_ZeroFloat(7.0f) + 3;
-                            tmpf1 = sp74;
                             this->actor.velocity.y = 5.0f + tmpf1;
                             this->actor.speedXZ = 4.0f + tmpf1;
+                            
+                            if (!tmpf1){};
                         }
+
                         this->unk_170 = Math_Rand_CenteredFloat(6144.0f);
                         if (Math_Rand_ZeroOne() < 0.5f) {
                             this->unk_184 = 1;
@@ -825,7 +828,6 @@ void EnKanban_Update(Actor* thisx, GlobalContext* globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_En_Kanban/EnKanban_Update.s")
 #endif
 
-
 #ifdef NON_MATCHING
 // Regalloc
 void EnKanban_Draw(Actor* thisx, GlobalContext* globalCtx) {
@@ -834,132 +836,133 @@ void EnKanban_Draw(Actor* thisx, GlobalContext* globalCtx) {
     f32 tmpf1;
     f32 tmpf2;
     f32 tmpf3;
+    f32 tmpf4;
     f32 projPosZ;
-    void* sp8C = Graph_Alloc(globalCtx->state.gfxCtx, 0x400);
+    u8* sp8C = (u8*)Graph_Alloc(globalCtx->state.gfxCtx, 0x400);
 
     s16 i;
-
-    Gfx* dispRefs[4];
 
     u16 tmp16;
     s32 pad2;
     
-    GraphicsContext* gfxCtx = globalCtx->state.gfxCtx;
+    {
+        GraphicsContext* gfxCtx = globalCtx->state.gfxCtx;
+        Gfx* dispRefs[4];
 
+        Graph_OpenDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x67B);
+        func_80093D18(globalCtx->state.gfxCtx);
+        func_80093D84(globalCtx->state.gfxCtx);
 
-    Graph_OpenDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x67B);
-    func_80093D18(globalCtx->state.gfxCtx);
-    func_80093D84(globalCtx->state.gfxCtx);
+        gSPDisplayList(gfxCtx->polyOpa.p++, D_06000C30);
 
-    gSPDisplayList(gfxCtx->polyOpa.p++, D_06000C30);
-
-    if (this->unk_154 != 0) {
-        Matrix_Translate(this->actor.posRot.pos.x, this->actor.posRot.pos.y, this->actor.posRot.pos.z, MTXMODE_NEW);
-        Matrix_Scale(this->actor.scale.x, this->actor.scale.y, this->actor.scale.z, MTXMODE_APPLY);
-        Matrix_RotateX(this->unk_188.x, MTXMODE_APPLY);
-        Matrix_RotateZ(this->unk_188.z, MTXMODE_APPLY);
-        Matrix_Translate(0.0f, this->actor.shape.unk_08, 0.0f, MTXMODE_APPLY);
-        Matrix_RotateY((this->actor.shape.rot.y / 32768.0f) * M_PI, MTXMODE_APPLY);
-        Matrix_RotateX((this->actor.shape.rot.x / 32768.0f) * M_PI, MTXMODE_APPLY);
-        tmpf1 = fabsf(Math_Sins(this->unk_168) * this->unk_180);
-        tmpf2 = fabsf(Math_Sins(this->unk_16C) * this->unk_17C);
-        
-        if (tmpf1 < tmpf2) {
-            tmpf1 = tmpf2;
-        }
-        
-        tmpf1 *= -(f32)this->unk_184;
-        Matrix_Translate(0.0f, 0.0f, tmpf1, MTXMODE_APPLY);
-        Matrix_RotateX((this->unk_168 / 32768.0f) * M_PI, MTXMODE_APPLY);
-        Matrix_RotateY((this->unk_16C / 32768.0f) * M_PI, MTXMODE_APPLY);
-        Matrix_Translate(this->unk_15C.x, this->unk_15C.y, this->unk_15C.z - 100.0f, MTXMODE_APPLY);
-
-        gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x6B3), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-
-        for (i = 0; i < 11; i++) {
-            if ((D_80A944BC[i] & this->unk_156) != 0) {
-                gSPDisplayList(gfxCtx->polyOpa.p++, D_80A946D0[i]);
+        if (this->unk_154 != 0) {
+            Matrix_Translate(this->actor.posRot.pos.x, this->actor.posRot.pos.y, this->actor.posRot.pos.z, MTXMODE_NEW);
+            Matrix_Scale(this->actor.scale.x, this->actor.scale.y, this->actor.scale.z, MTXMODE_APPLY);
+            Matrix_RotateX(this->unk_188.x, MTXMODE_APPLY);
+            Matrix_RotateZ(this->unk_188.z, MTXMODE_APPLY);
+            Matrix_Translate(0.0f, this->actor.shape.unk_08, 0.0f, MTXMODE_APPLY);
+            Matrix_RotateY((this->actor.shape.rot.y / 32768.0f) * M_PI, MTXMODE_APPLY);
+            Matrix_RotateX((this->actor.shape.rot.x / 32768.0f) * M_PI, MTXMODE_APPLY);
+            tmpf1 = fabsf(Math_Sins(this->unk_168) * this->unk_180);
+            tmpf2 = fabsf(Math_Sins(this->unk_16C) * this->unk_17C);
+            
+            if (tmpf1 < tmpf2) {
+                tmpf1 = tmpf2;
             }
-        }
-    } else {
-        Matrix_Translate(0.0f, 0.0f, -100.0f, MTXMODE_APPLY);
+            
+            tmpf1 *= -(f32)this->unk_184;
+            Matrix_Translate(0.0f, 0.0f, tmpf1, MTXMODE_APPLY);
+            Matrix_RotateX((this->unk_168 / 32768.0f) * M_PI, MTXMODE_APPLY);
+            Matrix_RotateY((this->unk_16C / 32768.0f) * M_PI, MTXMODE_APPLY);
+            Matrix_Translate(this->unk_15C.x, this->unk_15C.y, this->unk_15C.z - 100.0f, MTXMODE_APPLY);
 
-        gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x6BD), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x6B3), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-        if (this->unk_156 == 0xFFFF) {
-            gSPDisplayList(gfxCtx->polyOpa.p++, D_0403C050);
-        } else {
             for (i = 0; i < 11; i++) {
                 if ((D_80A944BC[i] & this->unk_156) != 0) {
                     gSPDisplayList(gfxCtx->polyOpa.p++, D_80A946D0[i]);
                 }
             }
-        }
-        if (this->unk_198 != 0) {
-            tmpf3 = (this->unk_194 == 0) ? -1200.0f : 0.0f;
-
-            Matrix_Translate(0.0f, 4400.0f + tmpf3, 200.0f, MTXMODE_APPLY);
-            Matrix_RotateZ(D_80A94EFC[this->unk_194], MTXMODE_APPLY);
-            Matrix_Scale(0.0f, 10.0f, 2.0f, MTXMODE_APPLY);
-
-            gDPPipeSync(gfxCtx->polyXlu.p++);
-            gDPSetPrimColor(gfxCtx->polyXlu.p++, 0, 0, 0xFF, 0xFF, 0xFF, this->unk_198);
-            gDPSetEnvColor(gfxCtx->polyXlu.p++, 0xFF, 0xFF, 0x96, 0x00);
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x6ED), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-            gSPDisplayList(gfxCtx->polyXlu.p++, D_06001630);
-        }
-    }
-
-    projPosZ = this->actor.projectedPos.z;
-    if ((projPosZ <= 400.0f) && 
-        (projPosZ > 0.0f) && 
-        (this->actor.groundY > -3000.0f) && 
-       ((this->unk_176 != 0) || (this->unk_178 != 0))) {
-
-        tmp16 = gSaveContext.dayTime;
-        if (tmp16 >= 0x8000) {
-            tmp16 = 0xFFFF - tmp16;
-        }
-
-        tmpf1 = (tmp16 * 0.00275f) + 10.0f;
-        if (projPosZ > 300.0f) {
-            tmpf1 *= (400.0f - projPosZ) * 0.01f;
-        }
-
-        gDPSetPrimColor(gfxCtx->polyXlu.p++, 0, 0, 0x00, 0x00, 0x00, (s32)tmpf1);
-
-        if ((this->unk_154 == 0) && (gSaveContext.linkAge == 1)) {
-            tmpf1 = 0.0f;
         } else {
-            tmpf1 = ((this->actor.posRot.pos.y - this->actor.groundY) * -50.0f) / 100.0f;
-        }
-        Matrix_Translate(this->actor.posRot.pos.x, this->actor.groundY, this->actor.posRot.pos.z + tmpf1, 0);
-        Matrix_RotateX(this->unk_188.x, MTXMODE_APPLY);
-        Matrix_RotateZ(this->unk_188.z, MTXMODE_APPLY);
-        Matrix_Scale(this->actor.scale.x, 0.0f, this->actor.scale.z, MTXMODE_APPLY);
-        if (this->unk_154 == 0) {
-            Matrix_RotateX(-0.62831855f, MTXMODE_APPLY);
-        }
-        Matrix_RotateY((this->actor.shape.rot.y / 32768.0f) * M_PI, MTXMODE_APPLY);
-        Matrix_RotateX((this->actor.shape.rot.x / 32768.0f) * M_PI, MTXMODE_APPLY);
-        Matrix_RotateX((this->unk_168 / 32768.0f) * M_PI, MTXMODE_APPLY);
-        Matrix_RotateY((this->unk_16C / 32768.0f) * M_PI, MTXMODE_APPLY);
-        Matrix_Translate(this->unk_15C.x, this->unk_15C.y, this->unk_15C.z, MTXMODE_APPLY);
+            Matrix_Translate(0.0f, 0.0f, -100.0f, MTXMODE_APPLY);
 
-        gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x729), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x6BD), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-        for (i = 0; i < 0x400; i++) {
-            if ((D_80A946FC[i] & this->unk_156) != 0) {
-                ((u8*)sp8C)[i] = 0xFF;
+            if (this->unk_156 == 0xFFFF) {
+                gSPDisplayList(gfxCtx->polyOpa.p++, D_0403C050);
             } else {
-                ((u8*)sp8C)[i] = 0;
+                for (i = 0; i < 11; i++) {
+                    if ((D_80A944BC[i] & this->unk_156) != 0) {
+                        gSPDisplayList(gfxCtx->polyOpa.p++, D_80A946D0[i]);
+                    }
+                }
+            }
+            if (this->unk_198 != 0) {
+                tmpf3 = (this->unk_194 == 0) ? -1200.0f : 0.0f;
+
+                Matrix_Translate(0.0f, 4400.0f + tmpf3, 200.0f, MTXMODE_APPLY);
+                Matrix_RotateZ(D_80A94EFC[this->unk_194], MTXMODE_APPLY);
+                Matrix_Scale(0.0f, 10.0f, 2.0f, MTXMODE_APPLY);
+
+                gDPPipeSync(gfxCtx->polyXlu.p++);
+                gDPSetPrimColor(gfxCtx->polyXlu.p++, 0, 0, 0xFF, 0xFF, 0xFF, this->unk_198);
+                gDPSetEnvColor(gfxCtx->polyXlu.p++, 0xFF, 0xFF, 0x96, 0x00);
+                gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x6ED), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+                gSPDisplayList(gfxCtx->polyXlu.p++, D_06001630);
             }
         }
 
-        gSPSegment(gfxCtx->polyXlu.p++, 0x08, SEGMENTED_TO_VIRTUAL(sp8C));
-        gSPDisplayList(gfxCtx->polyXlu.p++, D_80A94F60);
+        projPosZ = this->actor.projectedPos.z;
+        if ((projPosZ <= 400.0f) && 
+            (projPosZ > 0.0f) && 
+            (this->actor.groundY > -3000.0f) && 
+           ((this->unk_176 != 0) || (this->unk_178 != 0))) {
+
+            tmp16 = gSaveContext.dayTime;
+            if (tmp16 >= 0x8000) {
+                tmp16 = 0xFFFF - tmp16;
+            }
+
+            tmpf1 = (tmp16 * 0.00275f) + 10.0f;
+            if (projPosZ > 300.0f) {
+                tmpf1 *= (400.0f - projPosZ) * 0.01f;
+            }
+
+            gDPSetPrimColor(gfxCtx->polyXlu.p++, 0, 0, 0x00, 0x00, 0x00, (s32)tmpf1);
+
+            if ((this->unk_154 == 0) && (gSaveContext.linkAge == 1)) {
+                tmpf1 = 0.0f;
+            } else {
+                tmpf1 = ((this->actor.posRot.pos.y - this->actor.groundY) * -50.0f) / 100.0f;
+            }
+            Matrix_Translate(this->actor.posRot.pos.x, this->actor.groundY, this->actor.posRot.pos.z + tmpf1, 0);
+            Matrix_RotateX(this->unk_188.x, MTXMODE_APPLY);
+            Matrix_RotateZ(this->unk_188.z, MTXMODE_APPLY);
+            Matrix_Scale(this->actor.scale.x, 0.0f, this->actor.scale.z, MTXMODE_APPLY);
+            if (this->unk_154 == 0) {
+                Matrix_RotateX(-0.62831855f, MTXMODE_APPLY);
+            }
+            Matrix_RotateY((this->actor.shape.rot.y / 32768.0f) * M_PI, MTXMODE_APPLY);
+            Matrix_RotateX((this->actor.shape.rot.x / 32768.0f) * M_PI, MTXMODE_APPLY);
+            Matrix_RotateX((this->unk_168 / 32768.0f) * M_PI, MTXMODE_APPLY);
+            Matrix_RotateY((this->unk_16C / 32768.0f) * M_PI, MTXMODE_APPLY);
+            Matrix_Translate(this->unk_15C.x, this->unk_15C.y, this->unk_15C.z, MTXMODE_APPLY);
+
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x729), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+            for (i = 0; i < 0x400; i++) {
+                if ((D_80A946FC[i] & this->unk_156) != 0) {
+                    (sp8C)[i] = 0xFF;
+                } else {
+                    (sp8C)[i] = 0;
+                }
+            }
+
+            gSPSegment(gfxCtx->polyXlu.p++, 0x08, SEGMENTED_TO_VIRTUAL(sp8C));
+            gSPDisplayList(gfxCtx->polyXlu.p++, D_80A94F60);
+        }
+        Graph_CloseDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x741);
     }
-    Graph_CloseDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_kanban.c", 0x741);
 }
 #else
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_En_Kanban/EnKanban_Draw.s")
