@@ -1153,7 +1153,7 @@ void Quake_Init();
 s16 Quake_Add(Camera* cam, u32 callbackIdx);
 u32 Quake_RemoveFromIdx(s16 idx);
 s16 Quake_Calc(Camera* camera, UnkQuakeCalcStruct* camData);
-Gfx* Gfx_SetFog(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 n, s32 f);
+Gfx* Gfx_SetFog(Gfx* gfx, u32 r, u32 g, u32 b, u32 a, s32 n, s32 f);
 Gfx* Gfx_SetFogWithSync(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 n, s32 f);
 Gfx* Gfx_SetFog2(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 n, s32 f);
 Gfx* Gfx_CallSetupDL(Gfx* gfx, u32 i);
@@ -1184,9 +1184,9 @@ void func_80094A14(GraphicsContext* gfxCtx);
 void func_80094C50(GraphicsContext* gfxCtx);
 Gfx* Gfx_BranchTexScroll(Gfx** gfxp, u32 x, u32 y, s32 width, s32 height);
 Gfx* func_80094E78(GraphicsContext* gfxCtx, u32 x, u32 y);
-Gfx* Gfx_TexScroll(GraphicsContext* gfxCtx, u32 x, u32 y, s32 width, s32 height);
-Gfx* Gfx_TwoTexScroll(GraphicsContext* gfxCtx, s32 tile1, u32 x1, u32 y1, s32 width1, s32 height1, s32 tile2, u32 x2,
-                      u32 y2, s32 width2, s32 height2);
+Gfx* Gfx_TexScroll(GraphicsContext* gfxCtx, s32 x, s32 y, s32 width, s32 height);
+Gfx* Gfx_TwoTexScroll(GraphicsContext* gfxCtx, s32 tile1, s32 x1, s32 y1, s32 width1, s32 height1, s32 tile2, s32 x2,
+                      s32 y2, s32 width2, s32 height2);
 Gfx* Gfx_TwoTexScrollEnvColor(GraphicsContext* gfxCtx, s32 tile1, u32 x1, u32 y1, s32 width1, s32 height1, s32 tile2,
                               u32 x2, u32 y2, s32 width2, s32 height2, s32 r, s32 g, s32 b, s32 a);
 void func_80095248(GraphicsContext* gfxCtx, u8 r, u8 g, u8 b);

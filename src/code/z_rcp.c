@@ -774,7 +774,7 @@ Gfx gEmptyDL[] = {
     gsSPEndDisplayList(),
 };
 
-Gfx* Gfx_SetFog(Gfx* gfx, s32 r, s32 g, s32 b, s32 a, s32 n, s32 f) {
+Gfx* Gfx_SetFog(Gfx* gfx, u32 r, u32 g, u32 b, u32 a, s32 n, s32 f) {
     if (f == n) {
         f++;
     }
@@ -1388,7 +1388,7 @@ Gfx* func_80094E78(GraphicsContext* gfxCtx, u32 x, u32 y) {
     return Gfx_TexScroll(gfxCtx, x, y, 0, 0);
 }
 
-Gfx* Gfx_TexScroll(GraphicsContext* gfxCtx, u32 x, u32 y, s32 width, s32 height) {
+Gfx* Gfx_TexScroll(GraphicsContext* gfxCtx, s32 x, s32 y, s32 width, s32 height) {
     Gfx* displayList = Graph_Alloc(gfxCtx, 3 * sizeof(Gfx));
 
     x %= 2048;
@@ -1401,8 +1401,8 @@ Gfx* Gfx_TexScroll(GraphicsContext* gfxCtx, u32 x, u32 y, s32 width, s32 height)
     return displayList;
 }
 
-Gfx* Gfx_TwoTexScroll(GraphicsContext* gfxCtx, s32 tile1, u32 x1, u32 y1, s32 width1, s32 height1, s32 tile2, u32 x2,
-                      u32 y2, s32 width2, s32 height2) {
+Gfx* Gfx_TwoTexScroll(GraphicsContext* gfxCtx, s32 tile1, s32 x1, s32 y1, s32 width1, s32 height1, s32 tile2, s32 x2,
+                      s32 y2, s32 width2, s32 height2) {
     Gfx* displayList = Graph_Alloc(gfxCtx, 5 * sizeof(Gfx));
 
     x1 %= 2048;
