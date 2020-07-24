@@ -201,13 +201,10 @@ void func_80938CD0(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2, Vec3f* ar
 void func_80939250(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3, f32 arg4, f32 arg5, s16 arg6, s16 arg7);
 void func_80938DC4(GlobalContext* globalCtx, s16 arg1, Vec3f* arg2, Vec3f* arg3, Vec3f* arg4, f32 arg5, s16 arg6, s16 arg7, s16 arg8);
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_80938CD0(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3, f32 arg4, s16 arg5, s16 arg6) {
     s16 i;
     BossTw1* ptr = (BossTw1*)globalCtx->unk_11E10;
     
-
     for (i = 0; i < arg6; i++) {
         if (ptr->unk_00 == 0) {
             ptr->unk_00 = 1;
@@ -216,19 +213,14 @@ void func_80938CD0(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2, Vec3f* ar
             ptr->unk_1C = *arg3;
             ptr->unk_34 = arg4 / 1000.0f;
             ptr->unk_2C = 0xFF;
-            ptr->unk_01 = Math_Rand_ZeroFloat(10.0f);
+            ptr->unk_01 = (s16)Math_Rand_ZeroFloat(10.0f);
             ptr->unk_2E = arg5;
             break;
         }
         ptr++;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_80938CD0.s")
-#endif
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_80938DC4(GlobalContext* globalCtx, s16 arg1, Vec3f* arg2, Vec3f* arg3, Vec3f* arg4, f32 arg5, s16 arg6, s16 arg7, s16 arg8) {
     s16 i;
     BossTw1* ptr = (BossTw1*)globalCtx->unk_11E10;
@@ -242,18 +234,13 @@ void func_80938DC4(GlobalContext* globalCtx, s16 arg1, Vec3f* arg2, Vec3f* arg3,
             ptr->unk_34 = arg5 / 1000.0f;
             ptr->unk_2E = arg7;
             ptr->unk_2C = arg6;
-            ptr->unk_01 = Math_Rand_ZeroFloat(100.0f);
+            ptr->unk_01 = (s16)Math_Rand_ZeroFloat(100.0f);
             break;
         }
         ptr++;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_80938DC4.s")
-#endif
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_80938EC0(GlobalContext* globalCtx, Vec3f* arg1, f32 arg2, f32 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
     s16 i;
     BossTw1* ptr = (BossTw1*)globalCtx->unk_11E10;
@@ -269,19 +256,14 @@ void func_80938EC0(GlobalContext* globalCtx, Vec3f* arg1, f32 arg2, f32 arg3, s1
             ptr->unk_2E = arg5;
             ptr->unk_30 = arg6;
             ptr->unk_2C = arg4;
-            ptr->unk_3C = Math_Rand_ZeroFloat(M_PI);
+            ptr->unk_3C = (s16)Math_Rand_ZeroFloat(M_PI);
             ptr->unk_01 = 0;
             break;
         }
         ptr++;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_80938EC0.s")
-#endif
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_80938FC4(GlobalContext* globalCtx, s32 arg1) {
     s16 i;
     BossTw1* ptr = (BossTw1*)globalCtx->unk_11E10;
@@ -306,12 +288,7 @@ void func_80938FC4(GlobalContext* globalCtx, s32 arg1) {
         ptr++;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_80938FC4.s")
-#endif
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_80939070(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3, f32 arg4, s16 arg5) {
     s16 i;
     BossTw1* ptr = (BossTw1*)globalCtx->unk_11E10;
@@ -326,18 +303,13 @@ void func_80939070(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2, Vec3f* ar
             ptr->unk_2E = arg5;
             ptr->unk_30 = 0;
             ptr->unk_2C = 0;
-            ptr->unk_01 = Math_Rand_ZeroFloat(1000.0f);
+            ptr->unk_01 = (s16)Math_Rand_ZeroFloat(1000.0f);
             break;
         }
         ptr++;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_80939070.s")
-#endif
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_80939148(GlobalContext* globalCtx, Vec3f* arg1, f32 arg2, f32 arg3, s16 arg4) {
     s16 i;
     BossTw1* ptr = (BossTw1*)globalCtx->unk_11E10;
@@ -354,18 +326,13 @@ void func_80939148(GlobalContext* globalCtx, Vec3f* arg1, f32 arg2, f32 arg3, s1
             ptr->unk_38 = arg3;
             ptr->unk_3C = Math_Rand_ZeroFloat(6.2831855f);
             ptr->unk_2C = 0;
-            ptr->unk_01 = Math_Rand_ZeroFloat(1000.0f);
+            ptr->unk_01 = (s16)Math_Rand_ZeroFloat(1000.0f);
             break;
         }
         ptr++;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_80939148.s")
-#endif
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_80939250(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2, Vec3f* arg3, f32 arg4, f32 arg5, s16 arg6, s16 arg7) {
     s16 i;
     BossTw1* ptr = (BossTw1*)globalCtx->unk_11E10;
@@ -381,18 +348,13 @@ void func_80939250(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2, Vec3f* ar
             ptr->unk_2E = arg7;
             ptr->unk_30 = 0;
             ptr->unk_2C = arg6;
-            ptr->unk_01 = Math_Rand_ZeroFloat(1000.0f);
+            ptr->unk_01 = (s16)Math_Rand_ZeroFloat(1000.0f);
             break;
         }
         ptr++;
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_80939250.s")
-#endif
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_80939338(GlobalContext* globalCtx, f32 arg1, s16 arg2) {
     Player* player = PLAYER;
     s16 i;
@@ -417,19 +379,14 @@ void func_80939338(GlobalContext* globalCtx, f32 arg1, s16 arg2) {
                 ptr->unk_2E = arg2;
                 ptr->unk_30 = 0;
                 ptr->unk_2C = 0xFF;
-                ptr->unk_01 = Math_Rand_ZeroFloat(1000.0f);
+                ptr->unk_01 = (s16)Math_Rand_ZeroFloat(1000.0f);
                 break;
             }
             ptr++;
         }
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_80939338.s")
-#endif
 
-#ifdef NON_MATCHING
-// Regalloc on the ZeroFloat
 void func_809394FC(GlobalContext* globalCtx, f32 arg1, s16 arg2) {
     Player* player = PLAYER;
     s16 i;
@@ -454,16 +411,13 @@ void func_809394FC(GlobalContext* globalCtx, f32 arg1, s16 arg2) {
                 ptr->unk_2E = arg2;
                 ptr->unk_30 = 0;
                 ptr->unk_2C = 0xFF;
-                ptr->unk_01 = Math_Rand_ZeroFloat(1000.0f);
+                ptr->unk_01 = (s16)Math_Rand_ZeroFloat(1000.0f);
                 break;
             }
             ptr++;
         }
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_809394FC.s")
-#endif
 
 #ifdef NON_MATCHING
 // Assignments in the middle
@@ -825,7 +779,7 @@ f32 func_8093AED8(Vec3f* arg0) {
     }
 }
 
-#ifdef NON_MATCHING
+#ifdef NON_EQUIV
 void func_8093B1AC(BossTw *this, GlobalContext *globalCtx) {
     Player* player = PLAYER;
     BossTw* refActor = (BossTw*)this->actor.attachedA;
@@ -2313,102 +2267,112 @@ void func_809453EC(BossTw* this, GlobalContext* globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Tw/func_809453EC.s")
 #endif
 
+#define NON_MATCHING
 #ifdef NON_MATCHING
-void func_80945D14(BossTw* this, GlobalContext* globalCtx) {
-    Player* player = PLAYER;
-    Vec3f sp118;
+void func_80945D14(BossTw *this, GlobalContext *globalCtx) {
+    f32 distXZ;
+    f32 diffX;
+    f32 diffY;
+    f32 diffZ;
+    f32 temp_f2;
+    Player *player = PLAYER;
+    s32 pad2;
     Vec3f sp100;
     Vec3f spF4;
     Vec3s spEC;
+    s16 phi_s0;
     Vec3f spDC;
     Vec3f spD0;
     Vec3f spC4;
     Vec3f spB8;
     Vec3f spAC;
+    s32 pad;
     Vec3f sp9C;
     Vec3f sp90;
     Vec3f sp84;
+    f32 phi_f0;
     Vec3f sp74;
     Vec3f sp68;
     Vec3f sp5C;
+    s16 phi_v0;
+    
 
-    s16 i;
-    s16 tmp16;
-    s32 tmp;
-    f32 tmpf1;
-
-    switch (this->actor.params) {
-        case 102:
-            switch (this->unk_440) {
+    switch(this->actor.params) {
+        case 0x66:
+            switch(this->unk_440){
                 case 0:
                     Actor_SetScale(&this->actor, 0.03f);
                     this->unk_440 = 1;
-                    sp118.x = player->actor.posRot.pos.x - this->actor.posRot.pos.x;
-                    sp118.y = (player->actor.posRot.pos.y + 30.0f) - this->actor.posRot.pos.y;
-                    sp118.z = player->actor.posRot.pos.z - this->actor.posRot.pos.z;
-                    this->actor.posRot.rot.y = Math_atan2f(sp118.x, sp118.z) * 10430.378f;
-                    this->actor.posRot.rot.x = Math_atan2f(sp118.y, sqrtf(SQ(sp118.x) + SQ(sp118.z))) * 10430.378f;
-                    this->actor.speedXZ = 20.0f;
-                    
-                    for (i = 0; i < 50; i++) {
-                        this->unk_1E8[i] = this->actor.posRot.pos;
+                    diffX = player->actor.posRot.pos.x - this->actor.posRot.pos.x;
+                    diffY = (player->actor.posRot.pos.y + 30.0f) - this->actor.posRot.pos.y;
+                    diffZ = player->actor.posRot.pos.z- this->actor.posRot.pos.z;
+                    this->actor.posRot.rot.y = Math_atan2f(diffX, diffZ) * 10430.378f;
+                    distXZ = sqrtf(SQ(diffX) + SQ(diffZ));
+                    this->actor.posRot.rot.x = Math_atan2f(diffY, distXZ) * 10430.378f;
+                    this->actor.speedXZ = 20;
+                    for(phi_s0 = 0; phi_s0 < 50; phi_s0++){
+                        this->unk_1E8[phi_s0] = this->actor.posRot.pos;
                     }
-
                     this->unk_1AC = 255.0f;
-
                 case 1:
-                case 10:
+                case 0xA:
                     this->unk_565 = 1;
                     if (this->unk_178[0] == 0) {
                         func_8002D908(&this->actor);
                         func_8002D7EC(&this->actor);
-                        Audio_PlayActorSound2(&this->actor, NA_SE_EN_TWINROBA_SHOOT_FREEZE - SFX_FLAG);
+                        Audio_PlayActorSound2(&this->actor, NA_SE_EN_TWINROBA_SHOOT_FREEZE & ~SFX_FLAG);
                     } else {
+                        
                         this->actor.posRot.pos = player->unk_9BC;
                         this->actor.posRot.pos.y = -2000.0f;
-                        func_800D20CC(&player->mf_A20, &spEC, 0);
-                        spEC.x = -spEC.x;
+                        func_800D20CC(&player->mf_A20, &spEC, MTXMODE_NEW);
                         spEC.y += 0x8000;
-                        Math_SmoothScaleMaxS(&this->unk_524.x, spEC.x, 10, 0x800);
-                        Math_SmoothScaleMaxS(&this->unk_524.y, spEC.y, 10, 0x800);
+                        spEC.x = -spEC.x;
+                        Math_SmoothScaleMaxS(&this->unk_524.x, spEC.x, 0xA, 0x800);
+                        Math_SmoothScaleMaxS(&this->unk_524.y, spEC.y, 0xA, 0x800);
+                        if(!player){}
                         if (this->unk_178[0] == 0x32) {
-                            D_8094C86F = 10;
+                            D_8094C86F = 0xA;
                             D_8094C872 = 7;
                             globalCtx->envCtx.unk_D8 = 1.0f;
                         }
                         if (this->unk_178[0] < 0x33) {
-                            Audio_PlayActorSound2(&this->actor, NA_SE_EN_TWINROBA_SHOOT_FREEZE - SFX_FLAG);
-                            Audio_PlayActorSound2(&this->actor, NA_SE_EN_TWINROBA_REFL_FREEZE - SFX_FLAG);
-                            Matrix_RotateY((this->unk_524.y / 32678.0f) * M_PI, 0);
-                            Matrix_RotateX((this->unk_524.x / 32678.0f) * M_PI, 1);
+                            
+                            Audio_PlayActorSound2(&this->actor, NA_SE_EN_TWINROBA_SHOOT_FREEZE & ~SFX_FLAG);
+                            Audio_PlayActorSound2(&this->actor, NA_SE_EN_TWINROBA_REFL_FREEZE & ~SFX_FLAG);
+                            Matrix_RotateY((this->unk_524.y / 32678.0f) * M_PI, MTXMODE_NEW);
+                            Matrix_RotateX((this->unk_524.x / 32678.0f) * M_PI, MTXMODE_APPLY);
                             spF4.x = 0.0f;
                             spF4.y = 0.0f;
                             spF4.z = 50.0f;
                             Matrix_MultVec3f(&spF4, &sp100);
-                            tmp16 = this->unk_178[0] * 10;
-                            if (tmp16 >= 0x100) {
-                                tmp16 = 0xFF;
+                            phi_v0 = this->unk_178[0] * 10;
+                            if (phi_v0 >= 0x100) {
+                                phi_v0 = 0xFF;
                             }
-                            func_80939250(globalCtx, &spF4, &sp100, &D_8094A7DC, 10.0f, 80.0f, tmp16, 0);
+                            func_80939250(globalCtx, &player->unk_9BC, &sp100, &D_8094A7DC, 10.0f, 80.0f, phi_v0, 0);
                         }
                         if (this->unk_178[0] == 1) {
                             D_8094C840 = 0;
                             D_8094C851++;
                             Actor_Kill(&this->actor);
-                            return;
                         }
+                        return;
                     }
+
                     this->unk_500.y = func_8093AED8(&this->actor.posRot.pos);
+                    
                     if (this->unk_500.y >= 0.0f) {
                         if (this->unk_500.y != 35.0f) {
                             this->unk_500.x = this->actor.posRot.pos.x;
                             this->unk_500.z = this->actor.posRot.pos.z;
                             func_8093A5C4(this, globalCtx, 0);
                         } else {
-                            for (i = 0; i < 50; i++) {
-                                spDC.x = Math_Rand_CenteredFloat(20.0f);
-                                spDC.y = Math_Rand_CenteredFloat(20.0f);
-                                spDC.z = Math_Rand_CenteredFloat(20.0f);
+                            for(phi_s0 = 0; phi_s0 < 50; phi_s0++){
+                                
+                                spDC.x = Math_Rand_CenteredFloat(20);
+                                spDC.y = Math_Rand_CenteredFloat(20);
+                                spDC.z = Math_Rand_CenteredFloat(20);
                                 spD0.x = 0.0f;
                                 spD0.y = 0.0f;
                                 spD0.z = 0.0f;
@@ -2416,12 +2380,15 @@ void func_80945D14(BossTw* this, GlobalContext* globalCtx) {
                             }
                             globalCtx->envCtx.unk_D8 = 0.5f;
                         }
+
                         this->unk_440 = 2;
-                        this->unk_178[0] = 20;
-                    } else {
+                        this->unk_178[0] = 0x14;
+                    } else {                    
+                        
                         spB8 = D_8094AA10;
                         spAC = D_8094AA1C;
-                        for (i = 0; i < 10; i++) {
+                        for(phi_s0 = 0; phi_s0 < 10; phi_s0++){
+
                             spC4 = this->unk_1E8[(s16)Math_Rand_ZeroFloat(29.9f)];
                             spC4.x += Math_Rand_CenteredFloat(40.0f);
                             spC4.y += Math_Rand_CenteredFloat(40.0f);
@@ -2429,95 +2396,97 @@ void func_80945D14(BossTw* this, GlobalContext* globalCtx) {
                             spAC.y = 0.4f;
                             spAC.x = Math_Rand_CenteredFloat(0.5f);
                             spAC.z = Math_Rand_CenteredFloat(0.5f);
-                            func_80938CD0(globalCtx, &spC4,&spB8, &spAC, (s16)Math_Rand_ZeroFloat(2.0f) + 8, 0, 0x4B);
+                            func_80938CD0(globalCtx, &spC4, &spB8, &spAC, (s16)Math_Rand_ZeroFloat(2.0f) + 8, 0, 0x4B);
                         }
                     }
                     break;
-
                 case 2:
                     Math_SmoothScaleMaxF(&this->unk_1AC, 0.0f, 1.0f, 15.0f);
                     if (this->unk_178[0] == 0) {
                         Actor_Kill(&this->actor);
-                        return;
                     }
                     break;
             }
             break;
+        case 0x67:
+            if (this->unk_178[0] != 0) {
+                if (this->unk_178[0] == 1) {
+                    D_8094C840 = 0;
+                }
+                if (D_8094C841 == 1) {
+                    this->unk_178[0] = 0;
+                }
 
-        case 103:
-            switch (this->unk_178[0]) {
-                default:
-                    if (1 == this->unk_178[0]) {
-                        D_8094C840 = 0;
-                    }
-                    if (1 == D_8094C841) {
-                        this->unk_178[0] = 0;
-                    }
-                    Audio_PlayActorSound2(&this->actor, NA_SE_EV_ICE_FREEZE - SFX_FLAG);
-                    tmp = (D_8094C84C->actionFunc == func_8093C858) ? 0x46 : 20;
-                    if (tmp < this->unk_178[0]) {
-                        sp9C.x = Math_Rand_CenteredFloat(320.0f) + D_8094C844->unk_4BC.x;
-                        sp9C.y = D_8094C844->unk_4BC.y;
-                        sp9C.z = Math_Rand_CenteredFloat(320.0f) + D_8094C844->unk_4BC.z;
-                        sp90.x = 0.0f;
-                        sp90.y = 0.0f;
-                        sp90.z = 0.0f;
-                        sp84.x = 0.0f;
-                        sp84.z = 0.0f;
-                        sp84.y = 0.13f;
-                        func_80938DC4(globalCtx, 3, &sp9C, &sp90, &sp84, Math_Rand_ZeroFloat(5.0f) + 20.0f, 0, 0, 0x50);
-                        sp90.x = Math_Rand_CenteredFloat(10.0f);
-                        sp90.z = Math_Rand_CenteredFloat(10.0f);
-                        sp90.y = Math_Rand_ZeroFloat(3.0f) + 3.0f;
-                        sp9C.x = D_8094C844->unk_4BC.x + (sp90.x * 0.5f);
-                        sp9C.z = D_8094C844->unk_4BC.z + (sp90.z * 0.5f);
-                        func_80938DC4(globalCtx, 3, &sp9C, &sp90, &sp84, Math_Rand_ZeroFloat(5.0f) + 15.0f, 0xFF, 2, 0x82);
-                    }
-                    Math_SmoothScaleMaxF(&D_8094C844->unk_1A8, 80.0f, 1.0f, 3.0f);
-                    Math_SmoothScaleMaxF(&D_8094C844->unk_1B0, 255.0f, 1.0f, 10.0f);
-                    Math_SmoothScaleMaxF(&D_8094C844->unk_1B4, 0.04f, 0.1f, 0.002f);
-                    Math_SmoothScaleMaxF(&D_8094C844->unk_1C4, 70.0f, 1.0f, 5.0f);
+                Audio_PlayActorSound2(&this->actor, NA_SE_EV_ICE_FREEZE & ~SFX_FLAG);
+                
+                phi_v0 = D_8094C84C->actionFunc == func_8093C858 ? 0x46 : 0x14;
 
-                    if ((this->unk_178[0] == 0x46) || (this->unk_178[0] == 0x1E)) {
-                        D_8094C844->unk_1C4 = 10.0f;
-                    }
-                    if (!(this->unk_178[0] & 3)) {
-                        tmp16 = Math_Rand_ZeroFloat(9.9f);
-                        D_8094C844->unk_1C0 = (((f32)tmp16 + tmp16) * M_PI) / 10.0f;
-                        return;
-                    }
-                    break;
+                if (phi_v0 < this->unk_178[0]) {
+                    
+                    
+                    
+                    sp9C.x = Math_Rand_CenteredFloat(320.0f) + D_8094C844->unk_4BC.x;
+                    sp9C.z = Math_Rand_CenteredFloat(320.0f) + D_8094C844->unk_4BC.z;
+                    sp9C.y = D_8094C844->unk_4BC.y;
+                    sp90.x = 0.0f;
+                    sp90.y = 0.0f;
+                    sp90.z = 0.0f;
+                    sp84.x = 0.0f;
+                    sp84.z = 0.0f;
+                    sp84.y = 0.13f;
+                    func_80938DC4(globalCtx, 3, &sp9C, &sp90, &sp84, Math_Rand_ZeroFloat(5.0f) + 20.0f, 0, 0, 0x50);
+                    sp90.x = Math_Rand_CenteredFloat(10.0f);
+                    sp90.z = Math_Rand_CenteredFloat(10.0f);
+                    sp90.y = Math_Rand_ZeroFloat(3.0f) + 3.0f;
+                    sp9C.x = D_8094C844->unk_4BC.x + (sp90.x * 0.5f);
+                    sp9C.z = D_8094C844->unk_4BC.z + (sp90.z * 0.5f);
+                    func_80938DC4(globalCtx, 3, &sp9C, &sp90, &sp84, Math_Rand_ZeroFloat(5.0f) + 15.0f, 0xFF, 2, 0x82);
+                }
+                
+                Math_SmoothScaleMaxF(&D_8094C844->unk_1A8, 80.0f, 1.0f, 3.0f);
+                Math_SmoothScaleMaxF(&D_8094C844->unk_1B0, 255.0f, 1.0f, 10.0f);
+                Math_SmoothScaleMaxF(&D_8094C844->unk_1B4, 0.04f, 0.1f, 0.002f);
+                Math_SmoothScaleMaxF(&D_8094C844->unk_1C4, 70.0f, 1.0f, 5.0f);
+                if (this->unk_178[0] == 0x46 || this->unk_178[0] == 0x1E) {
+                    D_8094C844->unk_1C4 = 10.0f;
+                }
 
-                case 0:
-                    if (1 == D_8094C841) {
-                        if (1.0f < D_8094C844->unk_1B0) {
-                            for (i = 0; i < 3; i++) {
-                                sp74.x = Math_Rand_CenteredFloat(280.0f) + D_8094C844->unk_4BC.x;
-                                sp74.z = Math_Rand_CenteredFloat(280.0f) + D_8094C844->unk_4BC.z;
-                                sp74.y = D_8094C844->unk_4BC.y + 30.0f;
-                                sp68.x = 0.0f;
-                                sp68.y = 0.0f;
-                                sp68.z = 0.0f;
-                                sp5C.x = 0.0f;
-                                sp5C.y = 0.13f;
-                                sp5C.z = 0.0f;
-                                func_80938DC4(globalCtx, 3, &sp74, &sp68, &sp5C, Math_Rand_ZeroFloat(5.0f) + 20.0f, 0, 0, 0x50);
-                            }
+                if ((this->unk_178[0] & 3) == 0) {
+                    temp_f2 = (s16)Math_Rand_ZeroFloat(9.9f);
+                    D_8094C844->unk_1C0 = ((temp_f2 + temp_f2) * M_PI) / 10.0f;
+                    return;
+                }
+            } else {
+                if (D_8094C841 == 1) {
+                    if (1.0f < D_8094C844->unk_1B0) {
+                        for(phi_s0 = 0; phi_s0 < 3; phi_s0++){
+                            
+                            
+                            
+                            sp74.x = Math_Rand_CenteredFloat(280.0f) + D_8094C844->unk_4BC.x;
+                            sp74.z = Math_Rand_CenteredFloat(280.0f) + D_8094C844->unk_4BC.z;
+                            sp74.y = D_8094C844->unk_4BC.y + 30.0f;
+                            sp68.x = 0.0f;
+                            sp68.y = 0.0f;
+                            sp68.z = 0.0f;
+                            sp5C.x = 0.0f;
+                            sp5C.y = 0.13f;
+                            sp5C.z = 0.0f;
+                            func_80938DC4(globalCtx, 3, &sp74, &sp68, &sp5C, Math_Rand_ZeroFloat(5.0f) + 20.0f, 0, 0, 0x50);
                         }
-                        tmpf1 = 3.0f;
-                    } else {
-                        tmpf1 = 1.0f;
                     }
-                    Math_SmoothScaleMaxF(&D_8094C844->unk_1BC, 0.0f, 1.0f, 0.2f * tmpf1);
-                    Math_SmoothScaleMaxF(&D_8094C844->unk_1B0, 0.0f, 1.0f, 5.0f * tmpf1);
-                    Math_SmoothScaleMaxF(&D_8094C844->unk_1A8, 0.0f, 1.0f, tmpf1);
-                    if (D_8094C844->unk_1A8 <= 0.0f) {
-                        Actor_Kill(&this->actor);
-                        return;
-                    }
-                    break;
+                    phi_f0 = 3.0f;
+                } else {
+                    phi_f0 = 1.0f;
+                }
+                Math_SmoothScaleMaxF(&D_8094C844->unk_1BC, 0.0f, 1.0f, 0.2f * phi_f0);
+                Math_SmoothScaleMaxF(&D_8094C844->unk_1B0, 0.0f, 1.0f, 5.0f * phi_f0);
+                Math_SmoothScaleMaxF(&D_8094C844->unk_1A8, 0.0f, 1.0f, phi_f0);
+                if (D_8094C844->unk_1A8 <= 0.0f) {
+                    Actor_Kill(&this->actor);
+                }
             }
-
+            break;
     }
 }
 #else
