@@ -452,7 +452,7 @@ s16 D_80812848[2] = {
     0x007C, 0x0124, 0x01CC
 };
 
- s32 D_80812854[9] = {
+ u32 D_80812854[9] = {
     0x0101C880, 0x0101CC80, 0x0101D080, 
     0x01000180, 0x01000280, 0x01000380,
     0x01000480, 0x01000580, 0x01000680
@@ -1522,7 +1522,7 @@ void func_80806C20(FileChooseContext* this) {
 
 //#pragma GLOBAL_ASM("asm/non_matchings/overlays/gamestates/ovl_file_choose/func_80806DB0.s")
 // OK
-void func_80806DB0(GraphicsContext* gfxCtx, u32* arg1, s16 arg2) {
+void func_80806DB0(GraphicsContext* gfxCtx, UNK_TYPE arg1, s16 arg2) {
     s32 pad;
     Gfx* disprefs[4];
 

@@ -5,7 +5,7 @@
 
 void func_8080AF50(FileChooseContext*, f32, f32, f32);
 Gfx* func_8080AFD0(Gfx*, u32, s16, s16, s16);
-void func_80806DB0(GraphicsContext*, u32*, s16);
+void func_80806DB0(GraphicsContext*, char*, s16);
 
 extern Gfx D_01000000[];
 extern Gfx D_01015600[];
@@ -550,93 +550,77 @@ void func_8080D8CC(FileChooseContext* this, s16 fileSlot, s16 arg2) {
     s16 j;
     s16 tmp;
     s16 tmp2;
-    s16 tmp3;
+    s32 tmp3;
     s16 spD8[3];
-    KanFont* kanfont;
-    Gfx* dispRefs[5];
-    GraphicsContext* gfxCtx;
+    KanFont* kanfont = &this->kanfont;
 
-    gfxCtx = this->state.gfxCtx;
-    kanfont = &this->kanfont;
-    Graph_OpenDisps(dispRefs, gfxCtx, "../z_file_choose.c", 0x6AD);
-
-    gDPPipeSync(gfxCtx->polyOpa.p++);
-    gDPSetCombineLERP(gfxCtx->polyOpa.p++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
-
-    if (this->fileNamesA[fileSlot]) {
-        gSPVertex(gfxCtx->polyOpa.p++, &this->allocVtx2[D_8081284C[fileSlot]], 32, 0);
-        gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0, D_808128C8[arg2][0], D_808128C8[arg2][1], D_808128C8[arg2][2], this->fileNamesA[fileSlot]);
-
-        for (tmp3 = 0, j = 0; tmp3 < 32; tmp3 += 4, j++) {
-            func_80806DB0(this->state.gfxCtx, kanfont->unk_3C88[this->fileNames[fileSlot][j]], tmp3);
-        }
-    }
-
-    if ((fileSlot == this->selectedFileIdx) || (fileSlot == this->copyDsFiletIdx)) {
-        gDPPipeSync(gfxCtx->polyOpa.p++);
-        gDPSetCombineLERP(gfxCtx->polyOpa.p++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0);
-        gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0, 0xFF, 0xFF, 0xFF, this->fileInfoA[fileSlot]);
-        gSPVertex(gfxCtx->polyOpa.p++, &this->allocVtx2[D_8081284C[fileSlot] + 0x24], 12, 0);
-
-        func_8080B394(this->unk_1C9F6[fileSlot], &spD8[0], &spD8[1], &spD8[2]);
-
-        for (i = 0, j = 0; i < 3; i++, j += 4) {
-            func_80806DB0(this->state.gfxCtx, kanfont->unk_3C88[spD8[i]], i);
-        }
-
-        gDPPipeSync(gfxCtx->polyOpa.p++);
+    {
+        GraphicsContext* gfxCtx = this->state.gfxCtx;
+        Gfx* dispRefs[4];
         
-        tmp = (this->heartStatus[fileSlot] == 0) ? 0 : 1;
+        Graph_OpenDisps(dispRefs, this->state.gfxCtx, "../z_file_choose.c", 0x6AD);
 
         gDPPipeSync(gfxCtx->polyOpa.p++);
-        gDPSetCombineLERP(gfxCtx->polyOpa.p++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-        gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0, D_808128DC[tmp][0], D_808128DC[tmp][1], D_808128DC[tmp][2], this->fileInfoA[fileSlot]);
-        gDPSetEnvColor(gfxCtx->polyOpa.p++, D_808128E8[tmp][0], D_808128E8[tmp][1], D_808128E8[tmp][2], 0xFF);
+        gDPSetCombineLERP(gfxCtx->polyOpa.p++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
 
-        tmp2 = 0;
-        if (this->healthCapacities[0] < 0)
-            tmp2 = this->healthCapacities[0] + 0xF;
-        i = 0;
-        j = 0;
+        if (this->fileNamesA[fileSlot]) {
+            gSPVertex(gfxCtx->polyOpa.p++, &this->allocVtx2[D_8081284C[fileSlot]], 32, 0);
+            gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0, D_808128C8[arg2][0], D_808128C8[arg2][1], D_808128C8[arg2][2], this->fileNamesA[fileSlot]);
 
-        while (i < (tmp2 >> 4)) {
-            gSPVertex(gfxCtx->polyOpa.p++, &this->allocVtx2[D_8081284C[fileSlot] + j + 0x30], 4, 0);
-            gfxCtx->polyOpa.p = func_8080AFD0(gfxCtx->polyOpa.p, D_808128D4[tmp], 0x10, 0x10, 0);
-            i += 1;
-            j += 4;
+            for (i = 0, j = 0; j < 32; i++, j += 4) {
+                func_80806DB0(this->state.gfxCtx, &kanfont->unk_3C88[this->fileNames[fileSlot][i]], j);
+            }
         }
 
-        gDPPipeSync(gfxCtx->polyOpa.p++);
-        for (i = 0, j = 0; i < 9; i++, j += 4) {
-            if (gBitFlags[D_808128B4[i]] & this->questItems[i]) {
-                gSPVertex(gfxCtx->polyOpa.p++, &this->allocVtx2[D_8081284C[fileSlot] + j + 0x80], 4, 0);
-                gDPPipeSync(gfxCtx->polyOpa.p++);
-                gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0, D_80812878[i], D_8081288C[i], D_808128A0[i], this->fileInfoA[fileSlot]);
-                gDPSetEnvColor(gfxCtx->polyOpa.p++, 0x00, 0x00, 0x00, 0x00);
+        if ((fileSlot == this->selectedFileIdx) || (fileSlot == this->copyDsFiletIdx)) {
+            gDPPipeSync(gfxCtx->polyOpa.p++);
+            gDPSetCombineLERP(gfxCtx->polyOpa.p++, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, 0);
+            gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0, 0xFF, 0xFF, 0xFF, this->fileInfoA[fileSlot]);
+            gSPVertex(gfxCtx->polyOpa.p++, &this->allocVtx2[D_8081284C[fileSlot] + 0x24], 12, 0);
 
-                if (i < 3) {
-                    gDPLoadTextureBlock(gfxCtx->polyOpa.p++, D_80812854[i], 
-                        G_IM_FMT_RGBA, G_IM_SIZ_32b, 0x10, 0x10, 0, G_TX_NOMIRROR | G_TX_WRAP, 
-                        G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-    
-                    /*
-                    gDPSetTextureImage(gfxCtx->polyOpa.p++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 1, 0xFFFFFFFF);
-                    gDPSetTile(gfxCtx->polyOpa.p++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-                    gDPLoadSync(gfxCtx->polyOpa.p++);
-                    gDPLoadBlock(gfxCtx->polyOpa.p++, G_TX_LOADTILE, 0, 0, 255, 256);
+            func_8080B394(this->unk_1C9F6[fileSlot], &spD8[0], &spD8[1], &spD8[2]);
+
+            for (i = 0, j = 0; i < 3; i++, j += 4) {
+                func_80806DB0(this->state.gfxCtx, kanfont->unk_3C88[spD8[i]], j);
+            }
+
+            gDPPipeSync(gfxCtx->polyOpa.p++);
+            
+            tmp = (this->heartStatus[fileSlot] == 0) ? 0 : 1;
+
+            gDPPipeSync(gfxCtx->polyOpa.p++);
+            gDPSetCombineLERP(gfxCtx->polyOpa.p++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
+            gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0, D_808128DC[tmp][0], D_808128DC[tmp][1], D_808128DC[tmp][2], this->fileInfoA[fileSlot]);
+            gDPSetEnvColor(gfxCtx->polyOpa.p++, D_808128E8[tmp][0], D_808128E8[tmp][1], D_808128E8[tmp][2], 0xFF);
+
+            tmp2 = this->healthCapacities[0] / 16;
+            for (i = 0, j = 0; i < tmp2; i++, j++) {
+                gSPVertex(gfxCtx->polyOpa.p++, &this->allocVtx2[D_8081284C[fileSlot] + j + 0x30], 4, 0);
+                gfxCtx->polyOpa.p = func_8080AFD0(gfxCtx->polyOpa.p, D_808128D4[tmp], 0x10, 0x10, 0);
+            }
+
+            gDPPipeSync(gfxCtx->polyOpa.p++);
+            for (i = 0, j = 0; i < 9; i++, j += 4) {
+                if (gBitFlags[D_808128B4[i]] & this->questItems[i]) {
+                    gSPVertex(gfxCtx->polyOpa.p++, &this->allocVtx2[D_8081284C[fileSlot] + j + 0x80], 4, 0);
                     gDPPipeSync(gfxCtx->polyOpa.p++);
-                    gDPSetTile(gfxCtx->polyOpa.p++, G_IM_FMT_RGBA, G_IM_SIZ_32b, 4, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-                    gDPSetTileSize(gfxCtx->polyOpa.p++, G_TX_RENDERTILE, 0, 0, 0x003C, 0x003C);
-                    */
+                    gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0, D_80812878[i], D_8081288C[i], D_808128A0[i], this->fileInfoA[fileSlot]);
+                    gDPSetEnvColor(gfxCtx->polyOpa.p++, 0x00, 0x00, 0x00, 0x00);
 
-                    gSP1Quadrangle(gfxCtx->polyOpa.p++, 0, 2, 3, 1, 0);
-                } else {
-                    gfxCtx->polyOpa.p = func_8080AFD0(gfxCtx->polyOpa.p, D_80812854[i], 0x10, 0x10, 0);
+                    if (i < 3) {
+                        gDPLoadTextureBlock(gfxCtx->polyOpa.p++, D_80812854[i], 
+                            G_IM_FMT_RGBA, G_IM_SIZ_32b, 0x10, 0x10, 0, G_TX_NOMIRROR | G_TX_WRAP, 
+                            G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+
+                        gSP1Quadrangle(gfxCtx->polyOpa.p++, 0, 2, 3, 1, 0);
+                    } else {
+                        gfxCtx->polyOpa.p = func_8080AFD0(gfxCtx->polyOpa.p, D_80812854[i], 0x10, 0x10, 0);
+                    }
                 }
             }
         }
+        Graph_CloseDisps(dispRefs, this->state.gfxCtx, "../z_file_choose.c", 0x705);
     }
-    Graph_CloseDisps(dispRefs, this->state.gfxCtx, "../z_file_choose.c", 0x705);
 }
 #else
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/gamestates/ovl_file_choose/func_8080D8CC.s")
@@ -1252,7 +1236,6 @@ void func_80810698(FileChooseContext* this) {
     }
 }
 
-
 #ifdef NON_MATCHING
 void func_808106F4(FileChooseContext* this) {
     SaveContext* saveCtx = &gSaveContext;
@@ -1275,11 +1258,11 @@ void func_808106F4(FileChooseContext* this) {
         this->state.running = 0;
     }
     
+    gSaveContext.respawn[0].entranceIndex = -1;
+
     tmp = gSaveContext.magic;
     gSaveContext.magic = 0;
-
     gSaveContext.unk_13F4 = 0;
-    gSaveContext.respawn[0].entranceIndex = -1;
     gSaveContext.respawnFlag = 0;
     gSaveContext.seqIndex = 0xFF;
     gSaveContext.nightSeqIndex = 0xFF;
@@ -1332,9 +1315,9 @@ void func_808106F4(FileChooseContext* this) {
        (gSaveContext.equips.buttonItems[0] != 0x55)) {
 
         gSaveContext.equips.buttonItems[0] = 0xFF;
-        temp_a0 = (*(u16*)gEquipMasks & gSaveContext.equips.equipment) & 0xFFFF;
-        gSaveContext.equips.equipment &= *(u16*)gEquipNegMasks;
-        gSaveContext.equipment ^= (gBitFlags[temp_a0-1] << *(u8*)gEquipShifts);
+        temp_a0 = gEquipMasks[0] & gSaveContext.equips.equipment;
+        gSaveContext.equips.equipment &= gEquipNegMasks[0];
+        gSaveContext.equipment ^= (gBitFlags[temp_a0-1] << gEquipShifts[0]);
     }
 }
 #else
