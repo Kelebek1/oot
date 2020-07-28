@@ -263,15 +263,11 @@ typedef struct Player {
     /* 0x0450 */ Vec3f      unk_450;
     /* 0x045C */ char       unk_45C[0x00E];
     /* 0x046A */ u16        unk_46A;
-    /* 0x046C */ char       unk_46C[0x06E];
-    /* 0x04DA */ s16        unk_4DA;
-    /* 0x04DC */ char       unk_4DC[0x008];
-    /* 0x04E4 */ Collider   unk_4E4; // TODO determine type
-    /* 0x04FC */ char       unk_4FC[0x068];
-    /* 0x0564 */ Collider   unk_564; // TODO determine type
-    /* 0x057C */ char       unk_57C[0x07C];
-    /* 0x05F8 */ u8         unk_5F8;
-    /* 0x05F9 */ char       unk_5F9[0x06B];
+    /* 0x046C */ char       unk_46C[0x02C];
+    /* 0x0498 */ ColliderCylinder unk_498;
+    /* 0x04E4 */ ColliderQuad   unk_4E4;
+    /* 0x0564 */ ColliderQuad   unk_564;
+    /* 0x05E4 */ ColliderQuad   unk_5E4;
     /* 0x0664 */ Actor*     unk_664;
     /* 0x0668 */ char       unk_668[0x004];
     /* 0x066C */ s32        unk_66C;

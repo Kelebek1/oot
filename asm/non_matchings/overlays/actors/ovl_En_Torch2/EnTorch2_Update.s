@@ -679,6 +679,7 @@ glabel EnTorch2_Update
 /* 00DE0 80B1E760 8D6C067C */  lw      $t4, 0x067C($t3)           ## 0000067C
 /* 00DE4 80B1E764 000C7240 */  sll     $t6, $t4,  9               
 /* 00DE8 80B1E768 05C00005 */  bltz    $t6, .L80B1E780            
+/* 00DE8 80B1E768 05C00005 */  nop     ## FAKE
 .L80B1E76C:
 /* 00DEC 80B1E76C 24A50130 */  addiu   $a1, $a1, %lo(D_80B20130)  ## $a1 = 80B20130
 /* 00DF0 80B1E770 0C2C76F6 */  jal     func_80B1DBD8              

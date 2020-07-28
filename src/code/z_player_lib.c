@@ -474,7 +474,7 @@ void func_80090604(GlobalContext* globalCtx, Player* player, ColliderQuad* colli
     Vec3f a;
 
     if ((s32)(player->stateFlags1 << 9) < 0) {
-        player->unk_5F8 = D_8012607C[player->currentShield];
+        player->unk_5E4.base.type = D_8012607C[player->currentShield];
         Matrix_MultVec3f(&quadInit->quad[0], &a);
         Matrix_MultVec3f(&quadInit->quad[1], &b);
         Matrix_MultVec3f(&quadInit->quad[2], &c);
