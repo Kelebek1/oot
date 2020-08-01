@@ -17,6 +17,10 @@ void BgSpot01Idomizu_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 void func_808ABB84(BgSpot01Idomizu* this, GlobalContext* globalCtx);
 
+static InitChainEntry sInitChain[] = {
+    ICHAIN_VEC3F_DIV1000(scale, 100, ICHAIN_STOP),
+};
+
 /*
 const ActorInit Bg_Spot01_Idomizu_InitVars = {
     ACTOR_BG_SPOT01_IDOMIZU,
@@ -30,7 +34,17 @@ const ActorInit Bg_Spot01_Idomizu_InitVars = {
     (ActorFunc)BgSpot01Idomizu_Draw,
 };
 */
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Bg_Spot01_Idomizu/BgSpot01Idomizu_Init.s")
+
+void BgSpot01Idomizu_Init(Actor *thisx, GlobalContext *globalCtx) {
+    BgSpot01Idomizu* this = THIS;
+
+    Actor_ProcessInitChain(thisx, sInitChain);
+
+    this->unk_150 = ((gSaveContext.eventChkInf[6] & 0x80) || (LINK_AGE_IN_YEARS == YEARS_ADULT)) ? -550.0f : 52.0f;
+
+    this->actionFunc = func_808ABB84;
+    this->actor.posRot.pos.y = this->unk_150;
+}
 
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Bg_Spot01_Idomizu/BgSpot01Idomizu_Destroy.s")
 
