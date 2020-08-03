@@ -111,14 +111,6 @@ u8 D_808C7000[] = {
     0x00, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00
 };
 
-// D_808CA3C8
-static InitChainEntry sInitChain[] = {
-    ICHAIN_U8(unk_1F, 5, ICHAIN_CONTINUE),
-    ICHAIN_S8(naviEnemyId, 12, ICHAIN_CONTINUE),
-    ICHAIN_F32_DIV1000(gravity, 62536, ICHAIN_CONTINUE),
-    ICHAIN_F32(unk_4C, 8200, ICHAIN_STOP),
-};
-
 static ColliderJntSphItemInit sJntSphItemsInit[19] = {
     {
         { 0x03, { 0xFFCFFFFF, 0x00, 0x04 }, { 0xFFCFFFFF, 0x00, 0x00 }, 0x01, 0x01, 0x01 },
@@ -976,6 +968,14 @@ u16 D_808C93C8[2048] = {
     0x5A07, 0x6A07, 0x4905, 0x2801, 0x2001, 0x50C3, 0x82CF, 0x7A8B, 
     0x5981, 0x5101, 0x6A47, 0x82CF, 0x7249, 0x59C5, 0x51C1, 0x61C7, 
     0x6A8D, 0x620B, 0x5989, 0x3105, 0x30C5, 0x4083, 0x4041, 0x3001
+};
+
+// D_808CA3C8
+static InitChainEntry sInitChain[] = {
+    ICHAIN_U8(unk_1F, 5, ICHAIN_CONTINUE),
+    ICHAIN_S8(naviEnemyId, 12, ICHAIN_CONTINUE),
+    ICHAIN_F32_DIV1000(gravity, 62536, ICHAIN_CONTINUE),
+    ICHAIN_F32(unk_4C, 8200, ICHAIN_STOP),
 };
 
 Color_RGBA8_n D_808CA3D8 = {0xFF, 0xFF, 0x00, 0xFF};

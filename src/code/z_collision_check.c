@@ -3344,7 +3344,7 @@ s32 func_80062ECC(f32 actor_ac_98_10, f32 actor_ac_98_12, f32 arg2, Vec3f* ac_ac
 #endif
 
 u8 func_800635D0(s32 arg0) {
-    s32 result;
+    u8 result;
 
     result = 0;
     if (arg0 & 0x00400100) {
