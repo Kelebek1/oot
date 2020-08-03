@@ -984,7 +984,6 @@ Color_RGBA8_n D_808CA3DC = {0xFF, 0x0A, 0x00, 0xFF};
 Vec3f D_808CA3E0 = { 0.0f, 0.0f, 0.0f };
 Vec3f D_808CA3EC = { 0.0f, 0.0f, 0.0f };
 
-
 Vec3f D_808CA3F8[] = {
     {-1390.0f, 0.0f, -3804.0f },
     {-1390.0f, 0.0f, -2804.0f },
