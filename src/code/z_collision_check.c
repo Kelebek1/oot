@@ -3343,7 +3343,7 @@ s32 func_80062ECC(f32 actor_ac_98_10, f32 actor_ac_98_12, f32 arg2, Vec3f* ac_ac
 #pragma GLOBAL_ASM("asm/non_matchings/code/z_collision_check/func_80062ECC.s")
 #endif
 
-s32 func_800635D0(s32 arg0) {
+u8 func_800635D0(s32 arg0) {
     s32 result;
 
     result = 0;
