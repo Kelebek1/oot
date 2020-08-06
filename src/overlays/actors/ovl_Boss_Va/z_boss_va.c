@@ -3473,7 +3473,7 @@ void func_809597F4(GlobalContext* globalCtx) {
 
                 ptr->unk_2E += 0x157C;
                 ptr->unk_38[3] = (s16)(Math_Sins(ptr->unk_2E) * 50.0f) + 0x50;
-                Math_SmoothScaleMaxMinF(&ptr->unk_40[0], ptr->unk_44[0], 1.0f, 0.01f, 0.005f);
+                Math_SmoothScaleMaxMinF(&ptr->unk_40, ptr->unk_44[0], 1.0f, 0.01f, 0.005f);
                 ptr->unk_00.x = ptr->unk_44[1] + refActor->actor.posRot.pos.x;
                 ptr->unk_00.y = ptr->unk_44[2] + refActor->actor.posRot.pos.y;
                 ptr->unk_00.z = ptr->unk_44[3] + refActor->actor.posRot.pos.z;
@@ -3483,8 +3483,8 @@ void func_809597F4(GlobalContext* globalCtx) {
                         if (ptr->unk_26 == 0) {
                             tmp16 = Math_Vec3f_Yaw(&refActor->actor.posRot.pos, &ptr->unk_00);
                             ptr->unk_24 = 0;
-                            func_8094F60C(globalCtx, ptr, tmp16, ptr->unk_40[0] * 4500.0f, 1);
-                            func_8094F734(globalCtx, ptr, tmp16, ptr->unk_40[0] * 1.2f);
+                            func_8094F60C(globalCtx, ptr, tmp16, ptr->unk_40 * 4500.0f, 1);
+                            func_8094F734(globalCtx, ptr, tmp16, ptr->unk_40 * 1.2f);
                         }
                         break;
 
@@ -3493,8 +3493,8 @@ void func_809597F4(GlobalContext* globalCtx) {
                         if (refActor->unk_195 != 0) {
                             ptr->unk_24 = 0;
                             tmp16 = Math_Vec3f_Yaw(&refActor->actor.posRot.pos, &ptr->unk_00);
-                            func_8094F60C(globalCtx, ptr, tmp16, ptr->unk_40[0] * 4500.0f, 1);
-                            func_8094F734(globalCtx, ptr, tmp16, ptr->unk_40[0] * 1.2f);
+                            func_8094F60C(globalCtx, ptr, tmp16, ptr->unk_40 * 4500.0f, 1);
+                            func_8094F734(globalCtx, ptr, tmp16, ptr->unk_40 * 1.2f);
                         }
                         break;
                 }
@@ -3532,7 +3532,7 @@ void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             func_800D1FD4(&globalCtx->mf_11DA0);
             Matrix_RotateZ((ptr->unk_2E / 32768.0f) * 3.1416f, 1);
-            Matrix_Scale(ptr->unk_40[0] * 0.0185f, ptr->unk_40[0] * 0.0185f, 1.0f, 1);
+            Matrix_Scale(ptr->unk_40 * 0.0185f, ptr->unk_40 * 0.0185f, 1.0f, 1);
             gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x1370),
                       G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, D_06015710);
@@ -3549,7 +3549,7 @@ void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
             }
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             func_800D1FD4(&globalCtx->mf_11DA0);
-            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], ptr->unk_40[0], 1);
+            Matrix_Scale(ptr->unk_40, ptr->unk_40, ptr->unk_40, 1);
             Matrix_RotateZ((ptr->unk_2E / 32768.0f) * M_PI, 1);
 
             gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x138A),
@@ -3584,7 +3584,7 @@ void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
                 func_800D1FD4(&globalCtx->mf_11DA0);
             }
 
-            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], 1.0f, 1);
+            Matrix_Scale(ptr->unk_40, ptr->unk_40, 1.0f, 1);
 
             gDPPipeSync(gfxCtx->polyXlu.p++);
             gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x13BC),
@@ -3609,7 +3609,7 @@ void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
             if ((ptr->unk_28 != 1) || ((Math_Vec3f_DistXZ(&camera->eye, &ptr->unk_00) -
                                         Math_Vec3f_DistXZ(&camera->eye, &refActor->actor.posRot.pos)) < 10.0f)) {
                 Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
-                Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], ptr->unk_40[0], 1);
+                Matrix_Scale(ptr->unk_40, ptr->unk_40, ptr->unk_40, 1);
 
                 gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x13D8),
                           G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -3633,7 +3633,7 @@ void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
 
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             Matrix_RotateRPY(ptr->unk_2A, ptr->unk_2C, 0, 1);
-            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], ptr->unk_40[0], 1);
+            Matrix_Scale(ptr->unk_40, ptr->unk_40, ptr->unk_40, 1);
             Matrix_RotateX(ptr->unk_44[1] * 0.115f, 1);
             Matrix_RotateY(ptr->unk_44[1] * 0.13f, 1);
             Matrix_RotateZ(ptr->unk_44[1] * 0.1f, 1);
@@ -3663,7 +3663,7 @@ void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
 
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             Matrix_RotateRPY(ptr->unk_2A, ptr->unk_2C, 0, 1);
-            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], ptr->unk_40[0], 1);
+            Matrix_Scale(ptr->unk_40, ptr->unk_40, ptr->unk_40, 1);
 
             gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x1420),
                       G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -3685,7 +3685,7 @@ void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             func_800D1FD4(&globalCtx->mf_11DA0);
             Matrix_RotateZ((ptr->unk_2E / 32768.0f) * M_PI, 1);
-            Matrix_Scale(ptr->unk_40[0] * 0.02f, ptr->unk_40[0] * 0.02f, 1.0f, 1);
+            Matrix_Scale(ptr->unk_40 * 0.02f, ptr->unk_40 * 0.02f, 1.0f, 1);
 
             gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x143C),
                       G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -3707,7 +3707,7 @@ void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             Matrix_RotateZ((ptr->unk_2E / 32768.0f) * M_PI, 1);
             Matrix_RotateY((ptr->unk_2C / 32768.0f) * M_PI, 1);
-            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], 1.0f, 1);
+            Matrix_Scale(ptr->unk_40, ptr->unk_40, 1.0f, 1);
 
             gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x1458),
                       G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -3771,7 +3771,7 @@ void func_8095B028(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Ve
             }
 
             ptr->unk_44[2] = arg3->y;
-            ptr->unk_40[0] = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
+            ptr->unk_40 = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
             ptr->unk_30[3] = 0xFF;
             break;
         }
@@ -3805,7 +3805,7 @@ void func_8095B318(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Ve
             ptr->unk_38[2] = 0xDC;
             ptr->unk_38[3] = 0xA0;
 
-            ptr->unk_40[0] = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
+            ptr->unk_40 = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
             return;
         }
     }
@@ -3838,7 +3838,7 @@ void func_8095B4A4(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16
             ptr->unk_26 = 0x14;
             ptr->unk_38[3] = 0x64;
             ptr->unk_30[3] = 0xC8;
-            ptr->unk_40[0] = (Math_Rand_ZeroFloat(arg3) + arg3) * 0.01f;
+            ptr->unk_40 = (Math_Rand_ZeroFloat(arg3) + arg3) * 0.01f;
             break;
         }
     }
@@ -3873,7 +3873,7 @@ void func_8095B670(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16
             }
             ptr->unk_38[3] = 0x64;
             ptr->unk_30[3] = 0xC8;
-            ptr->unk_40[0] = arg4 * 0.01f;
+            ptr->unk_40 = arg4 * 0.01f;
             break;
         }
     }
@@ -3904,7 +3904,7 @@ void func_8095B80C(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Ve
             ptr->unk_26 = (s16)(Math_Rand_ZeroOne() * 10.0f) + 0xA;
             ptr->unk_38[3] = 0x64;
             ptr->unk_44[0] = arg4 * 0.01f;
-            ptr->unk_40[0] = 0.0f;
+            ptr->unk_40 = 0.0f;
 
             if (((i & 3) == 0) || (arg5 == 2)) {
                 Audio_PlaySoundGeneral(NA_SE_EN_BALINADE_BREAK, &ptr->unk_00, 4, &D_801333E0, &D_801333E0, &D_801333E8);
@@ -3949,7 +3949,7 @@ void func_8095B9B0(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16
 
             ptr->unk_2A = Math_Rand_CenteredFloat(65536.0f);
             ptr->unk_2C = Math_Rand_CenteredFloat(65536.0f);
-            ptr->unk_40[0] = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
+            ptr->unk_40 = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
             ptr->unk_44[2] = (Math_Rand_ZeroOne() * 0.25f) + 0.9f;
             break;
         }
@@ -3977,7 +3977,7 @@ void func_8095BBD0(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Ve
             ptr->unk_2C = arg4->y;
             ptr->unk_26 = (s16)(Math_Rand_ZeroOne() * 10.0f) + 0xA;
             ptr->unk_30[3] = 0xF0;
-            ptr->unk_40[0] = arg5 * 0.01f;
+            ptr->unk_40 = arg5 * 0.01f;
             break;
         }
     }
