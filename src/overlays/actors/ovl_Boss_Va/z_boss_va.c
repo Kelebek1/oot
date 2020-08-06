@@ -15,7 +15,7 @@ void func_809517A0(BossVa* this);
 void func_80957C10(BossVa* this);
 void func_80952100(BossVa* this);
 void func_809597F4(GlobalContext* globalCtx);
-void func_8095A188(BossVaEffect* arg0, GlobalContext* globalCtx);
+void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx);
 void func_8095BD24(GlobalContext* globalCtx, s16 arg1);
 void func_8094FBB4(GlobalContext* globalCtx);
 
@@ -31,7 +31,7 @@ void func_809572DC(BossVa* this, GlobalContext* globalCtx);
 void func_80950780(BossVa* this, GlobalContext* globalCtx);
 void func_80951844(BossVa* this, GlobalContext* globalCtx);
 void func_80953FC4(BossVa* this, GlobalContext* globalCtx);
-void func_8095438C(BossVa *this, GlobalContext *globalCtx);
+void func_8095438C(BossVa* this, GlobalContext* globalCtx);
 void func_80954168(BossVa* this, GlobalContext* globalCtx);
 void func_80954AD0(BossVa* this, GlobalContext* globalCtx);
 void func_80954C20(BossVa* this, GlobalContext* globalCtx);
@@ -60,16 +60,16 @@ void func_80952858(BossVa* this, GlobalContext* globalCtx);
 void func_8095335C(BossVa* this, GlobalContext* globalCtx);
 void func_809533F4(BossVa* this, GlobalContext* globalCtx);
 
-
-
-
 void func_8095B670(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16 arg3, s16 arg4);
 void func_8095B9B0(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16 arg3, s16 arg4);
-void func_8095B028(GlobalContext *globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5);
-void func_8095BBD0(GlobalContext *globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, Vec3s* arg4, s16 arg5, u8 arg6);
-void func_8095B80C(GlobalContext *globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5);
-void func_8095B318(GlobalContext *globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5);
-void func_8094F9E8(GlobalContext *globalCtx, BossVa* this, s32 arg2, s16 arg3, f32 arg4, f32 arg5, u8 arg6, f32 arg7, u8 arg8);
+void func_8095B028(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5);
+void func_8095BBD0(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, Vec3s* arg4, s16 arg5,
+                   u8 arg6);
+void func_8095B80C(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5);
+void func_8095B318(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5);
+void func_8095B4A4(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16 arg3, s16 arg4, s16 arg5);
+void func_8094F9E8(GlobalContext* globalCtx, BossVa* this, s32 arg2, s16 arg3, f32 arg4, f32 arg5, u8 arg6, f32 arg7,
+                   u8 arg8);
 
 extern SkeletonHeader D_06015B18;
 extern SkeletonHeader D_06017498;
@@ -122,8 +122,7 @@ const ActorInit Boss_Va_InitVars = {
 };
 */
 
-static ColliderCylinderInit sCylinderInit =
-{
+static ColliderCylinderInit sCylinderInit = {
     { COLTYPE_UNK10, 0x11, 0x09, 0x39, 0x20, COLSHAPE_CYLINDER },
     { 0x00, { 0xFFCFFFEF, 0x03, 0x08 }, { 0x00000010, 0x00, 0x00 }, 0x01, 0x01, 0x01 },
     { 85, 120, 0, { 0, 0, 0 } },
@@ -136,80 +135,54 @@ static ColliderJntSphItemInit sJntSphItemsInit[1] = {
     },
 };
 
-static ColliderJntSphInit sJntSphInit =
-{
+static ColliderJntSphInit sJntSphInit = {
     { COLTYPE_UNK6, 0x00, 0x09, 0x00, 0x10, COLSHAPE_JNTSPH },
-    1, sJntSphItemsInit,
+    1,
+    sJntSphItemsInit,
 };
 
-static ColliderQuadInit sQuadInit =
-{
+static ColliderQuadInit sQuadInit = {
     { COLTYPE_METAL_SHIELD, 0x11, 0x09, 0x00, 0x00, COLSHAPE_QUAD },
     { 0x00, { 0x20000000, 0x03, 0x04 }, { 0x00000010, 0x00, 0x00 }, 0x81, 0x01, 0x00 },
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } },
 };
 
-Vec3f D_8095C044[] = {
-    {0.0f, 175.35000610351562f, 0.0f },
-    {0.0f, 175.35000610351562f, 0.0f },
-    {0.0f, 175.35000610351562f, 0.0f },
-    {120.0f, 103.42500305175781f, -67.0f },
-    {0.0f, 103.42500305175781f, 140.0f },
-    {-120.0f, 103.42500305175781f, -70.0f },
-    {-2.0f, 16.0f, 50.0f },
-    {48.0f, 16.0f, 15.0f },
-    {25.0f, 16.0f, -36.0f },
-    {-29.0f, 16.0f, -36.0f },
-    {-63.0f, 16.0f, 22.0f },
-    {0.0f, -10.0f, -64.0f },
-    {63.0f, -10.0f, -22.0f },
-    {35.0f, -10.0f, 46.0f },
-    {-36.0f, -10.0f, 46.0f },
-    {-49.0f, -10.0f, -17.0f }
-};
+Vec3f D_8095C044[] = { { 0.0f, 175.35000610351562f, 0.0f },
+                       { 0.0f, 175.35000610351562f, 0.0f },
+                       { 0.0f, 175.35000610351562f, 0.0f },
+                       { 120.0f, 103.42500305175781f, -67.0f },
+                       { 0.0f, 103.42500305175781f, 140.0f },
+                       { -120.0f, 103.42500305175781f, -70.0f },
+                       { -2.0f, 16.0f, 50.0f },
+                       { 48.0f, 16.0f, 15.0f },
+                       { 25.0f, 16.0f, -36.0f },
+                       { -29.0f, 16.0f, -36.0f },
+                       { -63.0f, 16.0f, 22.0f },
+                       { 0.0f, -10.0f, -64.0f },
+                       { 63.0f, -10.0f, -22.0f },
+                       { 35.0f, -10.0f, 46.0f },
+                       { -36.0f, -10.0f, 46.0f },
+                       { -49.0f, -10.0f, -17.0f } };
 
-Vec3s D_8095C17C[] = { 
-    {0x1FFE, 0x0000, 0x0000},
-    {0x1FFE, 0x5550, 0x0000}, 
-    {0x1FFE, 0xAAB0, 0x0000}, 
-    {0xD558, 0x5550, 0x0000}, 
-    {0xD558, 0x0000, 0x0000},    
-    {0xD558, 0xAAB0, 0x0000}, 
-    {0x2AA8, 0xFCCC, 0x0000}, 
-    {0x2AA8, 0x3330, 0x0000}, 
-    {0x2AA8, 0x6660, 0x0000},
-    {0x2AA8, 0x99A0, 0x0000},    
-    {0x2AA8, 0xCCD0, 0x0000}, 
-    {0x4C98, 0x81D0, 0x0000}, 
-    {0x4C98, 0x4F70, 0x0000}, 
-    {0x4C98, 0x1758, 0x0000}, 
-    {0x4C98, 0xE8A8, 0x0000},    
-    {0x4C98, 0xB648, 0x0000}
-};
+Vec3s D_8095C17C[] = { { 0x1FFE, 0x0000, 0x0000 }, { 0x1FFE, 0x5550, 0x0000 }, { 0x1FFE, 0xAAB0, 0x0000 },
+                       { 0xD558, 0x5550, 0x0000 }, { 0xD558, 0x0000, 0x0000 }, { 0xD558, 0xAAB0, 0x0000 },
+                       { 0x2AA8, 0xFCCC, 0x0000 }, { 0x2AA8, 0x3330, 0x0000 }, { 0x2AA8, 0x6660, 0x0000 },
+                       { 0x2AA8, 0x99A0, 0x0000 }, { 0x2AA8, 0xCCD0, 0x0000 }, { 0x4C98, 0x81D0, 0x0000 },
+                       { 0x4C98, 0x4F70, 0x0000 }, { 0x4C98, 0x1758, 0x0000 }, { 0x4C98, 0xE8A8, 0x0000 },
+                       { 0x4C98, 0xB648, 0x0000 } };
 
-Vec3f D_8095C1DC[] = {
-    {10.0f, 0.0f, 30.0f },
-    {260.0f, 0.0f, -470.0f },
-    {-240.0f, 0.0f, -470.0f }
-};
+Vec3f D_8095C1DC[] = { { 10.0f, 0.0f, 30.0f }, { 260.0f, 0.0f, -470.0f }, { -240.0f, 0.0f, -470.0f } };
 
-DamageTable D_8095C200[] = {
-    0x10, 0x02, 0x01, 0x02, 
-    0x10, 0x02, 0x02, 0x10, 
-    0x01, 0x02, 0x04, 0x02, 
-    0x02, 0x02, 0x02, 0x02, 
-    0x02, 0xE0, 0x60, 0xD0, 
-    0x00, 0x00, 0x01, 0x04, 
-    0x02, 0x02, 0x08, 0x04, 
-    0x00, 0x00, 0x04, 0x00
-};
+DamageTable D_8095C200[] = { 0x10, 0x02, 0x01, 0x02, 0x10, 0x02, 0x02, 0x10, 0x01, 0x02, 0x04,
+                             0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0xE0, 0x60, 0xD0, 0x00, 0x00,
+                             0x01, 0x04, 0x02, 0x02, 0x08, 0x04, 0x00, 0x00, 0x04, 0x00 };
 
 Vec3f D_8095C220 = { 0.0f, 0.0f, 0.0f };
-u8 D_8095C226[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, };
-u8 D_8095C22C = 0x00;
-u8 D_8095C230[] = {
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+u8 D_8095C226[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
+u8 D_8095C22C = 0x00;
+u8 D_8095C230[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 s16 D_8095C23C = 0x0000;
 Vec3f D_8095C240 = { 0.0f, 0.0f, 0.0f };
 Vec3f D_8095C24C = { 0.0f, 0.0f, 0.0f };
@@ -231,24 +204,20 @@ Color_RGBA8 D_8095C2F8 = { 0x00, 0x00, 0xFF, 0xFF };
 // Some data here
 
 UNK_PTR D_8095C300[] = {
-    0x060096F8, 0x0600A6F8, 0x0600B6F8, 0x0600C6F8, 
-    0x0600D6F8, 0x0600E6F8, 0x0600F6F8, 0x060106F8
+    0x060096F8, 0x0600A6F8, 0x0600B6F8, 0x0600C6F8, 0x0600D6F8, 0x0600E6F8, 0x0600F6F8, 0x060106F8
 };
 
 Vec3f D_8095C320 = { 0.0f, -1000.0f, 0.0f };
+Vec3f D_8095C32C = { 0.0f, -1000.0f, 0.0f };
+Vec3f D_8095C338 = { 0.0f, 0.0f, 0.0f };
+Vec3f D_8095C344 = { 0.0f, 0.0f, 0.0f };
 Vec3f D_8095C350 = { 0.0f, 0.0f, 0.0f };
 Vec3f D_8095C35C = { 0.0f, -1000.0f, 0.0f };
 Vec3f D_8095C368 = { 0.0f, 0.0f, 0.0f };
 Vec3f D_8095C374 = { 0.0f, -1000.0f, 0.0f };
-Gfx* D_8095C380[] = {
-    0x0601A3E8, 0x0601AEE8, 0x0601B9E8, 0x0601C4E8, 
-    0x0601CFE8, 0x0601DAE8, 0x0601E5E8, 0x0601F0E8
-};
+Gfx* D_8095C380[] = { 0x0601A3E8, 0x0601AEE8, 0x0601B9E8, 0x0601C4E8, 0x0601CFE8, 0x0601DAE8, 0x0601E5E8, 0x0601F0E8 };
 
-s16 D_8095C3A0[] = {
-    0x0344, 0x0384, 0x0344, 0x03F8, 
-    0x0320, 0x03F8, 0x0344, 0x0384
-};
+s16 D_8095C3A0[] = { 0x0344, 0x0384, 0x0344, 0x03F8, 0x0320, 0x03F8, 0x0344, 0x0384 };
 
 BossVaEffect D_8095DF50[400];
 
@@ -267,11 +236,11 @@ Vec3s D_80966938;
 u16 D_8096693E;
 s8 D_80966940;
 
-void func_8094F2C0(BossVa *this, BossVaActionFunc func) {
+void func_8094F2C0(BossVa* this, BossVaActionFunc func) {
     this->actionFunc = func;
 }
 
-void func_8094F2C8(BossVa *this) {
+void func_8094F2C8(BossVa* this) {
     BossVa* refActor = (BossVa*)this->actor.attachedA;
 
     Matrix_Translate(refActor->actor.posRot.pos.x, refActor->actor.posRot.pos.y, refActor->actor.posRot.pos.z, 0);
@@ -293,8 +262,14 @@ void func_8094F2C8(BossVa *this) {
         case 4:
         case 5:
             this->actor.shape.rot.y = D_8095C17C[this->actor.params].y;
-            this->actor.shape.rot.x = (D_8095C17C[this->actor.params].x + (s16)(Math_Coss(D_8095C17C[this->actor.params].y) * refActor->actor.shape.rot.x)) - (s16)(Math_Sins(D_8095C17C[this->actor.params].y) * refActor->actor.shape.rot.z);
-            this->actor.shape.rot.z = (s16)(Math_Coss(D_8095C17C[this->actor.params].y) * refActor->actor.shape.rot.z) + (D_8095C17C[this->actor.params].z + (s16)(Math_Sins(D_8095C17C[this->actor.params].y) * refActor->actor.shape.rot.x));
+            this->actor.shape.rot.x =
+                (D_8095C17C[this->actor.params].x +
+                 (s16)(Math_Coss(D_8095C17C[this->actor.params].y) * refActor->actor.shape.rot.x)) -
+                (s16)(Math_Sins(D_8095C17C[this->actor.params].y) * refActor->actor.shape.rot.z);
+            this->actor.shape.rot.z =
+                (s16)(Math_Coss(D_8095C17C[this->actor.params].y) * refActor->actor.shape.rot.z) +
+                (D_8095C17C[this->actor.params].z +
+                 (s16)(Math_Sins(D_8095C17C[this->actor.params].y) * refActor->actor.shape.rot.x));
             break;
     }
 
@@ -302,9 +277,7 @@ void func_8094F2C8(BossVa *this) {
     this->actor.shape.unk_08 = ((BossVa*)this->actor.attachedA)->actor.shape.unk_08;
 }
 
-void func_8095B4A4(GlobalContext *globalCtx, BossVaEffect* arg1, Vec3f* arg2, s16 arg3, s16 arg4, s16 arg5);
-
-void func_8094F50C(GlobalContext *globalCtx, Vec3f *arg1, s16 arg2, s16 arg3) {
+void func_8094F50C(GlobalContext* globalCtx, Vec3f* arg1, s16 arg2, s16 arg3) {
     s32 i;
     Vec3f sp50;
 
@@ -316,7 +289,7 @@ void func_8094F50C(GlobalContext *globalCtx, Vec3f *arg1, s16 arg2, s16 arg3) {
     }
 }
 
-void func_8094F60C(GlobalContext *globalCtx, BossVaEffect *arg1, s16 arg2, s16 arg3, s32 arg4) {
+void func_8094F60C(GlobalContext* globalCtx, BossVaEffect* arg1, s16 arg2, s16 arg3, s32 arg4) {
     s32 i;
     Vec3f sp60;
 
@@ -328,7 +301,7 @@ void func_8094F60C(GlobalContext *globalCtx, BossVaEffect *arg1, s16 arg2, s16 a
     }
 }
 
-void func_8094F734(GlobalContext *globalCtx, BossVaEffect *arg1, s16 arg2, s16 arg3) {
+void func_8094F734(GlobalContext* globalCtx, BossVaEffect* arg1, s16 arg2, s16 arg3) {
     s32 i;
     Vec3f sp58;
 
@@ -342,7 +315,8 @@ void func_8094F734(GlobalContext *globalCtx, BossVaEffect *arg1, s16 arg2, s16 a
     }
 }
 
-void func_8094F864(GlobalContext *globalCtx, BossVa *this, s32 arg2, s16 arg3, f32 arg4, f32 arg5, u8 arg6, f32 arg7, u8 arg8) {
+void func_8094F864(GlobalContext* globalCtx, BossVa* this, s32 arg2, s16 arg3, f32 arg4, f32 arg5, u8 arg6, f32 arg7,
+                   u8 arg8) {
     s32 i;
     s16 tmp;
     Vec3f sp6C;
@@ -356,7 +330,8 @@ void func_8094F864(GlobalContext *globalCtx, BossVa *this, s32 arg2, s16 arg3, f
     }
 }
 
-void func_8094F9E8(GlobalContext *globalCtx, BossVa *this, s32 arg2, s16 arg3, f32 arg4, f32 arg5, u8 arg6, f32 arg7, u8 arg8) {
+void func_8094F9E8(GlobalContext* globalCtx, BossVa* this, s32 arg2, s16 arg3, f32 arg4, f32 arg5, u8 arg6, f32 arg7,
+                   u8 arg8) {
     s16 tmp;
     s32 i;
     Vec3f sp6C;
@@ -375,7 +350,7 @@ void func_8094F9E8(GlobalContext *globalCtx, BossVa *this, s32 arg2, s16 arg3, f
     }
 }
 
-void func_8094FB6C(GlobalContext *globalCtx) {
+void func_8094FB6C(GlobalContext* globalCtx) {
     globalCtx->envCtx.unk_8C[0] = 0xA;
     globalCtx->envCtx.unk_8C[1] = 0xA;
     globalCtx->envCtx.unk_8C[2] = 0xA;
@@ -387,7 +362,7 @@ void func_8094FB6C(GlobalContext *globalCtx) {
     globalCtx->envCtx.unk_8C[8] = 0x46;
 }
 
-void func_8094FBB4(GlobalContext *globalCtx) {
+void func_8094FBB4(GlobalContext* globalCtx) {
     globalCtx->envCtx.unk_8C[6] = 0xDC;
     globalCtx->envCtx.unk_8C[7] = 0xDC;
     globalCtx->envCtx.unk_8C[8] = 0x96;
@@ -405,7 +380,18 @@ void func_8094FBB4(GlobalContext *globalCtx) {
     globalCtx->envCtx.unk_E2[3] = 0x64;
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_8094FC30.s")
+EnBoom* func_8094FC30(GlobalContext* globalCtx) {
+    Actor* refActor = globalCtx->actorCtx.actorList[ACTORTYPE_MISC].first;
+
+    while (refActor != NULL) {
+        if (refActor->id != ACTOR_EN_BOOM) {
+            refActor = refActor->next;
+            continue;
+        }
+        return (EnBoom*)refActor;
+    }
+    return NULL;
+}
 
 void func_8094FC70(BossVa* this, GlobalContext* globalCtx) {
     s32 i;
@@ -416,7 +402,8 @@ void func_8094FC70(BossVa* this, GlobalContext* globalCtx) {
 
     for (i = 7; i >= 0; i--) {
         sp84.x = Math_Rand_CenteredFloat(60.0f) + this->actor.posRot.pos.x;
-        sp84.y = Math_Rand_CenteredFloat(50.0f) + (this->actor.posRot.pos.y + (this->actor.shape.unk_08 * this->actor.scale.y));
+        sp84.y = Math_Rand_CenteredFloat(50.0f) +
+                 (this->actor.posRot.pos.y + (this->actor.shape.unk_08 * this->actor.scale.y));
         sp84.z = Math_Rand_CenteredFloat(60.0f) + this->actor.posRot.pos.z;
         sp78.y = Math_Rand_ZeroOne() + 1.0f;
         tmp = Math_Rand_S16Offset(0x50, 0x64);
@@ -464,7 +451,7 @@ void BossVa_Init(Actor* thisx, GlobalContext* globalCtx) {
         case 18:
             SkelAnime_InitSV(globalCtx, &this->skelAnime, &D_06018870, &D_06018150, NULL, NULL, 0);
             break;
-        
+
         default:
             this->actor.flags |= 0x1000000;
             SkelAnime_Init(globalCtx, &this->skelAnime, &D_06004E70, &D_06000024, NULL, NULL, 0);
@@ -481,14 +468,17 @@ void BossVa_Init(Actor* thisx, GlobalContext* globalCtx) {
 
     switch (this->actor.params) {
         case -1:
-            Actor_SpawnAttached(&globalCtx->actorCtx, thisx, globalCtx, ACTOR_BOSS_VA, 0.0f, 80.0f, 400.0f, 0, 0, 0, 0x13);
+            Actor_SpawnAttached(&globalCtx->actorCtx, thisx, globalCtx, ACTOR_BOSS_VA, 0.0f, 80.0f, 400.0f, 0, 0, 0,
+                                0x13);
             if (Flags_GetClear(globalCtx, globalCtx->roomCtx.curRoom.num)) {
                 tmp16 = ACTOR_EN_RU1;
                 if (gSaveContext.eventChkInf[3] & 0x80) {
                     tmp16 = ACTOR_DOOR_WARP1;
                 }
-                Actor_Spawn(&globalCtx->actorCtx, globalCtx, tmp16, this->actor.posRot.pos.x, this->actor.posRot.pos.y, this->actor.posRot.pos.z, 0, 0, 0, 0);
-                Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_ITEM_B_HEART, this->actor.posRot.pos.x + 160.0f, this->actor.posRot.pos.y, this->actor.posRot.pos.z, 0, 0, 0, 0);
+                Actor_Spawn(&globalCtx->actorCtx, globalCtx, tmp16, this->actor.posRot.pos.x, this->actor.posRot.pos.y,
+                            this->actor.posRot.pos.z, 0, 0, 0, 0);
+                Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_ITEM_B_HEART, this->actor.posRot.pos.x + 160.0f,
+                            this->actor.posRot.pos.y, this->actor.posRot.pos.z, 0, 0, 0, 0);
                 D_80966934 = 100;
                 Actor_Kill(thisx);
             } else {
@@ -516,14 +506,11 @@ void BossVa_Init(Actor* thisx, GlobalContext* globalCtx) {
                     this->unk_198 = 0x14;
 
                     for (i = 15; i > 5; i--) {
-                        Actor_SpawnAttached(&globalCtx->actorCtx, thisx, globalCtx, ACTOR_BOSS_VA, 
-                            D_8095C044[i].x + this->actor.posRot.pos.x, 
-                            D_8095C044[i].y + this->actor.posRot.pos.y, 
-                            D_8095C044[i].z + this->actor.posRot.pos.z, 
-                            D_8095C17C[i].x + this->actor.posRot.rot.x, 
-                            D_8095C17C[i].y + this->actor.posRot.rot.y, 
-                            D_8095C17C[i].z + this->actor.posRot.rot.z, 
-                            i);
+                        Actor_SpawnAttached(
+                            &globalCtx->actorCtx, thisx, globalCtx, ACTOR_BOSS_VA,
+                            D_8095C044[i].x + this->actor.posRot.pos.x, D_8095C044[i].y + this->actor.posRot.pos.y,
+                            D_8095C044[i].z + this->actor.posRot.pos.z, D_8095C17C[i].x + this->actor.posRot.rot.x,
+                            D_8095C17C[i].y + this->actor.posRot.rot.y, D_8095C17C[i].z + this->actor.posRot.rot.z, i);
                     }
 
                     sp5C = D_8095C220;
@@ -540,14 +527,11 @@ void BossVa_Init(Actor* thisx, GlobalContext* globalCtx) {
                 Collider_SetCylinder(globalCtx, &this->collider1, thisx, &sCylinderInit);
 
                 for (i = 5; i >= 0; i--) {
-                    Actor_SpawnAttached(&globalCtx->actorCtx, thisx, globalCtx, ACTOR_BOSS_VA, 
-                        D_8095C044[i].x + this->actor.posRot.pos.x, 
-                        D_8095C044[i].y + this->actor.posRot.pos.y, 
-                        D_8095C044[i].z + this->actor.posRot.pos.z, 
-                        D_8095C17C[i].x + this->actor.posRot.rot.x, 
-                        D_8095C17C[i].y + this->actor.posRot.rot.y, 
-                        D_8095C17C[i].z + this->actor.posRot.rot.z, 
-                        i);
+                    Actor_SpawnAttached(
+                        &globalCtx->actorCtx, thisx, globalCtx, ACTOR_BOSS_VA,
+                        D_8095C044[i].x + this->actor.posRot.pos.x, D_8095C044[i].y + this->actor.posRot.pos.y,
+                        D_8095C044[i].z + this->actor.posRot.pos.z, D_8095C17C[i].x + this->actor.posRot.rot.x,
+                        D_8095C17C[i].y + this->actor.posRot.rot.y, D_8095C17C[i].z + this->actor.posRot.rot.z, i);
                 }
 
                 Lib_MemSet((u8*)D_8095DF50, 0x8980, 0);
@@ -615,7 +599,7 @@ void BossVa_Init(Actor* thisx, GlobalContext* globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/BossVa_Init.s")
 #endif
 
-void BossVa_Destroy(Actor *thisx, GlobalContext *globalCtx) {
+void BossVa_Destroy(Actor* thisx, GlobalContext* globalCtx) {
     BossVa* this = THIS;
 
     SkelAnime_Free(&this->skelAnime, globalCtx);
@@ -623,7 +607,7 @@ void BossVa_Destroy(Actor *thisx, GlobalContext *globalCtx) {
     Collider_DestroyCylinder(globalCtx, &this->collider1);
 }
 
-void func_809506F0(BossVa *this) {
+void func_809506F0(BossVa* this) {
     f32 frames = SkelAnime_GetFrameCount(&D_06005184.genericHeader);
 
     SkelAnime_ChangeAnim(&this->skelAnime, &D_06005184, 1.0f, frames, frames, 2, 0.0f);
@@ -635,7 +619,7 @@ void func_809506F0(BossVa *this) {
 #ifdef NON_MATCHING
 // stack var 0x44 missing
 // something weird with the sp5C loads too for regalloc
-void func_80950780(BossVa *this, GlobalContext *globalCtx) {
+void func_80950780(BossVa* this, GlobalContext* globalCtx) {
     s32 pad;
     Player* player = PLAYER; // sp68
     Vec3f sp5C;
@@ -735,14 +719,11 @@ void func_80950780(BossVa *this, GlobalContext *globalCtx) {
             D_80966928 = sp5C;
 
             for (i = 15; i > 5; i--) {
-                Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_BOSS_VA, 
-                    D_8095C044[i].x + this->actor.posRot.pos.x, 
-                    D_8095C044[i].y + this->actor.posRot.pos.y, 
-                    D_8095C044[i].z + this->actor.posRot.pos.z, 
-                    D_8095C17C[i].x + this->actor.posRot.rot.x, 
-                    D_8095C17C[i].y + this->actor.posRot.rot.y, 
-                    D_8095C17C[i].z + this->actor.posRot.rot.z, 
-                    i);
+                Actor_SpawnAttached(
+                    &globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_BOSS_VA,
+                    D_8095C044[i].x + this->actor.posRot.pos.x, D_8095C044[i].y + this->actor.posRot.pos.y,
+                    D_8095C044[i].z + this->actor.posRot.pos.z, D_8095C17C[i].x + this->actor.posRot.rot.x,
+                    D_8095C17C[i].y + this->actor.posRot.rot.y, D_8095C17C[i].z + this->actor.posRot.rot.z, i);
             }
 
             this->unk_198 = 0x5A;
@@ -833,21 +814,21 @@ void func_80950780(BossVa *this, GlobalContext *globalCtx) {
 
         case 9:
             for (i = 10; i > 0; i--) {
-                if (D_8095C230[i-1]) {
-                    if (D_8095C230[i-1] == 1) {
+                if (D_8095C230[i - 1]) {
+                    if (D_8095C230[i - 1] == 1) {
                         Audio_PlayActorSound2(&this->actor, NA_SE_EN_BALINADE_STICK);
                         func_8094FB6C(globalCtx);
                         if (this->unk_194 == 0) {
                             this->unk_194 = 2;
                         }
                     } else {
-                        if (D_8095C230[i-1] == 2) {
+                        if (D_8095C230[i - 1] == 2) {
                             func_8094F864(globalCtx, this, 6, 0x8C, 50.0f, 30.0f, 2, i, 1);
                         }
                     }
 
-                    if (D_8095C230[i-1] < 3) {
-                        D_8095C230[i-1]++;
+                    if (D_8095C230[i - 1] < 3) {
+                        D_8095C230[i - 1]++;
                     }
                 }
             }
@@ -876,7 +857,8 @@ void func_80950780(BossVa *this, GlobalContext *globalCtx) {
                 D_80966908.z = -200.0f;
 
                 if (!(gSaveContext.eventChkInf[7] & 0x40)) {
-                    TitleCard_InitBossName(globalCtx, &globalCtx->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(&D_06001230), 0xA0, 0xB4, 0x80, 0x28);
+                    TitleCard_InitBossName(globalCtx, &globalCtx->actorCtx.titleCtx, SEGMENTED_TO_VIRTUAL(&D_06001230),
+                                           0xA0, 0xB4, 0x80, 0x28);
                 }
 
                 if (Math_Rand_ZeroOne() < 0.1f) {
@@ -954,7 +936,7 @@ void func_80950780(BossVa *this, GlobalContext *globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_80950780.s")
 #endif
 
-void func_809517A0(BossVa *this) {
+void func_809517A0(BossVa* this) {
     f32 frames = SkelAnime_GetFrameCount(&D_06005184.genericHeader);
 
     SkelAnime_ChangeAnim(&this->skelAnime, &D_06005184, 1.0f, frames, frames, 2, 0.0f);
@@ -965,7 +947,7 @@ void func_809517A0(BossVa *this) {
     func_8094F2C0(this, func_80951844);
 }
 
-void func_80951844(BossVa *this, GlobalContext *globalCtx) {
+void func_80951844(BossVa* this, GlobalContext* globalCtx) {
     Player* player = PLAYER;
 
     this->unk_1B0 += 0xCE4;
@@ -1013,19 +995,15 @@ void func_80951844(BossVa *this, GlobalContext *globalCtx) {
     func_800F436C(&this->actor.projectedPos, 0x313C, 1.0f);
 }
 
-void func_80951AD8(BossVa *this, GlobalContext *globalCtx) {
+void func_80951AD8(BossVa* this, GlobalContext* globalCtx) {
     s32 i;
 
     D_809668D1++;
     for (i = 10; i > 5; i--) {
-        Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_BOSS_VA, 
-            D_8095C044[i].x + this->actor.posRot.pos.x, 
-            D_8095C044[i].y + this->actor.posRot.pos.y, 
-            D_8095C044[i].z + this->actor.posRot.pos.z, 
-            D_8095C17C[i].x + this->actor.posRot.rot.x, 
-            D_8095C17C[i].y + this->actor.posRot.rot.y, 
-            D_8095C17C[i].z + this->actor.posRot.rot.z, 
-            i);
+        Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_BOSS_VA,
+                            D_8095C044[i].x + this->actor.posRot.pos.x, D_8095C044[i].y + this->actor.posRot.pos.y,
+                            D_8095C044[i].z + this->actor.posRot.pos.z, D_8095C17C[i].x + this->actor.posRot.rot.x,
+                            D_8095C17C[i].y + this->actor.posRot.rot.y, D_8095C17C[i].z + this->actor.posRot.rot.z, i);
     }
 
     this->unk_196 = 0;
@@ -1033,8 +1011,9 @@ void func_80951AD8(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_80951C04);
 }
 
-void func_80951C04(BossVa *this, GlobalContext *globalCtx) {
-    Player* player = PLAYER; //sp54
+// Warning on 196 comparison due to data type
+void func_80951C04(BossVa* this, GlobalContext* globalCtx) {
+    Player* player = PLAYER; // sp54
     Vec3f sp48;
 
     if (this->actor.dmgEffectTimer == 0) {
@@ -1129,14 +1108,14 @@ void func_80951C04(BossVa *this, GlobalContext *globalCtx) {
     func_800F436C(&this->actor.projectedPos, 0x313C, (this->unk_1F6.y * 0.00025f) + 1.0f);
 }
 
-void func_80952100(BossVa *this) {
+void func_80952100(BossVa* this) {
     this->collider1.body.bumper.flags = 0x10;
     this->actor.speedXZ = 0.0f;
     D_80966936 = 0;
     func_8094F2C0(this, func_8095213C);
 }
 
-void func_8095213C(BossVa *this, GlobalContext *globalCtx) {
+void func_8095213C(BossVa* this, GlobalContext* globalCtx) {
     s32 pad;
     Player* player = PLAYER;
     s32 i;
@@ -1210,14 +1189,11 @@ void func_8095213C(BossVa *this, GlobalContext *globalCtx) {
 
     if ((this->actor.shape.unk_08 >= -500.0f) && (D_809668D1 == 9)) {
         for (i = 15; i > 10; i--) {
-            Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_BOSS_VA, 
-                D_8095C044[i].x + this->actor.posRot.pos.x, 
-                D_8095C044[i].y + this->actor.posRot.pos.y, 
-                D_8095C044[i].z + this->actor.posRot.pos.z, 
-                D_8095C17C[i].x + this->actor.posRot.rot.x, 
-                D_8095C17C[i].y + this->actor.posRot.rot.y, 
-                D_8095C17C[i].z + this->actor.posRot.rot.z, 
-                i);
+            Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_BOSS_VA,
+                                D_8095C044[i].x + this->actor.posRot.pos.x, D_8095C044[i].y + this->actor.posRot.pos.y,
+                                D_8095C044[i].z + this->actor.posRot.pos.z, D_8095C17C[i].x + this->actor.posRot.rot.x,
+                                D_8095C17C[i].y + this->actor.posRot.rot.y, D_8095C17C[i].z + this->actor.posRot.rot.z,
+                                i);
         }
         D_809668D1++;
     }
@@ -1245,7 +1221,7 @@ void func_8095213C(BossVa *this, GlobalContext *globalCtx) {
     func_800F436C(&this->actor.projectedPos, 0x313C, (this->unk_1F6.y * 0.00025f) + 1.0f);
 }
 
-void func_809527A4(BossVa *this, GlobalContext *globalCtx) {
+void func_809527A4(BossVa* this, GlobalContext* globalCtx) {
     this->unk_1AC = 0;
     this->actor.flags |= 1;
     this->unk_1F6.y = this->unk_1AC;
@@ -1261,7 +1237,7 @@ void func_809527A4(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_80952858);
 }
 
-void func_80952858(BossVa *this, GlobalContext *globalCtx) {
+void func_80952858(BossVa* this, GlobalContext* globalCtx) {
     Player* player = PLAYER; // sp54
     f32 tmpf1;
     EnBoom* refActor;
@@ -1392,11 +1368,13 @@ void func_80952858(BossVa *this, GlobalContext *globalCtx) {
 
     if (D_809668D1 < 0x10) {
         if (Math_Vec3f_DistXZ(&this->actor.posRot.pos, &this->actor.initPosRot.pos) >= 400.0f) {
-            Math_SmoothScaleMaxMinS(&this->actor.posRot.rot.y, Math_Vec3f_Yaw(&this->actor.posRot.pos, &this->actor.initPosRot.pos), 1, 0x5DC, 0);
+            Math_SmoothScaleMaxMinS(&this->actor.posRot.rot.y,
+                                    Math_Vec3f_Yaw(&this->actor.posRot.pos, &this->actor.initPosRot.pos), 1, 0x5DC, 0);
         } else if (player->invincibilityTimer != 0) {
             Math_SmoothScaleMaxMinS(&this->actor.posRot.rot.y, this->actor.yawTowardsLink + 0x8000, 1, 0x12C, 0);
         } else if ((globalCtx->gameplayFrames & 0x80) == 0) {
-            Math_SmoothScaleMaxMinS(&this->actor.posRot.rot.y, this->actor.yawTowardsLink, 1, (s16)((D_809668D1 - 0xE) * 100.0f) + 0x64, 0);
+            Math_SmoothScaleMaxMinS(&this->actor.posRot.rot.y, this->actor.yawTowardsLink, 1,
+                                    (s16)((D_809668D1 - 0xE) * 100.0f) + 0x64, 0);
         }
     }
 
@@ -1428,7 +1406,7 @@ void func_80952858(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_8095335C(BossVa *this, GlobalContext *globalCtx) {
+void func_8095335C(BossVa* this, GlobalContext* globalCtx) {
     func_800F436C(&this->actor.projectedPos, 0x313C, 1.0f);
     this->actor.flags &= ~5;
     Audio_SetBGM(0x100100FF);
@@ -1440,7 +1418,9 @@ void func_8095335C(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_809533F4);
 }
 
-void func_809533F4(BossVa *this, GlobalContext *globalCtx) {
+#ifdef NON_MATCHING
+// sp68 struct copy regalloc
+void func_809533F4(BossVa* this, GlobalContext* globalCtx) {
     s32 sp7C;
     s32 i;
     Camera* camera = Gameplay_GetCamera(globalCtx, 0);
@@ -1472,7 +1452,6 @@ void func_809533F4(BossVa *this, GlobalContext *globalCtx) {
             sp68 = D_8095C220;
             D_80966918 = sp68;
             D_80966928 = sp68;
-            
 
             this->unk_1AC = Math_Vec3f_Yaw(&D_809668D8, &D_80966908) - 0x100;
             this->unk_1B0 = 0xF;
@@ -1570,23 +1549,18 @@ void func_809533F4(BossVa *this, GlobalContext *globalCtx) {
                 func_8002DF54(globalCtx, &this->actor, 7);
                 D_809668D2++;
 
-                Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_ITEM_B_HEART, 
-                    this->actor.posRot.pos.x, 
-                    this->actor.posRot.pos.y, 
-                    this->actor.posRot.pos.z, 
-                    0, 0, 0, 0);
+                Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_ITEM_B_HEART, this->actor.posRot.pos.x,
+                            this->actor.posRot.pos.y, this->actor.posRot.pos.z, 0, 0, 0, 0);
 
                 for (i = 2, sp7C = 2; i > 0; i--) {
-                    if (Math_Vec3f_DistXYZ(&D_8095C1DC[i], &player->actor.posRot.pos) < Math_Vec3f_DistXYZ(&D_8095C1DC[i - 1], &player->actor.posRot.pos)) {
+                    if (Math_Vec3f_DistXYZ(&D_8095C1DC[i], &player->actor.posRot.pos) <
+                        Math_Vec3f_DistXYZ(&D_8095C1DC[i - 1], &player->actor.posRot.pos)) {
                         sp7C = i - 1;
                     }
                 }
 
-                Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_EN_RU1, 
-                    D_8095C1DC[sp7C].x, 
-                    D_8095C1DC[sp7C].y, 
-                    D_8095C1DC[sp7C].z, 
-                    0, 0, 0, 0);
+                Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_EN_RU1, D_8095C1DC[sp7C].x, D_8095C1DC[sp7C].y,
+                            D_8095C1DC[sp7C].z, 0, 0, 0, 0);
             }
 
         case 10:
@@ -1617,18 +1591,22 @@ void func_809533F4(BossVa *this, GlobalContext *globalCtx) {
     Math_SmoothScaleMaxMinF(&this->actor.speedXZ, 0.0f, 1.0f, 0.5f, 0.0f);
     this->actor.shape.rot.y += this->unk_1F6.y;
     this->unk_1AC += this->unk_1F6.x;
-    
+
     this->unk_1A0 = (Math_Coss(this->unk_1AC) * 0.1f) + 1.0f;
     this->unk_1A4 = (Math_Sins(this->unk_1AC) * 0.05f) + 1.0f;
 }
+#else
+#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_809533F4.s")
+#endif
 
-void func_80953F4C(BossVa *this, GlobalContext *globalCtx) {
-    SkelAnime_ChangeAnim(&this->skelAnime, &D_060166A8, 0.0f, 0.0f, SkelAnime_GetFrameCount(&D_060166A8.genericHeader), 1, 0.0f);
+void func_80953F4C(BossVa* this, GlobalContext* globalCtx) {
+    SkelAnime_ChangeAnim(&this->skelAnime, &D_060166A8, 0.0f, 0.0f, SkelAnime_GetFrameCount(&D_060166A8.genericHeader),
+                         1, 0.0f);
     this->unk_198 = 0;
     func_8094F2C0(this, func_80953FC4);
 }
 
-void func_80953FC4(BossVa *this, GlobalContext *globalCtx) {
+void func_80953FC4(BossVa* this, GlobalContext* globalCtx) {
     func_8094F2C8(this);
     if (D_809668D2 == 0xD) {
         func_809540E4(this, globalCtx);
@@ -1646,25 +1624,29 @@ void func_80953FC4(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_809540E4(BossVa *this, GlobalContext *globalCtx) {
-    SkelAnime_ChangeAnim(&this->skelAnime, &D_060166A8, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_060166A8.genericHeader), 0, 0.0f);
+void func_809540E4(BossVa* this, GlobalContext* globalCtx) {
+    SkelAnime_ChangeAnim(&this->skelAnime, &D_060166A8, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_060166A8.genericHeader),
+                         0, 0.0f);
     this->unk_198 = (this->actor.params * 0xA);
     func_8094F2C0(this, func_80954168);
 }
 
-void func_80954168(BossVa *this, GlobalContext *globalCtx) {
+void func_80954168(BossVa* this, GlobalContext* globalCtx) {
     this->unk_198++;
     if ((D_809668D0 % 128) != 0) {
         func_8003426C(&this->actor, 0, 0xFF, 0, 0xC);
         if (Math_Rand_ZeroOne() > 0.5f) {
-            SkelAnime_ChangeAnim(&this->skelAnime, &D_060162AC, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_060162AC.genericHeader), 2, 0.0f);
+            SkelAnime_ChangeAnim(&this->skelAnime, &D_060162AC, 1.0f, 0.0f,
+                                 SkelAnime_GetFrameCount(&D_060162AC.genericHeader), 2, 0.0f);
         } else {
-            SkelAnime_ChangeAnim(&this->skelAnime, &D_060164B0, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_060164B0.genericHeader), 2, 0.0f);
+            SkelAnime_ChangeAnim(&this->skelAnime, &D_060164B0, 1.0f, 0.0f,
+                                 SkelAnime_GetFrameCount(&D_060164B0.genericHeader), 2, 0.0f);
         }
     }
 
     if (SkelAnime_FrameUpdateMatrix(&this->skelAnime) != 0) {
-        SkelAnime_ChangeAnim(&this->skelAnime, &D_060166A8, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_060166A8.genericHeader), 0, 0.0f);
+        SkelAnime_ChangeAnim(&this->skelAnime, &D_060166A8, 1.0f, 0.0f,
+                             SkelAnime_GetFrameCount(&D_060166A8.genericHeader), 0, 0.0f);
     }
 
     func_8094F2C8(this);
@@ -1685,12 +1667,13 @@ void func_80954168(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_8095438C(BossVa *this, GlobalContext *globalCtx) {
+void func_8095438C(BossVa* this, GlobalContext* globalCtx) {
     s32 params = this->actor.params + 16;
 
     D_809668D0++;
     D_809668D1++;
-    Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_BOSS_VA, this->unk_1B4.x, this->unk_1B4.y + 20.0f, this->unk_1B4.z, 0, this->actor.shape.rot.y, 0, params);
+    Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_BOSS_VA, this->unk_1B4.x, this->unk_1B4.y + 20.0f,
+                this->unk_1B4.z, 0, this->actor.shape.rot.y, 0, params);
     func_8005AA1C(&globalCtx->cameras[0], 2, 0xB, 8);
     this->unk_195 = 0;
     this->unk_19C = 0;
@@ -1699,7 +1682,7 @@ void func_8095438C(BossVa *this, GlobalContext *globalCtx) {
 
 #ifdef NON_MATCHING
 // Stack, something optimised away at 0x38
-void func_80954454(BossVa *this, GlobalContext *globalCtx) {
+void func_80954454(BossVa* this, GlobalContext* globalCtx) {
     BossVa* refActor = (BossVa*)this->actor.attachedA;
     f32 frames;
 
@@ -1734,7 +1717,8 @@ void func_80954454(BossVa *this, GlobalContext *globalCtx) {
 
     Math_SmoothScaleMaxMinS(&this->unk_1F6.x, refActor->unk_1F6.y * -3, 1, 0x4B0, 0);
     if (SkelAnime_FrameUpdateMatrix(&this->skelAnime) != 0) {
-        SkelAnime_ChangeAnim(&this->skelAnime, &D_060177F4, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_060177F4.genericHeader), 1, 0.0f);
+        SkelAnime_ChangeAnim(&this->skelAnime, &D_060177F4, 1.0f, 0.0f,
+                             SkelAnime_GetFrameCount(&D_060177F4.genericHeader), 1, 0.0f);
         this->actor.flags &= ~1;
     }
 
@@ -1761,7 +1745,8 @@ void func_80954454(BossVa *this, GlobalContext *globalCtx) {
         case 22:
             if (this->unk_195 == 0) {
                 if ((globalCtx->gameplayFrames % 2) != 0) {
-                    func_8094F9E8(globalCtx, this, 1, (s16)Math_Rand_CenteredFloat(5.0f) + 6, 7.0f, 5.0f, 2, (this->unk_19C >> 3) + 1, 1);
+                    func_8094F9E8(globalCtx, this, 1, (s16)Math_Rand_CenteredFloat(5.0f) + 6, 7.0f, 5.0f, 2,
+                                  (this->unk_19C >> 3) + 1, 1);
                 }
 
                 this->unk_19C++;
@@ -1788,13 +1773,14 @@ void func_80954454(BossVa *this, GlobalContext *globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_80954454.s")
 #endif
 
-void func_80954924(BossVa *this, GlobalContext *globalCtx) {
-    SkelAnime_ChangeAnim(&this->skelAnime, &D_06018150, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_06018150.genericHeader), 2, 0.0f);
+void func_80954924(BossVa* this, GlobalContext* globalCtx) {
+    SkelAnime_ChangeAnim(&this->skelAnime, &D_06018150, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_06018150.genericHeader),
+                         2, 0.0f);
     this->actor.flags &= ~1;
     func_8094F2C0(this, func_809549A8);
 }
 
-void func_809549A8(BossVa *this, GlobalContext *globalCtx) {
+void func_809549A8(BossVa* this, GlobalContext* globalCtx) {
     if ((SkelAnime_FrameUpdateMatrix(&this->skelAnime) != 0) && (Math_Rand_ZeroOne() < 0.3f)) {
         this->skelAnime.animCurrentFrame -= Math_Rand_ZeroOne() * 3.0f;
     }
@@ -1804,7 +1790,7 @@ void func_809549A8(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_80954A3C(BossVa *this, GlobalContext *globalCtx) {
+void func_80954A3C(BossVa* this, GlobalContext* globalCtx) {
     f32 frames = SkelAnime_GetFrameCount(&D_06018D18.genericHeader);
 
     SkelAnime_ChangeAnim(&this->skelAnime, &D_06018D18, 1.0f, frames - 1.0f, frames, 1, -6.0f);
@@ -1812,7 +1798,7 @@ void func_80954A3C(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_80954AD0);
 }
 
-void func_80954AD0(BossVa *this, GlobalContext *globalCtx) {
+void func_80954AD0(BossVa* this, GlobalContext* globalCtx) {
     func_8094F2C8(this);
 
     switch (D_809668D2) {
@@ -1831,7 +1817,7 @@ void func_80954AD0(BossVa *this, GlobalContext *globalCtx) {
     Math_SmoothScaleMaxMinS(&this->unk_1F0, this->skelAnime.limbDrawTbl[7].z, 1, 0x2EE, 0);
 }
 
-void func_80954B8C(BossVa *this, GlobalContext *globalCtx) {
+void func_80954B8C(BossVa* this, GlobalContext* globalCtx) {
     f32 frames = SkelAnime_GetFrameCount(&D_06018D18.genericHeader);
 
     SkelAnime_ChangeAnim(&this->skelAnime, &D_06018D18, 1.0f, frames - 1.0f, frames, 1, -6.0f);
@@ -1839,23 +1825,26 @@ void func_80954B8C(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_80954C20);
 }
 
-// ACTORTYPE_MISC
-EnBoom* func_8094FC30(GlobalContext* globalCtx);
-
 #ifdef NON_MATCHING
 // Stack, refActor stuff at the top is screwy and the cause I think
 // sp88 < sp90 line gives a type warning, but can't figure out how to fix
-void func_80954C20(BossVa *this, GlobalContext *globalCtx) {
-    Player* player = PLAYER;
+void func_80954C20(BossVa* this, GlobalContext* globalCtx) {
+    Player* player = PLAYER; // spA4
+    EnBoom* refActor;        // spA0
+    Actor* movingActor;      // sp9C
+    s16 sp9A_pad;
     s16 sp98;
     s16 sp96;
     s16 sp94;
+    s16 sp92_pad;
     s16 sp90 = 0x1F4;
     s16 sp8E;
+    s16 tmp17;
     u32 sp88;
     Vec3f sp7C;
+    s32 sp78_pad;
     f32 sp74;
-    u8 sp70;
+    s32 i; // sp70
     s16 sp6E;
     s16 sp6C;
     f32 sp68;
@@ -1868,31 +1857,34 @@ void func_80954C20(BossVa *this, GlobalContext *globalCtx) {
     s16 sp54;
     f32 sp50;
     Vec3f sp44;
+    // 0x10 bytes added here, stuff below should be done by compiler
+    s32 sp40_pad;
+    Collider* collider;            // sp3C
+    CollisionCheckContext* colCtx; // sp40
 
-    EnBoom* refActor = func_8094FC30(globalCtx);
-    Actor* refActor2;
-    s16 tmp17;
-    s32 i;
+    refActor = func_8094FC30(globalCtx);
 
-    if ((refActor == NULL) || (refActor2 = refActor->moveTo, refActor2 == NULL) || (refActor2 == &player->actor)) {
+    if ((refActor == NULL) || (refActor->moveTo == NULL) || (refActor->moveTo == &player->actor)) {
         sp7C = player->actor.posRot.pos;
         sp7C.y += 10.0f;
         sp8E = 0x3E80;
     } else {
+
         sp74 = R_UPDATE_RATE * 0.5f;
         sp8E = 0x4650;
 
+        movingActor = refActor->moveTo;
         sp7C = refActor->actor.posRot.pos;
         sp6C = refActor->actor.posRot.rot.y;
         sp56 = refActor->actor.posRot.rot.x;
 
         for (i = refActor->returnTimer; i >= 3; i--) {
-            sp6E = Math_Vec3f_Yaw(&sp7C, &refActor2->posRot2.pos);
+            sp6E = Math_Vec3f_Yaw(&sp7C, &movingActor->posRot2.pos);
             sp5A = sp6C - sp6E;
-            sp58 = Math_Vec3f_Pitch(&sp7C, &refActor2->posRot2.pos);
+            sp58 = Math_Vec3f_Pitch(&sp7C, &movingActor->posRot2.pos);
             sp54 = sp56 - sp58;
 
-            sp50 = (200.0f - Math_Vec3f_DistXYZ(&sp7C, &refActor2->posRot2.pos)) * 0.005f;
+            sp50 = (200.0f - Math_Vec3f_DistXYZ(&sp7C, &movingActor->posRot2.pos)) * 0.005f;
             if (sp50 < 0.12f) {
                 sp50 = 0.12f;
             }
@@ -1940,10 +1932,10 @@ void func_80954C20(BossVa *this, GlobalContext *globalCtx) {
     tmp17 = sp98 - this->actor.shape.rot.y;
 
     if (((sp8E >= ABS(tmp17)) || (this->unk_195 != 0)) &&
-       (!(D_809668D0 & 0x80) && !(player->stateFlags1 & 0x4000000))) {
+        (!(D_809668D0 & 0x80) && !(player->stateFlags1 & 0x4000000))) {
 
         if (this->unk_195 == 0) {
-            
+
             sp94 = sp98 - this->actor.shape.rot.y;
 
             if (ABS(sp94) >= 0x1771) {
@@ -1958,7 +1950,7 @@ void func_80954C20(BossVa *this, GlobalContext *globalCtx) {
             sp88 = ABS(tmp17);
 
             sp94 = sp98 - sp94;
-            
+
             if (ABS(sp94) >= 0x1771) {
                 if (sp94 > 0) {
                     sp94 = 0x1770;
@@ -1966,21 +1958,20 @@ void func_80954C20(BossVa *this, GlobalContext *globalCtx) {
                     sp94 = -0x1770;
                 }
             }
-            
+
             tmp17 = Math_SmoothScaleMaxMinS(&this->unk_1EC, sp94, 1, 0x6D6, 0);
             sp88 += ABS(tmp17);
 
-            tmp17 = Math_SmoothScaleMaxMinS(&this->unk_1F2, Math_Vec3f_Yaw(&this->unk_1CC, &sp7C) - 0x4000, 1, 0x9C4, 0);
+            tmp17 =
+                Math_SmoothScaleMaxMinS(&this->unk_1F2, Math_Vec3f_Yaw(&this->unk_1CC, &sp7C) - 0x4000, 1, 0x9C4, 0);
             sp88 += ABS(tmp17);
 
-            sp96 = this->actor.shape.rot.x + 
-                   this->skelAnime.limbDrawTbl[1].z +
-                   this->skelAnime.limbDrawTbl[2].z + 
-                   this->skelAnime.limbDrawTbl[3].z + 
-                   this->skelAnime.limbDrawTbl[4].z + 
+            sp96 = this->actor.shape.rot.x + this->skelAnime.limbDrawTbl[1].z + this->skelAnime.limbDrawTbl[2].z +
+                   this->skelAnime.limbDrawTbl[3].z + this->skelAnime.limbDrawTbl[4].z +
                    this->skelAnime.limbDrawTbl[5].z;
-            
-            tmp17 = Math_SmoothScaleMaxMinS(&this->unk_1EA, Math_Vec3f_Pitch(&sp7C, &this->unk_1C0) - sp96, 1, 0xFA0, 0);
+
+            tmp17 =
+                Math_SmoothScaleMaxMinS(&this->unk_1EA, Math_Vec3f_Pitch(&sp7C, &this->unk_1C0) - sp96, 1, 0xFA0, 0);
             sp88 += ABS(tmp17);
 
             tmp17 = Math_SmoothScaleMaxMinS(&this->unk_1F0, -Math_Vec3f_Pitch(&this->unk_1CC, &sp7C), 1, 0xFA0, 0);
@@ -2034,8 +2025,10 @@ void func_80954C20(BossVa *this, GlobalContext *globalCtx) {
             func_8094F864(globalCtx, this, 2, 0x6E, 15.0f, 15.0f, 3, 5.0f, 1);
             func_8094F864(globalCtx, this, 2, 0x6E, 15.0f, 15.0f, 3, 6.0f, 1);
             func_8094F864(globalCtx, this, 2, 0x6E, 15.0f, 15.0f, 3, 7.0f, 1);
-            CollisionCheck_SetAT(globalCtx, &globalCtx->colChkCtx, &this->collider3.base);
-            CollisionCheck_SetAC(globalCtx, &globalCtx->colChkCtx, &this->collider3.base);
+            colCtx = &globalCtx->colChkCtx;
+            collider = &this->collider3.base;
+            CollisionCheck_SetAT(globalCtx, colCtx, collider);
+            CollisionCheck_SetAC(globalCtx, colCtx, collider);
         } else {
             func_8094F864(globalCtx, this, 2, 0x32, 15.0f, 0.0f, 5, (this->unk_19C >> 3) + 1, 1);
             if (this->unk_19C == 0x1E) {
@@ -2058,11 +2051,13 @@ void func_80954C20(BossVa *this, GlobalContext *globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_80954C20.s")
 #endif
 
-void func_80955658(BossVa *this, GlobalContext *globalCtx) {
+void func_80955658(BossVa* this, GlobalContext* globalCtx) {
     if (Math_Rand_ZeroOne() > 0.5f) {
-        SkelAnime_ChangeAnim(&this->skelAnime, &D_06018A68, 0.5f, 0.0f, SkelAnime_GetFrameCount(&D_06018A68.genericHeader), 3, 4.0f);
+        SkelAnime_ChangeAnim(&this->skelAnime, &D_06018A68, 0.5f, 0.0f,
+                             SkelAnime_GetFrameCount(&D_06018A68.genericHeader), 3, 4.0f);
     } else {
-        SkelAnime_ChangeAnim(&this->skelAnime, &D_06018B90, 0.5f, 0.0f, SkelAnime_GetFrameCount(&D_06018B90.genericHeader), 3, 4.0f);
+        SkelAnime_ChangeAnim(&this->skelAnime, &D_06018B90, 0.5f, 0.0f,
+                             SkelAnime_GetFrameCount(&D_06018B90.genericHeader), 3, 4.0f);
     }
 
     func_8003426C(&this->actor, 0, 0xFF, 0, 0xC);
@@ -2070,7 +2065,7 @@ void func_80955658(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_8095575C);
 }
 
-void func_8095575C(BossVa *this, GlobalContext *globalCtx) {
+void func_8095575C(BossVa* this, GlobalContext* globalCtx) {
     func_8094F2C8(this);
     Math_SmoothScaleMaxMinS(&this->unk_1E6, 0, 1, 0xFA0, 0);
     Math_SmoothScaleMaxMinS(&this->unk_1E4, 0, 1, 0xFA0, 0);
@@ -2087,17 +2082,18 @@ void func_8095575C(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_8095586C(BossVa *this, GlobalContext *globalCtx) {
+void func_8095586C(BossVa* this, GlobalContext* globalCtx) {
     f32 frames = SkelAnime_GetFrameCount(&D_06018D18.genericHeader);
 
-    SkelAnime_ChangeAnim(&this->skelAnime, &D_06018D18, Math_Rand_ZeroOne() + 0.25f, Math_Rand_ZeroOne() * 3.0f, frames, 1, -6.0f);
+    SkelAnime_ChangeAnim(&this->skelAnime, &D_06018D18, Math_Rand_ZeroOne() + 0.25f, Math_Rand_ZeroOne() * 3.0f, frames,
+                         1, -6.0f);
     this->unk_195 = 0;
     this->unk_19C = (this->actor.params * -6) + 0x12;
     this->unk_1B0 = 0;
     func_8094F2C0(this, func_80955940);
 }
 
-void func_80955940(BossVa *this, GlobalContext *globalCtx) {
+void func_80955940(BossVa* this, GlobalContext* globalCtx) {
     f32 sp3C = 55.0f;
     f32 tmpf1;
     f32 tmpf2;
@@ -2117,22 +2113,23 @@ void func_80955940(BossVa *this, GlobalContext *globalCtx) {
     Math_SmoothScaleMaxMinS(&this->unk_1EC, this->unk_1EE, 1, (s16)Math_Rand_CenteredFloat(500.0f) + 0x1F4, 0);
     Math_SmoothScaleMaxMinS(&this->unk_1EA, 0, 1, 0x1F4, 0);
     Math_SmoothScaleMaxMinS(&this->unk_1F2, this->unk_1F4, 1, (s16)Math_Rand_CenteredFloat(500.0f) + 0x1F4, 0);
-    
+
     switch (D_809668D2) {
         case 0x11:
             sp3C = -55.0f;
         case 0x10:
         case 0x12:
             if (this->unk_195 == 0) {
-                if (((this->actor.params == 3) && (this->unk_19C < 0x10)) || 
-                    ((this->actor.params == 4) && (this->unk_19C < 0x18)) || 
-                     (this->actor.params == 5)) {
+                if (((this->actor.params == 3) && (this->unk_19C < 0x10)) ||
+                    ((this->actor.params == 4) && (this->unk_19C < 0x18)) || (this->actor.params == 5)) {
 
                     if (!(this->unk_19C & 1) && (this->unk_19C >= 0)) {
                         if (this->unk_19C < 8) {
-                            func_8094F9E8(globalCtx, this, 1, (s16)Math_Rand_CenteredFloat(5.0f) + 0xD, 0.0f, 0.0f, 2, 0.6f, 1);
+                            func_8094F9E8(globalCtx, this, 1, (s16)Math_Rand_CenteredFloat(5.0f) + 0xD, 0.0f, 0.0f, 2,
+                                          0.6f, 1);
                         } else {
-                            func_8094F9E8(globalCtx, this, 1, (s16)Math_Rand_CenteredFloat(5.0f) + 6, 0.0f, 7.0f, 2, (this->unk_19C >> 3) + 1, 1);
+                            func_8094F9E8(globalCtx, this, 1, (s16)Math_Rand_CenteredFloat(5.0f) + 6, 0.0f, 7.0f, 2,
+                                          (this->unk_19C >> 3) + 1, 1);
                         }
 
                         func_8094F864(globalCtx, this, 2, 0x32, 15.0f, 0.0f, 5, (this->unk_19C >> 3) + 1, 1);
@@ -2173,7 +2170,7 @@ void func_80955940(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_80955E64(BossVa *this, GlobalContext *globalCtx) {
+void func_80955E64(BossVa* this, GlobalContext* globalCtx) {
     f32 frames = SkelAnime_GetFrameCount(&D_06018D18.genericHeader);
 
     SkelAnime_ChangeAnim(&this->skelAnime, &D_06018D18, 1.0f, frames - 1.0f, frames, 1, -6.0f);
@@ -2183,8 +2180,8 @@ void func_80955E64(BossVa *this, GlobalContext *globalCtx) {
 
 #ifdef NON_MATCHING
 // Stack
-void func_80955EEC(BossVa *this, GlobalContext *globalCtx) {
-    Player* player = PLAYER; //sp74;
+void func_80955EEC(BossVa* this, GlobalContext* globalCtx) {
+    Player* player = PLAYER; // sp74;
     s32 sp70_pad;
     s16 tmp16;
     s16 sp6C;
@@ -2213,10 +2210,10 @@ void func_80955EEC(BossVa *this, GlobalContext *globalCtx) {
     sp6C = Math_Vec3f_Yaw(&sp54, &this->unk_1B4);
     tmp16 = sp6C - this->actor.shape.rot.y;
 
-    if (((ABS(tmp16) < 0x4651) || (this->unk_195 != 0)) && 
+    if (((ABS(tmp16) < 0x4651) || (this->unk_195 != 0)) &&
         (!(D_809668D0 & 0x80) && !(player->stateFlags1 & 0x4000000))) {
         if (this->unk_195 == 0) {
-            
+
             sp68 = sp6C - this->actor.shape.rot.y;
             if (ABS(sp68) >= 0x1771) {
                 if (sp68 > 0) {
@@ -2241,24 +2238,24 @@ void func_80955EEC(BossVa *this, GlobalContext *globalCtx) {
             tmp16 = Math_SmoothScaleMaxMinS(&this->unk_1EC, sp68, 1, 0xDAC, 0);
             sp60 += ABS(tmp16);
 
-            tmp16 = Math_SmoothScaleMaxMinS(&this->unk_1F2, Math_Vec3f_Yaw(&this->unk_1CC, &sp54) - 0x4000, 1, 0xEA6, 0);
+            tmp16 =
+                Math_SmoothScaleMaxMinS(&this->unk_1F2, Math_Vec3f_Yaw(&this->unk_1CC, &sp54) - 0x4000, 1, 0xEA6, 0);
             sp60 += ABS(tmp16);
 
-            sp6A = this->actor.shape.rot.x + 
-                   this->skelAnime.limbDrawTbl[1].x + 
-                   this->skelAnime.limbDrawTbl[2].x + 
-                   this->skelAnime.limbDrawTbl[3].x + 
-                   this->skelAnime.limbDrawTbl[4].x + 
+            sp6A = this->actor.shape.rot.x + this->skelAnime.limbDrawTbl[1].x + this->skelAnime.limbDrawTbl[2].x +
+                   this->skelAnime.limbDrawTbl[3].x + this->skelAnime.limbDrawTbl[4].x +
                    this->skelAnime.limbDrawTbl[5].x;
-            
-            tmp16 = Math_SmoothScaleMaxMinS(&this->unk_1EA, Math_Vec3f_Pitch(&sp54, &this->unk_1C0) - sp6A, 1, 0x1B58, 0);
+
+            tmp16 =
+                Math_SmoothScaleMaxMinS(&this->unk_1EA, Math_Vec3f_Pitch(&sp54, &this->unk_1C0) - sp6A, 1, 0x1B58, 0);
             sp60 += ABS(tmp16);
 
             tmp16 = Math_SmoothScaleMaxMinS(&this->unk_1F0, -Math_Vec3f_Pitch(&this->unk_1CC, &sp54), 1, 0x1B58, 0);
             sp60 += ABS(tmp16);
 
             this->skelAnime.animPlaybackSpeed = 0.0f;
-            if ((Math_SmoothScaleMaxMinF(&this->skelAnime.animCurrentFrame, 0.0f, 1.0f, 3.0f, 0.0f) == 0.0f) && (sp60 < 0x258)) {
+            if ((Math_SmoothScaleMaxMinF(&this->skelAnime.animCurrentFrame, 0.0f, 1.0f, 3.0f, 0.0f) == 0.0f) &&
+                (sp60 < 0x258)) {
                 this->unk_19C = 0;
                 this->unk_195++;
                 this->unk_1D8 = sp54;
@@ -2327,13 +2324,14 @@ void func_80955EEC(BossVa *this, GlobalContext *globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_80955EEC.s")
 #endif
 
-void func_80956644(BossVa *this, GlobalContext *globalCtx) {
-    SkelAnime_ChangeAnim(&this->skelAnime, &D_06018B90, 0.0f, 0.0f, SkelAnime_GetFrameCount(&D_06018B90.genericHeader), 3, -6.0f);
+void func_80956644(BossVa* this, GlobalContext* globalCtx) {
+    SkelAnime_ChangeAnim(&this->skelAnime, &D_06018B90, 0.0f, 0.0f, SkelAnime_GetFrameCount(&D_06018B90.genericHeader),
+                         3, -6.0f);
     this->unk_195 = 0;
     func_8094F2C0(this, func_809566C4);
 }
 
-void func_809566C4(BossVa *this, GlobalContext *globalCtx) {
+void func_809566C4(BossVa* this, GlobalContext* globalCtx) {
     SkelAnime_FrameUpdateMatrix(&this->skelAnime);
     func_8094F2C8(this);
     Math_SmoothScaleMaxMinS(&this->unk_1E6, 0, 1, 0x1770, 0);
@@ -2347,8 +2345,9 @@ void func_809566C4(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_809567D0(BossVa *this, GlobalContext *globalCtx) {
-    SkelAnime_ChangeAnim(&this->skelAnime, &D_06000024, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_06000024.genericHeader), 0, 0.0f);
+void func_809567D0(BossVa* this, GlobalContext* globalCtx) {
+    SkelAnime_ChangeAnim(&this->skelAnime, &D_06000024, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_06000024.genericHeader),
+                         0, 0.0f);
     this->unk_1A0 = 60.0f;
     this->unk_1A4 = Math_Rand_ZeroOne() * 360.0f;
     this->unk_19C = 0x40;
@@ -2362,7 +2361,7 @@ void func_809567D0(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_809568E0);
 }
 
-void func_809568E0(BossVa *this, GlobalContext *globalCtx) {
+void func_809568E0(BossVa* this, GlobalContext* globalCtx) {
     Vec3f sp54 = this->actor.initPosRot.pos;
     f32 sp50 = 40.0f;
     s16 sp4E;
@@ -2393,7 +2392,9 @@ void func_809568E0(BossVa *this, GlobalContext *globalCtx) {
         case 5:
         case 6:
             if (this->actor.params != 6) {
-                Math_SmoothScaleMaxMinF(&this->actor.posRot.pos.y, D_8095C044[this->actor.params + 10].y + this->actor.initPosRot.pos.y, 0.3f, 1.0f, 0.15f);
+                Math_SmoothScaleMaxMinF(&this->actor.posRot.pos.y,
+                                        D_8095C044[this->actor.params + 10].y + this->actor.initPosRot.pos.y, 0.3f,
+                                        1.0f, 0.15f);
                 this->actor.posRot.pos.x += (func_800CA720(this->unk_1A4 * 0.25f) * 0.5f);
             } else {
                 Math_SmoothScaleMaxMinF(&this->actor.posRot.pos.y, 60.0f, 0.3f, 1.0f, 0.15f);
@@ -2407,7 +2408,7 @@ void func_809568E0(BossVa *this, GlobalContext *globalCtx) {
                 Math_SmoothScaleMaxMinF(&this->actor.posRot.pos.x, sp54.x, 1.0f, 6.5f, 0.0f);
                 Math_SmoothScaleMaxMinF(&this->actor.posRot.pos.y, sp54.y, 1.0f, 6.5f, 0.0f);
                 Math_SmoothScaleMaxMinF(&this->actor.posRot.pos.z, sp54.z, 1.0f, 6.5f, 0.0f);
-                
+
                 sp50 = Math_Vec3f_DistXYZ(&sp54, &this->actor.posRot.pos);
                 if (sp50 <= 60.0f) {
                     tmp = Math_SmoothScaleMaxMinS(&this->actor.shape.rot.x, this->actor.initPosRot.rot.x, 1, 0x7D0, 0);
@@ -2440,13 +2441,14 @@ void func_809568E0(BossVa *this, GlobalContext *globalCtx) {
                     }
                 }
             }
-            
+
         case 7:
             this->unk_198--;
             if (this->unk_198 == 0) {
                 this->unk_19C = 0;
             } else {
-                func_80035844(&this->actor.attachedA->posRot.pos, &this->actor.posRot.pos, &this->actor.posRot.rot.x, 0);
+                func_80035844(&this->actor.attachedA->posRot.pos, &this->actor.posRot.pos, &this->actor.posRot.rot.x,
+                              0);
                 this->unk_1A0 = Math_Vec3f_DistXYZ(&this->actor.attachedA->posRot.pos, &this->actor.posRot.pos);
                 if (sp50 > 30.0f) {
                     func_8094F864(globalCtx, this, 1, 0x50, 15.0f, 0.0f, 2, 1.0f, 1);
@@ -2477,8 +2479,9 @@ void func_809568E0(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_80956E38(BossVa *this, GlobalContext *globalCtx) {
-    SkelAnime_ChangeAnim(&this->skelAnime, &D_06000024, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_06000024.genericHeader), 0, 0.0f);
+void func_80956E38(BossVa* this, GlobalContext* globalCtx) {
+    SkelAnime_ChangeAnim(&this->skelAnime, &D_06000024, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_06000024.genericHeader),
+                         0, 0.0f);
     this->unk_19C = 0x80;
     this->unk_1F0 = 0x78;
     this->unk_1A0 = 60.0f;
@@ -2487,13 +2490,12 @@ void func_80956E38(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_80956EE0);
 }
 
-void func_80956EE0(BossVa *this, GlobalContext *globalCtx) {
+void func_80956EE0(BossVa* this, GlobalContext* globalCtx) {
     Player* player = PLAYER; // sp64
     EnBoom* australianFrisbee;
     Vec3f sp54 = ((BossVa*)this->actor.attachedA)->unk_1D8;
     s16 sp52;
     f32 tmpf1;
-
 
     this->unk_1A4 += Math_Rand_ZeroOne() * 0.5f;
     sp52 = this->unk_19C & 0x1FF;
@@ -2565,8 +2567,9 @@ void func_80956EE0(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_809572DC(BossVa *this, GlobalContext *globalCtx) {
-    SkelAnime_ChangeAnim(&this->skelAnime, &D_06000024, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_06000024.genericHeader), 0, 0.0f);
+void func_809572DC(BossVa* this, GlobalContext* globalCtx) {
+    SkelAnime_ChangeAnim(&this->skelAnime, &D_06000024, 1.0f, 0.0f, SkelAnime_GetFrameCount(&D_06000024.genericHeader),
+                         0, 0.0f);
     this->unk_19C = 0x40;
     this->unk_1F0 = 0x78;
     this->unk_1A0 = 60.0f;
@@ -2575,7 +2578,7 @@ void func_809572DC(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_80957384);
 }
 
-void func_80957384(BossVa *this, GlobalContext *globalCtx) {
+void func_80957384(BossVa* this, GlobalContext* globalCtx) {
     Player* player = PLAYER; // sp64
     EnBoom* refThrowingStick;
     Vec3f sp54 = ((BossVa*)this->actor.attachedA)->unk_1D8;
@@ -2587,7 +2590,7 @@ void func_80957384(BossVa *this, GlobalContext *globalCtx) {
 
     this->unk_1A4 += Math_Rand_ZeroOne() * 0.5f;
     sp52 = this->unk_19C & 0x1FF;
-    if ((globalCtx->gameplayFrames & 0x7F) == 0) {
+    if ((globalCtx->gameplayFrames % 128) == 0) {
         this->unk_1F6.x = (s16)(Math_Rand_ZeroOne() * 100.0f) + 0x64;
     }
 
@@ -2634,7 +2637,6 @@ void func_80957384(BossVa *this, GlobalContext *globalCtx) {
         if (this->collider2.base.acFlags & 2) {
             this->collider2.base.acFlags &= ~2;
 
-            
             if ((this->collider2.base.ac->id == ACTOR_EN_BOOM) && (sp52 >= 0x40)) {
                 refThrowingStick = (EnBoom*)this->collider2.base.ac;
                 refThrowingStick->returnTimer = 0;
@@ -2686,18 +2688,19 @@ void func_80957384(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_80957998(BossVa *this, GlobalContext *globalCtx) {
+void func_80957998(BossVa* this, GlobalContext* globalCtx) {
     this->actor.flags |= 1;
     this->unk_198 = ((BossVa*)this->actor.attachedA)->unk_198;
     func_8003426C(&this->actor, 0, 0xFF, 0x2000, this->unk_198);
     func_8094F2C0(this, func_809579F4);
 }
 
-void func_809579F4(BossVa *this, GlobalContext *globalCtx) {
+void func_809579F4(BossVa* this, GlobalContext* globalCtx) {
     s32 sp44_pad;
     Vec3f sp40 = ((BossVa*)this->actor.attachedA)->unk_1D8;
 
-    this->actor.posRot.rot.x = Math_Vec3f_Pitch(&((BossVa*)this->actor.attachedA)->actor.posRot.pos, &this->actor.posRot.pos);
+    this->actor.posRot.rot.x =
+        Math_Vec3f_Pitch(&((BossVa*)this->actor.attachedA)->actor.posRot.pos, &this->actor.posRot.pos);
     if (this->collider2.base.acFlags & 2) {
         func_8094FC70(this, globalCtx);
         return;
@@ -2728,7 +2731,7 @@ void func_809579F4(BossVa *this, GlobalContext *globalCtx) {
     }
 }
 
-void func_80957C10(BossVa *this) {
+void func_80957C10(BossVa* this) {
     this->actor.flags &= ~1;
     this->unk_198 = 0x1E;
     Audio_PlayActorSound2(&this->actor, NA_SE_EN_BALINADE_BL_DEAD);
@@ -2736,14 +2739,14 @@ void func_80957C10(BossVa *this) {
     func_8094F2C0(this, func_80957C68);
 }
 
-void func_80957C68(BossVa *this, GlobalContext *globalCtx) {
+void func_80957C68(BossVa* this, GlobalContext* globalCtx) {
     this->unk_198--;
     if (this->unk_198 == 0) {
         Actor_Kill(&this->actor);
     }
 }
 
-void func_80957C9C(BossVa *this, GlobalContext *globalCtx) {
+void func_80957C9C(BossVa* this, GlobalContext* globalCtx) {
     if (D_809668D2 > 0) {
         D_80966934 = 100;
     }
@@ -2751,12 +2754,24 @@ void func_80957C9C(BossVa *this, GlobalContext *globalCtx) {
     func_8094F2C0(this, func_80957CEC);
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_80957CEC.s")
+void func_80957CEC(BossVa* this, GlobalContext* globalCtx) {
+    if (D_80966934 == 0x1D) {
+        Audio_PlayActorSound2(&this->actor, NA_SE_EV_BUYODOOR_CLOSE);
+    }
 
-void BossVa_Update(Actor *thisx, GlobalContext *globalCtx) {
-    BossVa *this = THIS;
-    EnBoom *refActor;
-    GlobalContext *globalCtx2 = globalCtx;
+    if (D_809668D2 < 0) {
+        if (D_80966934 < 100) {
+            D_80966934 += 8;
+        } else {
+            D_80966934 = 100;
+        }
+    }
+}
+
+void BossVa_Update(Actor* thisx, GlobalContext* globalCtx) {
+    BossVa* this = THIS;
+    EnBoom* refActor;
+    GlobalContext* globalCtx2 = globalCtx;
     s32 i;
 
     this->actionFunc(this, globalCtx);
@@ -2820,7 +2835,7 @@ void BossVa_Update(Actor *thisx, GlobalContext *globalCtx) {
 
 #ifdef NON_MATCHING
 // 2Tex
-s32 func_80957F60(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *pos, Vec3s *rot, Actor* thisx) {
+s32 func_80957F60(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     BossVa* this = THIS;
     s32 pad;
 
@@ -2832,7 +2847,9 @@ s32 func_80957F60(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *p
 
         if (limbIndex == 0x14) {
             gDPPipeSync(gfxCtx->polyOpa.p++);
-            gSPSegment(gfxCtx->polyOpa.p++, 0x08, Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0, 0, 8, 0x10, 1, 0, (-globalCtx->gameplayFrames * 2) % 64, 0x10, 0x10));
+            gSPSegment(gfxCtx->polyOpa.p++, 0x08,
+                       Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0, 0, 8, 0x10, 1, 0,
+                                        (-globalCtx->gameplayFrames * 2) % 64, 0x10, 0x10));
             gDPSetEnvColor(gfxCtx->polyOpa.p++, 0x00, 0x00, 0x00, this->unk_1AE);
             Matrix_RotateX(-1.5707964f, MTXMODE_APPLY);
         } else if ((limbIndex >= 0xA) && (limbIndex < 0x14)) {
@@ -2851,11 +2868,11 @@ s32 func_80957F60(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *p
     return 0;
 }
 #else
-s32 func_80957F60(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *pos, Vec3s *rot, Actor* thisx);
+s32 func_80957F60(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx);
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_80957F60.s")
 #endif
 
-void func_80958150(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *rot, Actor *thisx) {
+void func_80958150(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
     BossVa* this = THIS;
     Vec3f sp78 = D_8095C258;
     s32 pad;
@@ -2874,10 +2891,12 @@ void func_80958150(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *
             Matrix_MultVec3f(&sp78, &this->unk_1D8);
         } else if ((limbIndex >= 0xA) && (limbIndex < 0x14) && (D_8095C226[limbIndex] != 0)) {
             if (((limbIndex >= 0x10) || (limbIndex == 0xA)) && (D_809668D1 < 0xA)) {
-                gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x1070), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+                gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x1070),
+                          G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                 gSPDisplayList(gfxCtx->polyXlu.p++, &D_06008BB8);
             } else if ((limbIndex >= 0xB) && (D_809668D1 < 4)) {
-                gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x1074), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+                gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x1074),
+                          G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                 gSPDisplayList(gfxCtx->polyXlu.p++, &D_06008BB8);
             }
 
@@ -2888,11 +2907,15 @@ void func_80958150(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *
             }
             Matrix_MultVec3f(&sp78, &this->unk_1FC[limbIndex - 10]);
         } else if (limbIndex == 0x19) {
-            gSPSegment(gfxCtx->polyXlu.p++, 0x09, Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0U, (globalCtx->gameplayFrames * 0xA) % 128, 0x10, 0x20, 1, 0, (globalCtx->gameplayFrames * 5) % 128, 0x10, 0x20));
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x1088), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPSegment(gfxCtx->polyXlu.p++, 0x09,
+                       Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0U, (globalCtx->gameplayFrames * 10) % 128, 0x10,
+                                        0x20, 1, 0, (globalCtx->gameplayFrames * 5) % 128, 0x10, 0x20));
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x1088),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, &D_06008D70);
         } else if ((*dList != NULL) && (limbIndex >= 0x1D) && (limbIndex < 0x38)) {
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x108C), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x108C),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, *dList);
         } else if ((limbIndex == 0x18) && (D_809668D2 < 0xE)) {
             sp78.x = (thisx->shape.unk_08 + 450.0f) + -140.0f;
@@ -2923,7 +2946,7 @@ void func_80958150(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *
     }
 }
 
-s32 func_809586A4(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *pos, Vec3s *rot, Actor* thisx) {
+s32 func_809586A4(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     BossVa* this = THIS;
 
     if ((this->unk_194 == 0) && (limbIndex == 4)) {
@@ -2932,7 +2955,7 @@ s32 func_809586A4(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *p
     return 0;
 }
 
-void func_809586E4(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *rot, Actor* thisx) {
+void func_809586E4(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
     BossVa* this = THIS;
     Vec3f sp20 = D_8095C264;
     s32 pad;
@@ -2976,7 +2999,7 @@ void func_809586E4(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *
     }
 }
 
-s32 func_80958934(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *pos, Vec3s *rot, Actor* thisx) {
+s32 func_80958934(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     BossVa* this = THIS;
     MtxF sp2C;
     s32 pad;
@@ -3012,7 +3035,7 @@ s32 func_80958934(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *p
     return 0;
 }
 
-void func_80958B0C(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *rot, Actor* thisx) {
+void func_80958B0C(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
     BossVa* this = THIS;
     Vec3f sp70 = D_8095C270;
     Vec3f sp64 = D_8095C27C;
@@ -3089,14 +3112,14 @@ void func_80958B0C(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *
             Matrix_MultVec3f(&sp58, &this->collider3.dim.quad[0]);
             Matrix_MultVec3f(&sp4C, &this->collider3.dim.quad[3]);
             Matrix_MultVec3f(&sp40, &this->collider3.dim.quad[2]);
-            func_80062734(&this->collider3, &this->collider3.dim.quad[0], &this->collider3.dim.quad[1], 
-                &this->collider3.dim.quad[2], &this->collider3.dim.quad[3]);
+            func_80062734(&this->collider3, &this->collider3.dim.quad[0], &this->collider3.dim.quad[1],
+                          &this->collider3.dim.quad[2], &this->collider3.dim.quad[3]);
             Matrix_Pull();
             break;
     }
 }
 
-s32 func_80958F6C(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *pos, Vec3s *rot, Actor *thisx) {
+s32 func_80958F6C(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     BossVa* this = THIS;
 
     switch (limbIndex) {
@@ -3113,7 +3136,7 @@ s32 func_80958F6C(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3f *p
     return 0;
 }
 
-void func_80958FFC(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *rot, Actor* thisx) {
+void func_80958FFC(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
     BossVa* this = THIS;
 
     {
@@ -3122,11 +3145,15 @@ void func_80958FFC(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *
 
         Graph_OpenDisps(dispRefs, globalCtx->state.gfxCtx, "../z_boss_va.c", 0x118E);
         if (limbIndex == 2) {
-            gSPSegment(gfxCtx->polyXlu.p++, 0x0A, Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0, (globalCtx->gameplayFrames * 10) % 32, 0x10, 0x20, 1, 0, (-globalCtx->gameplayFrames * 5) % 32, 0x10, 0x20));
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x119C), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPSegment(gfxCtx->polyXlu.p++, 0x0A,
+                       Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0, (globalCtx->gameplayFrames * 10) % 32, 0x10,
+                                        0x20, 1, 0, (-globalCtx->gameplayFrames * 5) % 32, 0x10, 0x20));
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x119C),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, D_06000FA0);
         } else if ((limbIndex == 3) || (limbIndex == 4)) {
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x11A0), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x11A0),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, *dList);
         }
         Graph_CloseDisps(dispRefs, globalCtx->state.gfxCtx, "../z_boss_va.c", 0x11A5);
@@ -3135,7 +3162,7 @@ void func_80958FFC(GlobalContext *globalCtx, s32 limbIndex, Gfx **dList, Vec3s *
 
 #ifdef NON_MATCHING
 // 2Tex, regalloc, wrong jump location for case 0
-void BossVa_Draw(Actor* thisx, GlobalContext *globalCtx) {
+void BossVa_Draw(Actor* thisx, GlobalContext* globalCtx) {
     BossVa* this = THIS;
     s32 pad;
     Vec3f spBC;
@@ -3172,9 +3199,15 @@ void BossVa_Draw(Actor* thisx, GlobalContext *globalCtx) {
                 }
 
                 if (this->unk_197 == 0) {
-                    gSPSegment(gfxCtx->polyOpa.p++, 0x08, Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0, 0, 8, 0x10, 1, 0, (-globalCtx->gameplayFrames * 10) % 16, 0x10, 0x10));
-                    gSPSegment(gfxCtx->polyOpa.p++, 0x09, Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0, ((-globalCtx->gameplayFrames * 1) * 10) % 32, 0x10, 0x20, 1, 0, ((-globalCtx->gameplayFrames * 1) * 5) % 32, 0x10, 0x20));
-                    SkelAnime_Draw(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, func_80957F60, func_80958150, &this->actor);
+                    gSPSegment(gfxCtx->polyOpa.p++, 0x08,
+                               Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0, 0, 8, 0x10, 1, 0,
+                                                (-globalCtx->gameplayFrames * 10) % 16, 0x10, 0x10));
+                    gSPSegment(gfxCtx->polyOpa.p++, 0x09,
+                               Gfx_TwoTexScroll(globalCtx->state.gfxCtx, 0, 0,
+                                                ((-globalCtx->gameplayFrames * 1) * 10) % 32, 0x10, 0x20, 1, 0,
+                                                ((-globalCtx->gameplayFrames * 1) * 5) % 32, 0x10, 0x20));
+                    SkelAnime_Draw(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, func_80957F60,
+                                   func_80958150, &this->actor);
                 }
                 break;
 
@@ -3182,7 +3215,8 @@ void BossVa_Draw(Actor* thisx, GlobalContext *globalCtx) {
             case 1:
             case 2:
                 if (this->unk_197 == 0) {
-                    SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, this->skelAnime.dListCount, func_809586A4, func_809586E4, &this->actor);
+                    SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl,
+                                     this->skelAnime.dListCount, func_809586A4, func_809586E4, &this->actor);
                 }
                 break;
 
@@ -3190,19 +3224,22 @@ void BossVa_Draw(Actor* thisx, GlobalContext *globalCtx) {
             case 4:
             case 5:
                 if (this->unk_197 == 0) {
-                    SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, this->skelAnime.dListCount, func_80958934, func_80958B0C, &this->actor);
+                    SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl,
+                                     this->skelAnime.dListCount, func_80958934, func_80958B0C, &this->actor);
                 }
                 break;
 
             case 16:
             case 17:
             case 18:
-                SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, this->skelAnime.dListCount, NULL, NULL, NULL);
+                SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl,
+                                 this->skelAnime.dListCount, NULL, NULL, NULL);
                 break;
 
             default:
                 if (this->unk_197 == 0) {
-                    SkelAnime_Draw(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, func_80958F6C, func_80958FFC, &this->actor);
+                    SkelAnime_Draw(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, func_80958F6C,
+                                   func_80958FFC, &this->actor);
                     func_800628A4(0, &this->collider2);
                     if (D_809668D2 < 0xD) {
                         spBC = this->actor.attachedA->posRot.pos;
@@ -3220,7 +3257,8 @@ void BossVa_Draw(Actor* thisx, GlobalContext *globalCtx) {
                     Matrix_MultVec3f(&sp8C, &this->collider3.dim.quad[0]);
                     Matrix_MultVec3f(&sp80, &this->collider3.dim.quad[3]);
                     Matrix_MultVec3f(&sp74, &this->collider3.dim.quad[2]);
-                    func_80062734(&this->collider3, &this->collider3.dim.quad[0], &this->collider3.dim.quad[1], &this->collider3.dim.quad[2], &this->collider3.dim.quad[3]);
+                    func_80062734(&this->collider3, &this->collider3.dim.quad[0], &this->collider3.dim.quad[1],
+                                  &this->collider3.dim.quad[2], &this->collider3.dim.quad[3]);
                     Matrix_Pull();
                     spBC = this->actor.posRot.pos;
                     spBC.y += 9.0f;
@@ -3253,7 +3291,7 @@ void BossVa_Draw(Actor* thisx, GlobalContext *globalCtx) {
 
 #ifdef NON_MATCHING
 // Regalloc, wrong data accesses/types
-void func_809597F4(GlobalContext *globalCtx) {
+void func_809597F4(GlobalContext* globalCtx) {
     Player* player = PLAYER; // spB8
     s16 spB6;
     s16 i;
@@ -3287,9 +3325,12 @@ void func_809597F4(GlobalContext *globalCtx) {
                 ptr->unk_2C += (s16)(Math_Rand_ZeroOne() * 10000.0f) + 0x2000;
 
                 if ((ptr->unk_28 == 1) || (ptr->unk_28 == 4)) {
-                    spAA = ptr->unk_2A - Math_Vec3f_Pitch(&refActor->actor.posRot.pos, &((BossVa*)refActor->actor.attachedA)->unk_1D8);
-                    ptr->unk_00.x = refActor->actor.posRot.pos.x - (Math_Sins(refActor->actor.posRot.rot.y) * ptr->unk_44[1]);
-                    ptr->unk_00.z = refActor->actor.posRot.pos.z - (Math_Coss(refActor->actor.posRot.rot.y) * ptr->unk_44[1]);
+                    spAA = ptr->unk_2A - Math_Vec3f_Pitch(&refActor->actor.posRot.pos,
+                                                          &((BossVa*)refActor->actor.attachedA)->unk_1D8);
+                    ptr->unk_00.x =
+                        refActor->actor.posRot.pos.x - (Math_Sins(refActor->actor.posRot.rot.y) * ptr->unk_44[1]);
+                    ptr->unk_00.z =
+                        refActor->actor.posRot.pos.z - (Math_Coss(refActor->actor.posRot.rot.y) * ptr->unk_44[1]);
                     ptr->unk_00.y = (Math_Coss(-spAA) * ptr->unk_44[2]) + refActor->actor.posRot.pos.y;
                 } else if ((ptr->unk_28 == 2) || (ptr->unk_28 == 5)) {
                     ptr->unk_00.x = ptr->unk_44[1] + refActor->actor.posRot.pos.x;
@@ -3329,10 +3370,11 @@ void func_809597F4(GlobalContext *globalCtx) {
 
                 ptr->unk_2E += (s16)(Math_Rand_ZeroOne() * 10000.0f) + 0x24A8;
                 ptr->unk_00.x = ptr->unk_44[1] + refActor->actor.posRot.pos.x;
-                ptr->unk_00.y = (refActor->actor.posRot.pos.y + 310.0f) + (refActor->actor.shape.unk_08 * refActor->actor.scale.y);
+                ptr->unk_00.y =
+                    (refActor->actor.posRot.pos.y + 310.0f) + (refActor->actor.shape.unk_08 * refActor->actor.scale.y);
                 ptr->unk_00.z = ptr->unk_44[3] + refActor->actor.posRot.pos.z;
                 ptr->unk_28 = (ptr->unk_28 + 1) & 7;
-                
+
                 if (ptr->unk_26 < 100) {
                     ptr->unk_30[3] -= 50;
                     if (ptr->unk_30[3] < 0) {
@@ -3431,7 +3473,7 @@ void func_809597F4(GlobalContext *globalCtx) {
 
                 ptr->unk_2E += 0x157C;
                 ptr->unk_38[3] = (s16)(Math_Sins(ptr->unk_2E) * 50.0f) + 0x50;
-                Math_SmoothScaleMaxMinF(&ptr->unk_40, ptr->unk_44[0], 1.0f, 0.01f, 0.005f);
+                Math_SmoothScaleMaxMinF(&ptr->unk_40[0], ptr->unk_44[0], 1.0f, 0.01f, 0.005f);
                 ptr->unk_00.x = ptr->unk_44[1] + refActor->actor.posRot.pos.x;
                 ptr->unk_00.y = ptr->unk_44[2] + refActor->actor.posRot.pos.y;
                 ptr->unk_00.z = ptr->unk_44[3] + refActor->actor.posRot.pos.z;
@@ -3441,8 +3483,8 @@ void func_809597F4(GlobalContext *globalCtx) {
                         if (ptr->unk_26 == 0) {
                             tmp16 = Math_Vec3f_Yaw(&refActor->actor.posRot.pos, &ptr->unk_00);
                             ptr->unk_24 = 0;
-                            func_8094F60C(globalCtx, ptr, tmp16, ptr->unk_40 * 4500.0f, 1);
-                            func_8094F734(globalCtx, ptr, tmp16, ptr->unk_40 * 1.2f);
+                            func_8094F60C(globalCtx, ptr, tmp16, ptr->unk_40[0] * 4500.0f, 1);
+                            func_8094F734(globalCtx, ptr, tmp16, ptr->unk_40[0] * 1.2f);
                         }
                         break;
 
@@ -3451,8 +3493,8 @@ void func_809597F4(GlobalContext *globalCtx) {
                         if (refActor->unk_195 != 0) {
                             ptr->unk_24 = 0;
                             tmp16 = Math_Vec3f_Yaw(&refActor->actor.posRot.pos, &ptr->unk_00);
-                            func_8094F60C(globalCtx, ptr, tmp16, ptr->unk_40 * 4500.0f, 1);
-                            func_8094F734(globalCtx, ptr, tmp16, ptr->unk_40 * 1.2f);
+                            func_8094F60C(globalCtx, ptr, tmp16, ptr->unk_40[0] * 4500.0f, 1);
+                            func_8094F734(globalCtx, ptr, tmp16, ptr->unk_40[0] * 1.2f);
                         }
                         break;
                 }
@@ -3464,24 +3506,19 @@ void func_809597F4(GlobalContext *globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_809597F4.s")
 #endif
 
-#ifdef NON_MATCHING
-// Stack, 2 lines out of order near the end
-void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
-    BossVaEffect* ptr = arg0;
-    u8 flag = 0;
-    s16 i;
-    s32 pad2;
+void func_8095A188(BossVaEffect* ptr, GlobalContext* globalCtx) {
+    GraphicsContext* localGfx = globalCtx->state.gfxCtx;
     BossVa* refActor;
-    Camera* camera;
+    s16 i;
+    u8 flag = 0;
+    BossVaEffect* ptrHead = ptr;
+    Camera* camera = Gameplay_GetCamera(globalCtx, D_8095C23C);
 
-    GraphicsContext* gfxCtx = globalCtx->state.gfxCtx;
+    GraphicsContext* gfxCtx = localGfx;
     Gfx* dispRefs[4];
-    
 
-    camera = Gameplay_GetCamera(globalCtx, D_8095C23C);
+    Graph_OpenDisps(dispRefs, localGfx, "../z_boss_va.c", 0x1359);
 
-    Graph_OpenDisps(dispRefs, gfxCtx, "../z_boss_va.c", 0x1359);
-    
     for (i = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 1) {
             if (!flag) {
@@ -3495,13 +3532,15 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             func_800D1FD4(&globalCtx->mf_11DA0);
             Matrix_RotateZ((ptr->unk_2E / 32768.0f) * 3.1416f, 1);
-            Matrix_Scale(ptr->unk_40 * 0.0185f, ptr->unk_40 * 0.0185f, 1.0f, 1);
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(gfxCtx, "../z_boss_va.c", 0x1370), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            Matrix_Scale(ptr->unk_40[0] * 0.0185f, ptr->unk_40[0] * 0.0185f, 1.0f, 1);
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x1370),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, D_06015710);
         }
     }
 
-    for (ptr = arg0, i = 0, flag = 0; i < 400; i++, ptr++) {
+    ptr = ptrHead;
+    for (i = 0, flag = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 4) {
             if (!flag) {
                 func_80093D84(globalCtx->state.gfxCtx);
@@ -3510,10 +3549,11 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
             }
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             func_800D1FD4(&globalCtx->mf_11DA0);
-            Matrix_Scale(ptr->unk_40, ptr->unk_40, ptr->unk_40, 1);
+            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], ptr->unk_40[0], 1);
             Matrix_RotateZ((ptr->unk_2E / 32768.0f) * M_PI, 1);
 
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(gfxCtx, "../z_boss_va.c", 0x138A), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x138A),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gDPPipeSync(gfxCtx->polyXlu.p++);
             gSPSegment(gfxCtx->polyXlu.p++, 0x08, SEGMENTED_TO_VIRTUAL(D_8095C300[ptr->unk_28]));
             gDPSetPrimColor(gfxCtx->polyXlu.p++, 0, 0, ptr->unk_30[0], ptr->unk_30[1], ptr->unk_30[2], ptr->unk_30[3]);
@@ -3523,7 +3563,8 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
         }
     }
 
-    for (ptr = arg0, i = 0, flag = 0; i < 400; i++, ptr++) {
+    ptr = ptrHead;
+    for (i = 0, flag = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 6) {
             if (!flag) {
                 func_80093D84(globalCtx->state.gfxCtx);
@@ -3543,16 +3584,19 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
                 func_800D1FD4(&globalCtx->mf_11DA0);
             }
 
-            Matrix_Scale(ptr->unk_40, ptr->unk_40, 1.0f, 1);
+            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], 1.0f, 1);
 
             gDPPipeSync(gfxCtx->polyXlu.p++);
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(gfxCtx, "../z_boss_va.c", 0x13BC), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x13BC),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, D_06009468);
         }
     }
 
+    { s32 someBullshit; }
 
-    for (ptr = arg0, i = 0, flag = 0; i < 400; i++, ptr++) {
+    ptr = ptrHead;
+    for (i = 0, flag = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 7) {
             refActor = ptr->unk_54;
             if (!flag) {
@@ -3562,17 +3606,20 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
                 flag += 1;
             }
 
-            if ((ptr->unk_28 != 1) || ((Math_Vec3f_DistXZ(&camera->eye, &ptr->unk_00) - Math_Vec3f_DistXZ(&camera->eye, &refActor->actor.posRot.pos)) < 10.0f)) {
+            if ((ptr->unk_28 != 1) || ((Math_Vec3f_DistXZ(&camera->eye, &ptr->unk_00) -
+                                        Math_Vec3f_DistXZ(&camera->eye, &refActor->actor.posRot.pos)) < 10.0f)) {
                 Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
-                Matrix_Scale(ptr->unk_40, ptr->unk_40, ptr->unk_40, 1);
+                Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], ptr->unk_40[0], 1);
 
-                gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(gfxCtx, "../z_boss_va.c", 0x13D8), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+                gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x13D8),
+                          G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
                 gSPDisplayList(gfxCtx->polyOpa.p++, D_06012948);
             }
         }
     }
 
-    for (ptr = arg0, i = 0, flag = 0; i < 400; i++, ptr++) {
+    ptr = ptrHead;
+    for (i = 0, flag = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 8) {
             if (!flag) {
                 func_80093D18(globalCtx->state.gfxCtx);
@@ -3586,7 +3633,7 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
 
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             Matrix_RotateRPY(ptr->unk_2A, ptr->unk_2C, 0, 1);
-            Matrix_Scale(ptr->unk_40, ptr->unk_40, ptr->unk_40, 1);
+            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], ptr->unk_40[0], 1);
             Matrix_RotateX(ptr->unk_44[1] * 0.115f, 1);
             Matrix_RotateY(ptr->unk_44[1] * 0.13f, 1);
             Matrix_RotateZ(ptr->unk_44[1] * 0.1f, 1);
@@ -3595,12 +3642,14 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
             Matrix_RotateY(-(ptr->unk_44[1] * 0.13f), 1);
             Matrix_RotateX(-(ptr->unk_44[1] * 0.115f), 1);
 
-            gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(gfxCtx, "../z_boss_va.c", 0x1404), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x1404),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyOpa.p++, D_06012C50);
         }
     }
 
-    for (ptr = arg0, i = 0, flag = 0; i < 400; i++, ptr++) {
+    ptr = ptrHead;
+    for (i = 0, flag = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 5) {
             if (!flag) {
                 func_80093D84(globalCtx->state.gfxCtx);
@@ -3614,14 +3663,16 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
 
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             Matrix_RotateRPY(ptr->unk_2A, ptr->unk_2C, 0, 1);
-            Matrix_Scale(ptr->unk_40, ptr->unk_40, ptr->unk_40, 1);
+            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], ptr->unk_40[0], 1);
 
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(gfxCtx, "../z_boss_va.c", 0x1420), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x1420),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, D_06013638);
         }
     }
 
-    for (ptr = arg0, i = 0, flag = 0; i < 400; i++, ptr++) {
+    ptr = ptrHead;
+    for (i = 0, flag = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 2) {
             if (!flag) {
                 func_80093C14(globalCtx->state.gfxCtx);
@@ -3634,14 +3685,16 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             func_800D1FD4(&globalCtx->mf_11DA0);
             Matrix_RotateZ((ptr->unk_2E / 32768.0f) * M_PI, 1);
-            Matrix_Scale(ptr->unk_40 * 0.02f, ptr->unk_40 * 0.02f, 1.0f, 1);
+            Matrix_Scale(ptr->unk_40[0] * 0.02f, ptr->unk_40[0] * 0.02f, 1.0f, 1);
 
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(gfxCtx, "../z_boss_va.c", 0x143C), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x143C),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, D_06015710);
         }
     }
 
-    for (ptr = arg0, i = 0, flag = 0; i < 400; i++, ptr++) {
+    ptr = ptrHead;
+    for (i = 0, flag = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 3) {
             if (!flag) {
                 func_80093D84(globalCtx->state.gfxCtx);
@@ -3654,20 +3707,18 @@ void func_8095A188(BossVaEffect *arg0, GlobalContext *globalCtx) {
             Matrix_Translate(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, 0);
             Matrix_RotateZ((ptr->unk_2E / 32768.0f) * M_PI, 1);
             Matrix_RotateY((ptr->unk_2C / 32768.0f) * M_PI, 1);
-            Matrix_Scale(ptr->unk_40, ptr->unk_40, 1.0f, 1);
+            Matrix_Scale(ptr->unk_40[0], ptr->unk_40[0], 1.0f, 1);
 
-            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(gfxCtx, "../z_boss_va.c", 0x1458), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(localGfx, "../z_boss_va.c", 0x1458),
+                      G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
             gSPDisplayList(gfxCtx->polyXlu.p++, D_06008F70);
         }
     }
 
-    Graph_CloseDisps(dispRefs, gfxCtx, "../z_boss_va.c", 0x145F);
+    Graph_CloseDisps(dispRefs, localGfx, "../z_boss_va.c", 0x145F);
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_8095A188.s")
-#endif
 
-void func_8095B028(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Vec3f *arg3, s16 arg4, u8 arg5) {
+void func_8095B028(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5) {
     Player* player = PLAYER;
     s16 sp52;
     Vec3f sp44 = D_8095C320;
@@ -3682,7 +3733,7 @@ void func_8095B028(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Ve
             ptr->unk_26 = (s16)(Math_Rand_ZeroOne() * 10.0f) + 0x6F;
             ptr->unk_0C = ptr->unk_18 = D_8095C220;
             ptr->unk_28 = arg5;
-            
+
             switch (arg5) {
                 case 4:
                     ptr->unk_24 = 3;
@@ -3720,30 +3771,92 @@ void func_8095B028(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Ve
             }
 
             ptr->unk_44[2] = arg3->y;
-            ptr->unk_40 = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
+            ptr->unk_40[0] = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
             ptr->unk_30[3] = 0xFF;
             break;
         }
     }
 }
 
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_8095B318.s")
+void func_8095B318(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5) {
+    Vec3f sp34 = D_8095C32C;
+    s16 i;
+    Vec3f sp24;
 
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Va/func_8095B4A4.s")
+    for (i = 0; i < 400; i++, ptr++) {
+        if (ptr->unk_24 == 0) {
+            ptr->unk_24 = 4;
+            ptr->unk_54 = this;
 
-void func_8095B670(GlobalContext *globalCtx, BossVaEffect *ptr, Vec3f *arg2, s16 arg3, s16 arg4) {
+            ptr->unk_00 = sp34;
+
+            sp24 = D_8095C220;
+            ptr->unk_18 = sp24;
+            ptr->unk_0C = sp24;
+
+            ptr->unk_28 = 0;
+            ptr->unk_44[1] = arg3->x;
+            ptr->unk_44[3] = arg3->z;
+            ptr->unk_44[2] = arg3->y;
+            ptr->unk_26 = (s16)(Math_Rand_ZeroOne() * 10.0f) + 0x6F;
+            ptr->unk_30[0] = ptr->unk_30[1] = ptr->unk_30[2] = ptr->unk_30[3] = 0xE6;
+            ptr->unk_38[0] = 0;
+            ptr->unk_38[1] = 0x64;
+            ptr->unk_38[2] = 0xDC;
+            ptr->unk_38[3] = 0xA0;
+
+            ptr->unk_40[0] = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
+            return;
+        }
+    }
+}
+
+void func_8095B4A4(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16 arg3, s16 arg4, s16 arg5) {
+    s32 i;
+    Vec3f sp38 = D_8095C338;
+    Vec3f sp2C = D_8095C344;
+    f32 sp28;
+    f32 sp24;
+
+    for (i = 0; i < 400; i++, ptr++) {
+        if (ptr->unk_24 == 0) {
+            ptr->unk_24 = 6;
+            ptr->unk_00 = *arg2;
+            ptr->unk_28 = 0;
+
+            sp28 = Math_Sins(arg4) * 6.0f;
+            sp24 = Math_Rand_CenteredFloat(1.0f);
+            sp2C.x = (-Math_Sins(arg5) * sp28) + sp24;
+            sp24 = Math_Rand_CenteredFloat(1.0f);
+            sp2C.z = (-Math_Coss(arg5) * sp28) + sp24;
+
+            ptr->unk_0C = sp2C;
+
+            sp38.y = Math_Rand_CenteredFloat(0.3f) - 1.0f;
+            ptr->unk_18 = sp38;
+
+            ptr->unk_26 = 0x14;
+            ptr->unk_38[3] = 0x64;
+            ptr->unk_30[3] = 0xC8;
+            ptr->unk_40[0] = (Math_Rand_ZeroFloat(arg3) + arg3) * 0.01f;
+            break;
+        }
+    }
+}
+
+void func_8095B670(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16 arg3, s16 arg4) {
     s32 i;
     f32 sp38;
     Vec3f sp2C = D_8095C350;
     Vec3f sp20;
-    
+
     for (i = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 0) {
             ptr->unk_24 = 6;
             ptr->unk_00 = *arg2;
 
             ptr->unk_28 = 1;
-            
+
             sp38 = Math_Rand_ZeroOne() * 7.0f;
             sp20.x = Math_Sins(arg3) * sp38;
             sp20.y = Math_Rand_CenteredFloat(4.0f) + 4.0f;
@@ -3760,13 +3873,13 @@ void func_8095B670(GlobalContext *globalCtx, BossVaEffect *ptr, Vec3f *arg2, s16
             }
             ptr->unk_38[3] = 0x64;
             ptr->unk_30[3] = 0xC8;
-            ptr->unk_40 = arg4 * 0.01f;
+            ptr->unk_40[0] = arg4 * 0.01f;
             break;
         }
     }
 }
 
-void func_8095B80C(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Vec3f *arg3, s16 arg4, u8 arg5) {
+void func_8095B80C(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, s16 arg4, u8 arg5) {
     Vec3f sp34 = D_8095C35C;
     s16 i;
     Vec3f sp24;
@@ -3780,7 +3893,7 @@ void func_8095B80C(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Ve
             sp24 = D_8095C220;
             ptr->unk_18 = sp24;
             ptr->unk_0C = sp24;
-            
+
             ptr->unk_28 = arg5;
             ptr->unk_2E = 0;
 
@@ -3791,7 +3904,7 @@ void func_8095B80C(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Ve
             ptr->unk_26 = (s16)(Math_Rand_ZeroOne() * 10.0f) + 0xA;
             ptr->unk_38[3] = 0x64;
             ptr->unk_44[0] = arg4 * 0.01f;
-            ptr->unk_40 = 0.0f;
+            ptr->unk_40[0] = 0.0f;
 
             if (((i & 3) == 0) || (arg5 == 2)) {
                 Audio_PlaySoundGeneral(NA_SE_EN_BALINADE_BREAK, &ptr->unk_00, 4, &D_801333E0, &D_801333E0, &D_801333E8);
@@ -3801,7 +3914,7 @@ void func_8095B80C(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Ve
     }
 }
 
-void func_8095B9B0(GlobalContext *globalCtx, BossVaEffect *ptr, Vec3f *arg2, s16 arg3, s16 arg4) {
+void func_8095B9B0(GlobalContext* globalCtx, BossVaEffect* ptr, Vec3f* arg2, s16 arg3, s16 arg4) {
     s32 i;
     f32 sp48;
     Vec3f sp3C = D_8095C368;
@@ -3829,26 +3942,25 @@ void func_8095B9B0(GlobalContext *globalCtx, BossVaEffect *ptr, Vec3f *arg2, s16
                 ptr->unk_28 = 0;
             }
 
-            ptr->unk_30[3] = ptr->unk_38[0] = ptr->unk_38[1] = 
-            ptr->unk_38[2] = ptr->unk_38[3] = 0xFF;
+            ptr->unk_30[3] = ptr->unk_38[0] = ptr->unk_38[1] = ptr->unk_38[2] = ptr->unk_38[3] = 0xFF;
 
             ptr->unk_30[0] = 0x9B;
             ptr->unk_30[1] = ptr->unk_30[2] = 0x37;
 
             ptr->unk_2A = Math_Rand_CenteredFloat(65536.0f);
             ptr->unk_2C = Math_Rand_CenteredFloat(65536.0f);
-            ptr->unk_40 = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
+            ptr->unk_40[0] = (Math_Rand_ZeroFloat(arg4) + arg4) * 0.01f;
             ptr->unk_44[2] = (Math_Rand_ZeroOne() * 0.25f) + 0.9f;
             break;
         }
     }
 }
 
-void func_8095BBD0(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Vec3f *arg3, Vec3s *arg4, s16 arg5, u8 arg6) {
+void func_8095BBD0(GlobalContext* globalCtx, BossVaEffect* ptr, BossVa* this, Vec3f* arg3, Vec3s* arg4, s16 arg5,
+                   u8 arg6) {
     Vec3f sp2C = D_8095C374;
     s16 i;
     Vec3f sp1C;
-    
 
     for (i = 0; i < 400; i++, ptr++) {
         if (ptr->unk_24 == 0) {
@@ -3865,13 +3977,13 @@ void func_8095BBD0(GlobalContext *globalCtx, BossVaEffect *ptr, BossVa *this, Ve
             ptr->unk_2C = arg4->y;
             ptr->unk_26 = (s16)(Math_Rand_ZeroOne() * 10.0f) + 0xA;
             ptr->unk_30[3] = 0xF0;
-            ptr->unk_40 = arg5 * 0.01f;
+            ptr->unk_40[0] = arg5 * 0.01f;
             break;
         }
     }
 }
 
-void func_8095BD24(GlobalContext *globalCtx, s16 arg1) {
+void func_8095BD24(GlobalContext* globalCtx, s16 arg1) {
     MtxF sp98;
     f32 tmpf1;
     f32 tmpf2 = 0.0f;
@@ -3899,7 +4011,8 @@ void func_8095BD24(GlobalContext *globalCtx, s16 arg1) {
         Matrix_RotateZ(tmpf2, 1);
         Matrix_Translate(0.0f, D_8095C3A0[i] * tmpf1, 0.0f, 1);
 
-        gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x15F5), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_boss_va.c", 0x15F5),
+                  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         gSPDisplayList(gfxCtx->polyOpa.p++, D_8095C380[i]);
     }
 
