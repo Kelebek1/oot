@@ -12,7 +12,7 @@ typedef struct EnFireRock {
     /* 0x014C */ char unk_14C[0x44];
     /* 0x0190 */ EnEncount2* unk_190;
     /* 0x0194 */ char unk_194[0x4C];
-} EnFireRock; // size = 0x01E0
+} EnFireRock; // size = 0x01E0 
 
 extern const ActorInit En_Fire_Rock_InitVars;
 

@@ -9,9 +9,9 @@
 void EnEncount1_Init(Actor* thisx, GlobalContext* globalCtx);
 void EnEncount1_Update(Actor* thisx, GlobalContext* globalCtx);
 
-void func_80A0693C(EnEncount1 *this, GlobalContext* globalCtx);
-void func_80A06CD0(EnEncount1 *this, GlobalContext* globalCtx);
-void func_80A06E88(EnEncount1 *this, GlobalContext* globalCtx);
+void func_80A0693C(EnEncount1* this, GlobalContext* globalCtx);
+void func_80A06CD0(EnEncount1* this, GlobalContext* globalCtx);
+void func_80A06E88(EnEncount1* this, GlobalContext* globalCtx);
 
 const ActorInit En_Encount1_InitVars = {
     ACTOR_EN_ENCOUNT1,
@@ -25,16 +25,12 @@ const ActorInit En_Encount1_InitVars = {
     NULL,
 };
 
-s16 D_80A07450[] = {
-    0x0000, 0x2710, 0x7148, 0x8EB8, 0xD8F0
-};
+s16 D_80A07450[] = { 0x0000, 0x2710, 0x7148, 0x8EB8, 0xD8F0 };
 
-f32 D_80A0745C[] = {
-    200.0f, 170.0f, 120.0f, 120.0f, 170.0f
-};
+f32 D_80A0745C[] = { 200.0f, 170.0f, 120.0f, 120.0f, 170.0f };
 
-void EnEncount1_Init(Actor* thisx, GlobalContext *globalCtx) {
-    EnEncount1 *this = THIS;
+void EnEncount1_Init(Actor* thisx, GlobalContext* globalCtx) {
+    EnEncount1* this = THIS;
     f32 tmpf1;
 
     if (this->actor.params <= 0) {
@@ -99,7 +95,7 @@ void EnEncount1_Init(Actor* thisx, GlobalContext *globalCtx) {
     }
 }
 
-void func_80A0693C(EnEncount1 *this, GlobalContext *globalCtx) {
+void func_80A0693C(EnEncount1* this, GlobalContext* globalCtx) {
     f32 tmpf1;
     f32 var1;
     s16 var2;
@@ -111,12 +107,11 @@ void func_80A0693C(EnEncount1 *this, GlobalContext *globalCtx) {
     UNK_PTR sp70;
     EnReeba* reeba;
     Player* player = PLAYER;
-    
 
     this->unk_15A = 0;
     sp78 = this->actor.posRot.pos;
-    if ((this->unk_164 == 0) && (globalCtx->csCtx.state == 0) && 
-        (this->unk_150 >= this->unk_152) && (this->unk_152 < 5)) {
+    if ((this->unk_164 == 0) && (globalCtx->csCtx.state == 0) && (this->unk_150 >= this->unk_152) &&
+        (this->unk_152 < 5)) {
         tmp = func_80041D4C(&globalCtx->colCtx, player->actor.floorPoly, player->actor.floorPolySource);
         if ((tmp != 4) && (tmp != 7) && (tmp != 0xC)) {
             this->unk_160 = 0;
@@ -149,7 +144,8 @@ void func_80A0693C(EnEncount1 *this, GlobalContext *globalCtx) {
                 }
 
                 sp78.y = tmpf1;
-                reeba = (EnReeba*)Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_REEBA, sp78.x, sp78.y, sp78.z, 0, 0, 0, var3);
+                reeba = (EnReeba*)Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_REEBA,
+                                                      sp78.x, sp78.y, sp78.z, 0, 0, 0, var3);
                 if (reeba != NULL) {
                     this->unk_152++;
                     reeba->unk_280 = this->unk_162;
@@ -187,7 +183,7 @@ void func_80A0693C(EnEncount1 *this, GlobalContext *globalCtx) {
     if (sp86) {};
 }
 
-void func_80A06CD0(EnEncount1 *this, GlobalContext *globalCtx) {
+void func_80A06CD0(EnEncount1* this, GlobalContext* globalCtx) {
     s32 pad;
     UNK_PTR sp58;
     CollisionPoly* sp54;
@@ -197,7 +193,7 @@ void func_80A06CD0(EnEncount1 *this, GlobalContext *globalCtx) {
 
     if (this->unk_164 == 0) {
         this->unk_164 = 10;
-        if ((fabsf(player->actor.posRot.pos.y - this->actor.posRot.pos.y) > 100.0f) || 
+        if ((fabsf(player->actor.posRot.pos.y - this->actor.posRot.pos.y) > 100.0f) ||
             (this->actor.xzDistFromLink > this->unk_168)) {
             this->unk_15A++;
             return;
@@ -213,7 +209,8 @@ void func_80A06CD0(EnEncount1 *this, GlobalContext *globalCtx) {
                 return;
             }
             sp48.y = tmpf1;
-            if (Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_TITE, sp48.x, sp48.y, sp48.z, 0, 0, 0, -1) != NULL) {
+            if (Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_TITE, sp48.x, sp48.y,
+                                    sp48.z, 0, 0, 0, -1) != NULL) {
                 this->unk_152++;
                 this->unk_158++;
             } else {
@@ -227,20 +224,20 @@ void func_80A06CD0(EnEncount1 *this, GlobalContext *globalCtx) {
 
 #ifdef NON_MATCHING
 // temp2 casting
-void func_80A06E88(EnEncount1 *this, GlobalContext *globalCtx) {
+void func_80A06E88(EnEncount1* this, GlobalContext* globalCtx) {
     f32 tmpf1;
     f32 tmpf2;
     s16 rotY;
     s16 tmp1;
     s16 tmp2;
     Vec3f sp98;
-    CollisionPoly *sp94;
+    CollisionPoly* sp94;
     UNK_PTR sp90;
-    Actor *refActor;
+    Actor* refActor;
     Player* player = PLAYER;
 
     if (globalCtx->sceneNum != 0x51) {
-        if ((fabsf(player->actor.posRot.pos.y - this->actor.posRot.pos.y) > 100.0f) || 
+        if ((fabsf(player->actor.posRot.pos.y - this->actor.posRot.pos.y) > 100.0f) ||
             (this->unk_168 < this->actor.xzDistFromLink)) {
             this->unk_15A++;
             return;
@@ -255,7 +252,7 @@ void func_80A06E88(EnEncount1 *this, GlobalContext *globalCtx) {
 
     if ((this->unk_152 < this->unk_150) && (this->unk_158 < this->unk_156)) {
         while ((this->unk_152 < this->unk_150) && (this->unk_158 < this->unk_156)) {
-            if (0x51 == globalCtx->sceneNum) {
+            if (globalCtx->sceneNum == 0x51) {
                 if ((player->unk_89E == 0) || (player->actor.floorPolySource != 0x32) ||
                     !(player->actor.bgCheckFlags & 1) || (player->stateFlags1 & 0x8000000)) {
                     this->unk_15C = 0x3C;
@@ -271,7 +268,6 @@ void func_80A06E88(EnEncount1 *this, GlobalContext *globalCtx) {
                     return;
                 }
 
-                
                 tmpf1 = Math_Rand_CenteredFloat(40.0f) + 200.0f;
                 rotY = player->actor.shape.rot.y;
                 if (this->unk_152 != 0) {
@@ -283,8 +279,8 @@ void func_80A06E88(EnEncount1 *this, GlobalContext *globalCtx) {
                 sp98.y = player->actor.groundY + 120.0f;
                 sp98.z = (player->actor.posRot.pos.z + (Math_Coss(rotY) * tmpf1)) + Math_Rand_CenteredFloat(40.0f);
                 tmpf2 = func_8003C9A4(&globalCtx->colCtx, &sp94, &sp90, &this->actor, &sp98);
-                if ((tmpf2 <= -32000.0f) || 
-                    ((-32000.0f != player->actor.waterY) && (tmpf2 < (player->actor.posRot.pos.y - player->actor.waterY)))) {
+                if ((tmpf2 <= -32000.0f) || ((-32000.0f != player->actor.waterY) &&
+                                             (tmpf2 < (player->actor.posRot.pos.y - player->actor.waterY)))) {
                     return;
                 }
                 sp98.y = tmpf2;
@@ -295,7 +291,7 @@ void func_80A06E88(EnEncount1 *this, GlobalContext *globalCtx) {
                 tmp2 = -0x100;
             } else {
                 tmp2 = 0;
-                //tmp3 = this->unk_15E / 10;
+                // tmp3 = this->unk_15E / 10;
                 if ((s16)(this->unk_15E / 10) > 0) {
                     if ((s16)(this->unk_15E % 10) == 0) {
                         tmp2 = (this->unk_15E / 10) * 5;
@@ -306,22 +302,22 @@ void func_80A06E88(EnEncount1 *this, GlobalContext *globalCtx) {
                 tmp1 = ACTOR_EN_SKB;
             }
 
-            refActor = Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, tmp1, 
-                sp98.x, sp98.y, sp98.z, 0, 0, 0, tmp2);
+            refActor = Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, tmp1, sp98.x, sp98.y, sp98.z,
+                                           0, 0, 0, tmp2);
             if (refActor != NULL) {
                 this->unk_152++;
                 if (this->unk_152 >= this->unk_150) {
                     this->unk_15C = 0x64;
                 }
 
-                if (0x51 != globalCtx->sceneNum) {
+                if (globalCtx->sceneNum != 0x51) {
                     this->unk_158++;
                 }
             } else {
                 // Couldn't spawn!
-                osSyncPrintf("\x1b[32m☆☆☆☆☆ 発生できません！ ☆☆☆☆☆\n\x1b[m");
-                osSyncPrintf("\x1b[32m☆☆☆☆☆ 発生できません！ ☆☆☆☆☆\n\x1b[m");
-                osSyncPrintf("\x1b[32m☆☆☆☆☆ 発生できません！ ☆☆☆☆☆\n\x1b[m");
+                osSyncPrintf(VT_FGCOL(GREEN) "☆☆☆☆☆ 発生できません！ ☆☆☆☆☆\n" VT_RST);
+                osSyncPrintf(VT_FGCOL(GREEN) "☆☆☆☆☆ 発生できません！ ☆☆☆☆☆\n" VT_RST);
+                osSyncPrintf(VT_FGCOL(GREEN) "☆☆☆☆☆ 発生できません！ ☆☆☆☆☆\n" VT_RST);
                 return;
             }
         }
@@ -331,8 +327,8 @@ void func_80A06E88(EnEncount1 *this, GlobalContext *globalCtx) {
 #pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_En_Encount1/func_80A06E88.s")
 #endif
 
-void EnEncount1_Update(Actor* thisx, GlobalContext *globalCtx) {
-    EnEncount1 *this = THIS;
+void EnEncount1_Update(Actor* thisx, GlobalContext* globalCtx) {
+    EnEncount1* this = THIS;
 
     if (this->unk_164 != 0) {
         this->unk_164--;
@@ -342,10 +338,14 @@ void EnEncount1_Update(Actor* thisx, GlobalContext *globalCtx) {
     if (BREG(0) != 0) {
         if (this->unk_15A != 0) {
             if ((this->unk_15A & 1) == 0) {
-                DebugDisplay_AddObject(this->actor.posRot.pos.x, this->actor.posRot.pos.y, this->actor.posRot.pos.z, this->actor.posRot.rot.x, this->actor.posRot.rot.y, this->actor.posRot.rot.z, 1.0f, 1.0f, 1.0f, 0x78, 0x78, 0x78, 0xFF, 4, globalCtx->state.gfxCtx);
+                DebugDisplay_AddObject(this->actor.posRot.pos.x, this->actor.posRot.pos.y, this->actor.posRot.pos.z,
+                                       this->actor.posRot.rot.x, this->actor.posRot.rot.y, this->actor.posRot.rot.z,
+                                       1.0f, 1.0f, 1.0f, 0x78, 0x78, 0x78, 0xFF, 4, globalCtx->state.gfxCtx);
             }
         } else {
-            DebugDisplay_AddObject(this->actor.posRot.pos.x, this->actor.posRot.pos.y, this->actor.posRot.pos.z, this->actor.posRot.rot.x, this->actor.posRot.rot.y, this->actor.posRot.rot.z, 1.0f, 1.0f, 1.0f, 0xFF, 0, 0xFF, 0xFF, 4, globalCtx->state.gfxCtx);
+            DebugDisplay_AddObject(this->actor.posRot.pos.x, this->actor.posRot.pos.y, this->actor.posRot.pos.z,
+                                   this->actor.posRot.rot.x, this->actor.posRot.rot.y, this->actor.posRot.rot.z, 1.0f,
+                                   1.0f, 1.0f, 0xFF, 0, 0xFF, 0xFF, 4, globalCtx->state.gfxCtx);
         }
     }
 }

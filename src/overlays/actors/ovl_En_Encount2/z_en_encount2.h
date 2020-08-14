@@ -13,7 +13,7 @@ typedef struct {
     /* 0x0C */ f32 unk_0C;
     /* 0x10 */ u8 unk_10;
     /* 0x15 */ f32 unk_14;
-    /* 0x18 */ f32 unk_18;
+    /* 0x18 */ f32 unk_18; 
     /* 0x1C */ f32 unk_1C;
     /* 0x20 */ Vec3f unk_20;
 } EnEncount2Struct1; // size = 0x2C

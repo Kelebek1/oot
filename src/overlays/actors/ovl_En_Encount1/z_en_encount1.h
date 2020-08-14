@@ -17,7 +17,7 @@ typedef struct EnEncount1 {
     /* 0x0156 */ s16 unk_156;
     /* 0x0158 */ s16 unk_158;
     /* 0x015A */ s16 unk_15A;
-    /* 0x015C */ s16 unk_15C;
+    /* 0x015C */ s16 unk_15C; 
     /* 0x015E */ s16 unk_15E;
     /* 0x0160 */ s16 unk_160;
     /* 0x0162 */ s16 unk_162;
