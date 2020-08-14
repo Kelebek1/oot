@@ -886,7 +886,8 @@ typedef struct {
     /* 0x2C */ s8       unk_2C;
     /* 0x2D */ char     unk_2D[0x5E];
     /* 0x8C */ s16      unk_8C[6];
-    /* 0x98 */ char     unk_98[0x08];
+    /* 0x98 */ u16      unk_98[3];
+    /* 0x9E */ s16      unk_9E;
     /* 0xA0 */ s16      unk_A0;
     /* 0xA2 */ char     unk_A2[0x06];
     /* 0xA8 */ s16      unk_A8;
@@ -897,7 +898,11 @@ typedef struct {
     /* 0xB8 */ UNK_PTR  lightSettingsList;
     /* 0xBC */ char     unk_BC[0x03];
     /* 0xBF */ u8       unk_BF;
-    /* 0xC0 */ char     unk_C0[0x16];
+    /* 0xC0 */ char     unk_C0[0x0F];
+    /* 0xCF */ u8       unk_CF[3];
+    ///* 0xD0 */ u8       unk_D0;
+    ///* 0xD1 */ u8       unk_D1;
+    /* 0xD2 */ char     unk_D2[0x04];
     /* 0xD6 */ s16      unk_D6;
     /* 0xD8 */ f32      unk_D8;
     /* 0xDC */ u8       unk_DC;

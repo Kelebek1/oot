@@ -333,7 +333,8 @@ typedef struct Player {
     /* 0x088C */ char       unk_88C[0x008];
     /* 0x0894 */ s16        dropY; // Truncated copy of y position that does not update while falling
     /* 0x0896 */ s16        fallY; // The truncated y distance link has moved in that frame, positive is down, negative is up
-    /* 0x0898 */ char       unk_898[0x008];
+    /* 0x0898 */ char       unk_898[0x006];
+    /* 0x089E */ u16        unk_89E;
     /* 0x08A0 */ u8         unk_8A0;
     /* 0x08A1 */ u8         unk_8A1;
     /* 0x08A2 */ u16        unk_8A2;
