@@ -9,7 +9,7 @@ float sqrtf(float f);
 #pragma intrinsic(sqrtf)
 double sqrt(double d);
 #pragma intrinsic(sqrt)
- 
+
 void cleararena(void);
 void bootproc(void);
 void Main_ThreadEntry(void* arg0);

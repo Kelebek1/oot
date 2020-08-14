@@ -20,7 +20,7 @@ typedef struct {
     Vec3f pos;
     Vec3s rot;
 } PosRot; // size = 0x14
- 
+
 typedef struct {
     /* 0x00 */ char   unk_00[0x8];
     /* 0x08 */ Vec3s  norm;  // Normal vector
