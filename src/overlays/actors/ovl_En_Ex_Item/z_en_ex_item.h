@@ -6,9 +6,26 @@
 
 struct EnExItem;
 
+typedef void (*EnExItemActionFunc)(struct EnExItem*, GlobalContext*);
+
 typedef struct EnExItem {
     /* 0x0000 */ Actor actor;
-    /* 0x014C */ char unk_14C[0x38];
+    /* 0x014C */ EnExItemActionFunc actionFunc;
+    /* 0x0150 */ s16 unk_150;
+    /* 0x0152 */ s16 unk_152;
+    /* 0x0154 */ s16 unk_154;
+    /* 0x0156 */ s16 unk_156;
+    /* 0x0158 */ s16 unk_158;
+    /* 0x015A */ s16 unk_15A;
+    /* 0x015C */ s16 unk_15C;
+    /* 0x015E */ s16 unk_15E;
+    /* 0x0160 */ s16 unk_160;
+    /* 0x0164 */ f32 unk_164;
+    /* 0x0168 */ f32 unk_168;
+    /* 0x016C */ s8 unk_16C;
+    /* 0x0170 */ Vec3f unk_170;
+    /* 0x017C */ void (*unk_17C)(Actor* thisx, GlobalContext* globalCtx, s32 flag);
+    /* 0x0180 */ void (*unk_180)(Actor* thisx, GlobalContext* globalCtx, s32 flag);
 } EnExItem; // size = 0x0184
 
 extern const ActorInit En_Ex_Item_InitVars;
