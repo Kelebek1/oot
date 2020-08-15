@@ -2331,15 +2331,21 @@ endseg
 beginseg
     name "ovl_En_Encount1"
     include "build/src/overlays/actors/ovl_En_Encount1/z_en_encount1.o"
-    include "build/data/overlays/actors/z_en_encount1.data.o"
+#ifdef NON_MATCHING
+    include "build/src/overlays/actors/ovl_En_Encount1/ovl_En_Encount1_reloc.o"
+#else
     include "build/data/overlays/actors/z_en_encount1.reloc.o"
+#endif
 endseg
 
 beginseg
     name "ovl_En_Encount2"
     include "build/src/overlays/actors/ovl_En_Encount2/z_en_encount2.o"
-    include "build/data/overlays/actors/z_en_encount2.data.o"
+#ifdef NON_MATCHING
+    include "build/src/overlays/actors/ovl_En_Encount2/ovl_En_Encount2_reloc.o"
+#else
     include "build/data/overlays/actors/z_en_encount2.reloc.o"
+#endif
 endseg
 
 beginseg

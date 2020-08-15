@@ -13,6 +13,10 @@ void func_80A0693C(EnEncount1* this, GlobalContext* globalCtx);
 void func_80A06CD0(EnEncount1* this, GlobalContext* globalCtx);
 void func_80A06E88(EnEncount1* this, GlobalContext* globalCtx);
 
+s16 D_80A07450[] = { 0x0000, 0x2710, 0x7148, 0x8EB8, 0xD8F0 };
+
+f32 D_80A0745C[] = { 200.0f, 170.0f, 120.0f, 120.0f, 170.0f };
+
 const ActorInit En_Encount1_InitVars = {
     ACTOR_EN_ENCOUNT1,
     ACTORTYPE_PROP,
@@ -24,10 +28,6 @@ const ActorInit En_Encount1_InitVars = {
     (ActorFunc)EnEncount1_Update,
     NULL,
 };
-
-s16 D_80A07450[] = { 0x0000, 0x2710, 0x7148, 0x8EB8, 0xD8F0 };
-
-f32 D_80A0745C[] = { 200.0f, 170.0f, 120.0f, 120.0f, 170.0f };
 
 void EnEncount1_Init(Actor* thisx, GlobalContext* globalCtx) {
     EnEncount1* this = THIS;
