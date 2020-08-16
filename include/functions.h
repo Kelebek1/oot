@@ -2204,7 +2204,7 @@ void func_800F4C58(Vec3f*, u16, u8);
 void func_800F574C(f32 arg0, UNK_TYPE arg2);
 void func_800F595C(u16);
 void func_800F59E8(u16);
-// ? func_800F5ACC(?);
+void func_800F5ACC(s32);
 // ? func_800F5C64(?);
 // ? func_800F5CF8(?);
 // ? func_800F5E18(?);
