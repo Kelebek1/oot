@@ -206,9 +206,9 @@ void EnFdFire_Update(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void EnFdFire_Draw(Actor* thisx, GlobalContext* globalCtx) {
-    Color_RGBA8_n spB8[] = { { 0xFF, 0xFF, 0x00, 0xFF }, { 0xFF, 0xFF, 0xFF, 0xFF } };
+    Color_RGBA8_n spB8[] = { { 255, 255, 0, 255 }, { 255, 255, 255, 255 } };
 
-    Color_RGBA8_n spB0[] = { { 0xFF, 0x0A, 0x00, 0xFF }, { 0x00, 0x0A, 0xFF, 0xFF } };
+    Color_RGBA8_n spB0[] = { { 255, 10, 0, 255 }, { 0, 10, 255, 255 } };
     EnFdFire* this = THIS;
     s32 pad;
 
@@ -222,7 +222,7 @@ void EnFdFire_Draw(Actor* thisx, GlobalContext* globalCtx) {
     GraphicsContext* gfxCtx = globalCtx->state.gfxCtx;
     Gfx* dispRefs[4];
 
-    Graph_OpenDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_fd_fire.c", 0x23C);
+    Graph_OpenDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_fd_fire.c", 572);
     Matrix_Translate(thisx->posRot.pos.x, thisx->posRot.pos.y, thisx->posRot.pos.z, 0);
     if (1) {};
     sp8E = Math_Vec3f_Yaw(&sp9C, &thisx->velocity) - func_8005A9F4(ACTIVE_CAM);
@@ -244,7 +244,7 @@ void EnFdFire_Draw(Actor* thisx, GlobalContext* globalCtx) {
 
     Matrix_Scale(1.0f, sp84, 1.0f / sp84, 1);
 
-    gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_fd_fire.c", 0x26F),
+    gSPMatrix(gfxCtx->polyXlu.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_fd_fire.c", 623),
               G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
     func_80093D84(globalCtx->state.gfxCtx);
@@ -264,5 +264,5 @@ void EnFdFire_Draw(Actor* thisx, GlobalContext* globalCtx) {
     gDPPipeSync(gfxCtx->polyXlu.p++);
     gSPDisplayList(gfxCtx->polyXlu.p++, D_0404D4E0);
 
-    Graph_CloseDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_fd_fire.c", 0x2A0);
+    Graph_CloseDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_fd_fire.c", 672);
 }
