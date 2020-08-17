@@ -2384,8 +2384,11 @@ endseg
 beginseg
     name "ovl_En_Firefly"
     include "build/src/overlays/actors/ovl_En_Firefly/z_en_firefly.o"
-    include "build/data/overlays/actors/z_en_firefly.data.o"
+#ifdef NON_MATCHING
+    include "build/src/overlays/actors/ovl_En_Firefly/ovl_En_Firefly_reloc.o"
+#else
     include "build/data/overlays/actors/z_en_firefly.reloc.o"
+#endif
 endseg
 
 beginseg
