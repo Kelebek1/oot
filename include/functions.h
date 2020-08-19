@@ -268,7 +268,7 @@ void EffectSsSolderSrchBall_Spawn(GlobalContext* globalCtx, Vec3f* pos, Vec3f* v
 // ? func_80029FAC(?);
 // ? func_8002A140(?);
 // ? func_8002A1DC(?);
-// ? func_8002A2A4(?);
+void func_8002A2A4(GlobalContext* globalCtx, Vec3f* arg1, f32 arg2, Vec3f* arg3, Vec3f* arg4, Color_RGBA8* arg5, Color_RGBA8* arg6, s32 arg7);
 // ? func_8002A32C(?);
 // ? func_8002A3C4(?);
 // ? func_8002A484(?);
