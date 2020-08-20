@@ -255,7 +255,7 @@ void func_800299AC(GlobalContext* globalCtx, Vec3f* v);
 // ? func_80029C00(?);
 // ? func_80029C50(?);
 void func_80029CA4(GlobalContext* globalCtx, s32 a, Vec3f* pos);
-// ? func_80029CC8(?);
+void func_80029CC8(GlobalContext* globalCtx, s32, s32, Vec3f*);
 void EffectSsFhgFlash_Spawn(GlobalContext*, Vec3f*, Vec3f*, Vec3f*, s16, u8);
 void EffectSsFhgFlash_Spawn2(GlobalContext*, Actor*, Vec3f*, s16, u8);
 // ? func_80029DBC(?);
@@ -273,7 +273,7 @@ void EffectSsSolderSrchBall_Spawn(GlobalContext* globalCtx, Vec3f* pos, Vec3f* v
 // ? func_8002A3C4(?);
 // ? func_8002A484(?);
 // ? func_8002A4D4(?);
-// ? func_8002A5F4(?);
+void func_8002A5F4(GlobalContext* globalCtx, Vec3f*, Vec3f*, Vec3f*, s32, s32);
 void func_8002A65C(GlobalContext* globalCtx, Actor* actor, Vec3f* pos, s16 arg3, s16 arg4);
 void func_8002A6B8(GlobalContext* globalCtx, Vec3f* pos, Vec3f* arg2, Vec3f* arg3, u32 arg4, s32 arg5, u32 arg6,
                    u32 arg7, u32 arg8, u32 arg9, u32 arg10, u32 arg11, u32 arg12, u32 arg13, u32 arg14, u32 arg15);
@@ -2200,6 +2200,7 @@ void func_800F436C(UNK_TYPE arg0, s16 arg1, f32 arg2);
 // ? func_800F4784(?);
 // ? func_800F491C(?);
 // ? func_800F4A70(?);
+void func_800F4BF4(Vec3f*, u16 sfxId, s8);
 void func_800F4C58(Vec3f*, u16, u8);
 // ? func_800F50CC(?);
 // ? func_800F510C(?);
