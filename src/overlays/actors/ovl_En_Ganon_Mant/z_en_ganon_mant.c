@@ -113,10 +113,16 @@ u16 D_80A24E4C[] = {
     0x0000, 0x000C, 0x0018, 0x0024, 0x0030, 0x003C, 0x0048, 0x0054, 
     0x0060, 0x006C, 0x0078, 0x0084, 
 
-    // ???
+    // ??? Should be 12x12 array?...
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
 };
 
+// 0x800 * 2 bytes here, 0x800 in the one below
+// I think they may be combined, to make one [3][64][32] array.
+// D_80A27078 defines 2 of them as the same size textures, 
+// so it's odd for the first to be double the size
+// The arrays listed in D_80A24D64 can return 0, 1 or 2, which
+// in func_80A23D84 index this array somehow.
 s16 D_80A24F78[] = {
     0x7001, 0xA801, 0x7801, 0x4801, 0x4801, 0x7001, 0x9001, 0x8801, 
     0x8801, 0x7801, 0x5001, 0x5001, 0x5801, 0x6001, 0x6801, 0x8801, 
@@ -1059,6 +1065,7 @@ void EnGanonMant_Destroy(Actor *thisx, GlobalContext *globalCtx) {
 }
 
 #ifdef NON_MATCHING
+// regalloc, wrong D_80A24F78 accesses I think
 void func_80A23D84(EnGanonMant *this) {
     f32 sp50;
     f32 sp4C;
