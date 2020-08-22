@@ -1096,6 +1096,7 @@ s32 func_8008E9D0(Player* player);
 // ? func_8008EB2C(?);
 // ? func_8008EC04(?);
 void func_8008ECAC(GlobalContext*, Player* player);
+void func_8008ED9C(GlobalContext* globalCtx, Player* player, s32 item, s32 arg2);
 void func_8008EDF0(Player*);
 // ? func_8008EE08(?);
 s32 func_8008EF44(GlobalContext*, s32);
