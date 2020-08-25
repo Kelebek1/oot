@@ -74,7 +74,7 @@ static ColliderCylinderInit sCylinderInit = {
 
 static CollisionCheckInfoInit2 D_80A41B2C = { 0x00, 0x0000, 0x0000, 0x0000, 0xFF };
 
-void func_80A3E570(EnGo* this, EnGoActionFunc actionFunc) {
+void EnGo_SetupAction(EnGo* this, EnGoActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
 
@@ -720,18 +720,18 @@ void EnGo_Init(Actor* thisx, GlobalContext* globalCtx) {
             Actor_SetScale(&this->actor, 0.008f);
             if (CHECK_OWNED_EQUIP(EQUIP_TUNIC, 1)) {
                 func_80A3F4BC(this, globalCtx);
-                func_80A3E570(this, func_80A40218);
+                EnGo_SetupAction(this, func_80A40218);
             } else {
                 this->actor.shape.unk_08 = 1400.0f;
                 this->actor.speedXZ = 3.0f;
-                func_80A3E570(this, func_80A4011C);
+                EnGo_SetupAction(this, func_80A4011C);
             }
             break;
 
         case 16:
             this->skelAnime.animCurrentFrame = SkelAnime_GetFrameCount(&D_06004930.genericHeader);
             Actor_SetScale(&this->actor, 0.01f);
-            func_80A3E570(this, func_80A4020C);
+            EnGo_SetupAction(this, func_80A4020C);
             break;
 
         case 64:
@@ -740,19 +740,19 @@ void EnGo_Init(Actor* thisx, GlobalContext* globalCtx) {
             }
 
             Actor_SetScale(&this->actor, 0.015f);
-            func_80A3E570(this, func_80A40218);
+            EnGo_SetupAction(this, func_80A40218);
             break;
 
         case 48:
             this->actor.shape.unk_08 = 1400.0f;
             Actor_SetScale(&this->actor, 0.01f);
-            func_80A3E570(this, func_80A3FEB4);
+            EnGo_SetupAction(this, func_80A3FEB4);
             break;
 
         case 144:
             this->actor.unk_1F = 5;
             Actor_SetScale(&this->actor, 0.16f);
-            func_80A3E570(this, func_80A40218);
+            EnGo_SetupAction(this, func_80A40218);
             break;
 
         case 32:
@@ -760,7 +760,7 @@ void EnGo_Init(Actor* thisx, GlobalContext* globalCtx) {
         case 96:
         case 112:
             Actor_SetScale(&this->actor, 0.01f);
-            func_80A3E570(this, func_80A40218);
+            EnGo_SetupAction(this, func_80A40218);
             break;
 
         default:
@@ -778,7 +778,7 @@ void EnGo_Destroy(Actor* thisx, GlobalContext* globalCtx) {
 
 void func_80A3FEB4(EnGo* this, GlobalContext* globalCtx) {
     if (!(this->actor.xyzDistFromLinkSq > 1440000.0f)) {
-        func_80A3E570(this, func_80A3FEF8);
+        EnGo_SetupAction(this, func_80A3FEF8);
     }
 }
 
@@ -799,7 +799,7 @@ void func_80A3FEF8(EnGo* this, GlobalContext* globalCtx) {
         }
 
         this->actor.speedXZ = 0.0f;
-        func_80A3E570(this, func_80A4008C);
+        EnGo_SetupAction(this, func_80A4008C);
     }
 
     this->actor.shape.rot = this->actor.posRot.rot;
@@ -812,7 +812,7 @@ void func_80A4008C(EnGo* this, GlobalContext* globalCtx) {
     if (func_80A3F7C0(this, 3, 6.0f) != 0) {
         if (this->unk_21A == 0) {
             this->actor.shape.unk_08 = 0.0f;
-            func_80A3E570(this, func_80A40218);
+            EnGo_SetupAction(this, func_80A40218);
         } else {
             func_80A3F594(this, 0xC, 0.16f, 0.1f, 1, 10.0f, 20.0f);
         }
@@ -823,7 +823,7 @@ void func_80A4011C(EnGo* this, GlobalContext* globalCtx) {
     if ((func_80A3F300(this, globalCtx) == 1) && Flags_GetSwitch(globalCtx, this->actor.params >> 8) &&
         (this->unk_218 == 0)) {
         this->actor.speedXZ = 0.0f;
-        func_80A3E570(this, func_80A4008C);
+        EnGo_SetupAction(this, func_80A4008C);
         gSaveContext.infTable[16] |= 0x200;
     }
 
@@ -851,7 +851,7 @@ void func_80A40218(EnGo* this, GlobalContext* globalCtx) {
             }
 
             this->skelAnime.animPlaybackSpeed *= tmpf1;
-            func_80A3E570(this, func_80A40318);
+            EnGo_SetupAction(this, func_80A40318);
             if ((this->actor.params & 0xF0) == 0x90) {
                 func_800800F8(globalCtx, 0x1068, -0x63, &this->actor, 0);
             }
@@ -882,11 +882,11 @@ void func_80A40318(EnGo* this, GlobalContext* globalCtx) {
     if (DECR(this->unk_212) == 0) {
         Audio_PlaySoundGeneral(NA_SE_EN_GOLON_SIT_DOWN, &this->actor.projectedPos, 4, &D_801333E0, &D_801333E0,
                                &D_801333E8);
-        func_80A3E570(this, func_80A405CC);
+        EnGo_SetupAction(this, func_80A405CC);
     } else if (func_80A3F15C(this, globalCtx) == 0) {
         func_80A3F260(this);
         this->skelAnime.animPlaybackSpeed = 0.0f;
-        func_80A3E570(this, func_80A40494);
+        EnGo_SetupAction(this, func_80A40494);
     }
 }
 
@@ -907,7 +907,7 @@ void func_80A40494(EnGo* this, GlobalContext* globalCtx) {
     this->skelAnime.animPlaybackSpeed = 0.0f;
     this->skelAnime.animCurrentFrame = 0.0f;
     this->unk_210 = Math_Rand_S16Offset(30, 30);
-    func_80A3E570(this, func_80A40218);
+    EnGo_SetupAction(this, func_80A40218);
 }
 
 void func_80A405CC(EnGo* this, GlobalContext* globalCtx) {
@@ -923,9 +923,9 @@ void func_80A405CC(EnGo* this, GlobalContext* globalCtx) {
         this->skelAnime.animPlaybackSpeed = 0.0f;
         this->unk_212 = Math_Rand_S16Offset(30, 30);
         if (((this->actor.params & 0xF0) == 0x40) && !(gSaveContext.infTable[14] & 0x800)) {
-            func_80A3E570(this, func_80A40B1C);
+            EnGo_SetupAction(this, func_80A40B1C);
         } else {
-            func_80A3E570(this, func_80A406E0);
+            EnGo_SetupAction(this, func_80A406E0);
         }
     }
 }
@@ -938,25 +938,25 @@ void func_80A406E0(EnGo* this, GlobalContext* globalCtx) {
             func_80A3EDE0(this, 2);
             this->unk_21E = 100;
             this->unk_1E0.unk_00 = 0;
-            func_80A3E570(this, func_80A40D5C);
+            EnGo_SetupAction(this, func_80A40D5C);
             globalCtx->msgCtx.msgMode = 0x37;
             gSaveContext.timer2State = 0;
             func_800800F8(globalCtx, 0x105E, -0x63, &this->actor, 0);
         } else {
             this->unk_1E0.unk_00 = 0;
-            func_80A3E570(this, func_80A40B74);
+            EnGo_SetupAction(this, func_80A40B74);
             func_80106CCC(globalCtx);
             func_80A40B74(this, globalCtx);
         }
     } else if (((this->actor.params & 0xF0) == 0) && (this->unk_1E0.unk_00 == 2)) {
-        func_80A3E570(this, func_80A40B74);
+        EnGo_SetupAction(this, func_80A40B74);
         globalCtx->msgCtx.unk_E3E7 = 4;
         globalCtx->msgCtx.msgMode = 0x36;
     } else if ((DECR(this->unk_212) == 0) && (func_80A3F15C(this, globalCtx) == 0)) {
         func_80A3F260(this);
         this->skelAnime.animPlaybackSpeed = -0.1f;
         this->skelAnime.animPlaybackSpeed *= ((this->actor.params & 0xF0) == 0x90) ? 0.5f : 1.0f;
-        func_80A3E570(this, func_80A408D8);
+        EnGo_SetupAction(this, func_80A408D8);
     }
 }
 
@@ -981,13 +981,13 @@ void func_80A408D8(EnGo* this, GlobalContext* globalCtx) {
     }
 
     if (DECR(this->unk_212) == 0) {
-        func_80A3E570(this, func_80A40494);
+        EnGo_SetupAction(this, func_80A40494);
     } else if (func_80A3F15C(this, globalCtx)) {
         func_80A3F260(this);
         Audio_PlaySoundGeneral(NA_SE_EN_GOLON_SIT_DOWN, &this->actor.projectedPos, 4, &D_801333E0, &D_801333E0,
                                &D_801333E8);
         this->skelAnime.animPlaybackSpeed = 0.0f;
-        func_80A3E570(this, func_80A405CC);
+        EnGo_SetupAction(this, func_80A405CC);
     }
 }
 
@@ -1000,14 +1000,14 @@ void func_80A40A54(EnGo* this, GlobalContext* globalCtx) {
         func_80A3EDE0(this, 1);
         this->skelAnime.animCurrentFrame = SkelAnime_GetFrameCount(&D_06004930.genericHeader);
         this->actor.speedXZ = 0.0f;
-        func_80A3E570(this, func_80A406E0);
+        EnGo_SetupAction(this, func_80A406E0);
     }
 }
 
 void func_80A40B1C(EnGo* this, GlobalContext* globalCtx) {
     if (gSaveContext.infTable[14] & 0x800) {
         func_80A3EDE0(this, 3);
-        func_80A3E570(this, func_80A40A54);
+        EnGo_SetupAction(this, func_80A40A54);
     } else {
         func_80A406E0(this, globalCtx);
     }
@@ -1023,7 +1023,7 @@ void func_80A40B74(EnGo* this, GlobalContext* globalCtx) {
     if (func_8002F410(&this->actor, globalCtx) != 0) {
         this->unk_1E0.unk_00 = 2;
         this->actor.attachedA = NULL;
-        func_80A3E570(this, func_80A40C78);
+        EnGo_SetupAction(this, func_80A40C78);
         return;
     }
 
@@ -1054,7 +1054,7 @@ void func_80A40B74(EnGo* this, GlobalContext* globalCtx) {
 
 void func_80A40C78(EnGo* this, GlobalContext* globalCtx) {
     if (this->unk_1E0.unk_00 == 3) {
-        func_80A3E570(this, func_80A406E0);
+        EnGo_SetupAction(this, func_80A406E0);
         if ((this->actor.params & 0xF0) != 0x90) {
             this->unk_1E0.unk_00 = 0;
             return;
@@ -1084,7 +1084,7 @@ void func_80A40D5C(EnGo* this, GlobalContext* globalCtx) {
         this->actor.textId = 0x305A;
         func_8010B720(globalCtx, this->actor.textId);
         this->unk_1E0.unk_00 = 1;
-        func_80A3E570(this, func_80A40DCC);
+        EnGo_SetupAction(this, func_80A40DCC);
     }
 }
 
@@ -1093,7 +1093,7 @@ void func_80A40DCC(EnGo* this, GlobalContext* globalCtx) {
         func_80A3EDE0(this, 1);
         this->skelAnime.animCurrentFrame = SkelAnime_GetFrameCount(&D_06004930.genericHeader);
         func_80106CCC(globalCtx);
-        func_80A3E570(this, func_80A40B74);
+        EnGo_SetupAction(this, func_80A40B74);
         func_80A40B74(this, globalCtx);
     }
 }
