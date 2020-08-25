@@ -1,3 +1,9 @@
+/*
+ * File: z_en_go.c
+ * Overlay: ovl_En_Go
+ * Description: Goron (cutscenes)
+ */
+
 #include "z_en_go.h"
 #include "overlays/actors/ovl_En_Bom/z_en_bom.h"
 
