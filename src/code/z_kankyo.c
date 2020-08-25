@@ -73,7 +73,7 @@ s32 func_800775CC() {
     return gSaveContext.unk_18;
 }
 
-void func_800775D8() {
+void func_800775D8(void) {
     gSaveContext.unk_18 = 0;
 }
 
