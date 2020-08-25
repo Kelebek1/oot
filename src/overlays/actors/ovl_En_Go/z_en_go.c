@@ -41,6 +41,13 @@ extern SkeletonHeader D_0600FEF0;
 extern AnimationHeader D_06004930;
 extern AnimationHeader D_06010590;
 
+typedef struct {
+    AnimationHeader* unk_00;
+    f32 playbackSpeed;
+    u8 unk_08;
+    f32 transitionRate;
+} EnGoStruct2;
+
 const ActorInit En_Go_InitVars = {
     ACTOR_EN_GO,
     ACTORTYPE_NPC,
@@ -60,13 +67,6 @@ static ColliderCylinderInit sCylinderInit = {
 };
 
 static CollisionCheckInfoInit2 D_80A41B2C = { 0x00, 0x0000, 0x0000, 0x0000, 0xFF };
-
-typedef struct {
-    AnimationHeader* unk_00;
-    f32 playbackSpeed;
-    u8 unk_08;
-    f32 transitionRate;
-} EnGoStruct2;
 
 void func_80A3E570(EnGo* this, EnGoActionFunc actionFunc) {
     this->actionFunc = actionFunc;

@@ -25,19 +25,8 @@ typedef struct EnGo {
     /* 0x014C */ SkelAnime skelAnime;
     /* 0x0190 */ EnGoActionFunc actionFunc;
     /* 0x0194 */ ColliderCylinder collider;
-    
     /* 0x01E0 */ struct_80034A14_arg1 unk_1E0;
-
-    ///* 0x01E0 */ s16 unk_1E0;
-    ///* 0x01E2 */ char unk_1E2[0x6];
-    ///* 0x01E8 */ Vec3s unk_1E8;
-    ///* 0x01EE */ Vec3s unk_1EE;
-    ///* 0x01F4 */ f32 unk_1F4;
-    ///* 0x01F8 */ f32 unk_1F8;
-    ///* 0x01FC */ f32 unk_1FC;
-    ///* 0x0200 */ f32 unk_200;
-    
-    /* 0x0208 */ char unk_208[0x4];
+    /* 0x0208 */ char unk_208[0x4]; // Likely part of struct above
     /* 0x020C */ s16 unk_20C;
     /* 0x020E */ s16 unk_20E;
     /* 0x0210 */ s16 unk_210;
@@ -48,8 +37,8 @@ typedef struct EnGo {
     /* 0x021A */ s16 unk_21A;
     /* 0x021C */ s16 unk_21C;
     /* 0x021E */ s16 unk_21E;
-    /* 0x0220 */ s16 unk_220[18]; // maybe wrong size
-    /* 0x0244 */ s16 unk_244[18]; // maybe wrong size
+    /* 0x0220 */ s16 unk_220[18];
+    /* 0x0244 */ s16 unk_244[18];
     /* 0x0268 */ EnGoStruct1 unk_268[20];
 } EnGo; // size = 0x06C8
 
