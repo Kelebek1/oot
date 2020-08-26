@@ -2500,8 +2500,7 @@ endseg
 beginseg
     name "ovl_En_Go2"
     include "build/src/overlays/actors/ovl_En_Go2/z_en_go2.o"
-    include "build/data/overlays/actors/z_en_go2.data.o"
-    include "build/data/overlays/actors/z_en_go2.reloc.o"
+    include "build/src/overlays/actors/ovl_En_Go2/ovl_En_Go2_reloc.o"
 endseg
 
 beginseg

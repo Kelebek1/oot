@@ -115,7 +115,7 @@ typedef struct {
     /* 0x003B */ char         unk_3B[0x0001];
     /* 0x003C */ u8           doubleMagic;
     /* 0x003D */ u8           doubleDefense;
-    /* 0x003E */ s8           bgsFlag;
+    /* 0x003E */ u8           bgsFlag;
     /* 0x0040 */ ItemEquips   childEquips;
     /* 0x004A */ ItemEquips   adultEquips;
     /* 0x0054 */ char         unk_54[0x0014];
