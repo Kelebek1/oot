@@ -330,6 +330,7 @@ s16 func_8002DAC0(Actor* actor, Vec3f* arg1);
 f32 func_8002DB48(Actor* actorA, Actor* actorB);
 s16 func_8002DAE0(Actor* actorA, Actor* actorB);
 s16 func_8002DB28(Actor* actor, Vec3f* arg1);
+f32 func_8002DB6C(Actor* actor, Vec3f* arg1);
 f32 func_8002DB8C(Actor* actorA, Actor* actorB);
 f32 func_8002DBB0(Actor* actor, Vec3f* arg1);
 void func_8002DBD0(Actor* actor, Vec3f* result, Vec3f* arg2);
