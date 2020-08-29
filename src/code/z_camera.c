@@ -3927,7 +3927,7 @@ Vec3f* func_8005AFB4(Vec3f* dst, Camera* camera) {
 }
 
 void Camera_SetCameraData(Camera* camera, s16 arg1, CutsceneCameraPoint* atPoints, CutsceneCameraPoint* eyePoints,
-                          s16 relativeToPlayer, s16 arg5) {
+                          s16 relativeToPlayer, s16 arg5, UNK_TYPE arg6) {
     if (arg1 & 0x1) {
         camera->atPoints = atPoints;
     }

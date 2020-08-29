@@ -1613,7 +1613,7 @@ void func_8002F5F0(Actor* actor, GlobalContext* globalCtx) {
     }
 }
 
-u32 func_8002F618(GlobalContext* globalCtx, Actor* actor) {
+s32 func_8002F618(GlobalContext* globalCtx, Actor* actor) {
     if (actor->attachedB != NULL) {
         return 1;
     } else {
@@ -1633,7 +1633,7 @@ u32 func_8002F63C(GlobalContext* globalCtx, Actor* actor, s32 arg2) {
     return 0;
 }
 
-u32 func_8002F674(GlobalContext* globalCtx, Actor* actor) {
+s32 func_8002F674(GlobalContext* globalCtx, Actor* actor) {
     if (actor->attachedB == NULL) {
         return 1;
     } else {
