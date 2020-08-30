@@ -1,3 +1,9 @@
+/*
+ * File: z_en_hs.c
+ * Overlay: ovl_En_Hs
+ * Description: Carpenter's Son
+ */
+
 #include "z_en_hs.h"
 #include "vt.h"
 
