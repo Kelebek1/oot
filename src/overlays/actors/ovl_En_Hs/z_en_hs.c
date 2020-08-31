@@ -42,7 +42,7 @@ static ColliderCylinderInit sCylinderInit = {
     { 40, 40, 0, { 0, 0, 0 } },
 };
 
-void func_80A6E3A0(EnHs* this, EnHsActionFunc actionFunc) {
+void EnHs_SetupAction(EnHs* this, EnHsActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
 
@@ -67,7 +67,7 @@ void EnHs_Init(Actor* thisx, GlobalContext* globalCtx) {
     if (this->actor.params == 1) {
         // Kokiri shop (when adult)
         osSyncPrintf(VT_FGCOL(CYAN) " ヒヨコの店(大人の時) \n" VT_RST);
-        func_80A6E3A0(this, func_80A6E9AC);
+        EnHs_SetupAction(this, func_80A6E9AC);
         if (gSaveContext.itemGetInf[3] & 1) {
             // Kokiri shop closed
             osSyncPrintf(VT_FGCOL(CYAN) " ヒヨコ屋閉店 \n" VT_RST);
@@ -76,7 +76,7 @@ void EnHs_Init(Actor* thisx, GlobalContext* globalCtx) {
     } else {
         // Kokiri shop (when child)
         osSyncPrintf(VT_FGCOL(CYAN) " ヒヨコの店(子人の時) \n" VT_RST);
-        func_80A6E3A0(this, func_80A6E9AC);
+        EnHs_SetupAction(this, func_80A6E9AC);
     }
 
     this->unk_2A8 = 0;
@@ -93,7 +93,7 @@ s32 func_80A6E53C(EnHs* this, GlobalContext* globalCtx, u16 arg2, EnHsActionFunc
     s16 tmp;
 
     if (func_8002F194(&this->actor, globalCtx) != 0) {
-        func_80A6E3A0(this, arg3);
+        EnHs_SetupAction(this, arg3);
         return 1;
     } else {
         this->actor.textId = arg2;
@@ -108,7 +108,7 @@ s32 func_80A6E53C(EnHs* this, GlobalContext* globalCtx, u16 arg2, EnHsActionFunc
 
 void func_80A6E5EC(EnHs* this, GlobalContext* globalCtx) {
     if (func_8002F334(&this->actor, globalCtx) != 0) {
-        func_80A6E3A0(this, func_80A6E6B0);
+        EnHs_SetupAction(this, func_80A6E6B0);
     }
 
     this->unk_2A8 |= 1;
@@ -117,7 +117,7 @@ void func_80A6E5EC(EnHs* this, GlobalContext* globalCtx) {
 void func_80A6E630(EnHs* this, GlobalContext* globalCtx) {
     if ((func_8010BDBC(&globalCtx->msgCtx) == 6) && (func_80106BC8(globalCtx) != 0)) {
         func_80088AA0(0xB4);
-        func_80A6E3A0(this, func_80A6E6B0);
+        EnHs_SetupAction(this, func_80A6E6B0);
         gSaveContext.eventInf[1] &= ~1;
     }
 
@@ -130,20 +130,20 @@ void func_80A6E6B0(EnHs* this, GlobalContext* globalCtx) {
 
 void func_80A6E6D8(EnHs* this, GlobalContext* globalCtx) {
     if (func_8002F334(&this->actor, globalCtx) != 0) {
-        func_80A6E3A0(this, func_80A6E9AC);
+        EnHs_SetupAction(this, func_80A6E9AC);
     }
 }
 
 void func_80A6E70C(EnHs* this, GlobalContext* globalCtx) {
     if (func_8002F334(&this->actor, globalCtx) != 0) {
-        func_80A6E3A0(this, func_80A6E9AC);
+        EnHs_SetupAction(this, func_80A6E9AC);
     }
 }
 
 void func_80A6E740(EnHs* this, GlobalContext* globalCtx) {
     if (Actor_HasParent(&this->actor, globalCtx)) {
         this->actor.parent = NULL;
-        func_80A6E3A0(this, func_80A6E630);
+        EnHs_SetupAction(this, func_80A6E630);
     } else {
         func_8002F434(&this->actor, globalCtx, 0x1F, 10000.0f, 50.0f);
     }
@@ -155,13 +155,13 @@ void func_80A6E7BC(EnHs* this, GlobalContext* globalCtx) {
     if ((func_8010BDBC(&globalCtx->msgCtx) == 4) && (func_80106BC8(globalCtx) != 0)) {
         switch (globalCtx->msgCtx.choiceIndex) {
             case 0:
-                func_80A6E3A0(this, func_80A6E740);
+                EnHs_SetupAction(this, func_80A6E740);
                 func_8002F434(&this->actor, globalCtx, 0x1F, 10000.0f, 50.0f);
                 break;
 
             case 1:
                 func_8010B720(globalCtx, 0x10B4);
-                func_80A6E3A0(this, func_80A6E70C);
+                EnHs_SetupAction(this, func_80A6E70C);
                 break;
         }
         SkelAnime_ChangeAnim(&this->skelAnime, &D_060005C0, 1.0f, 0.0f,
@@ -176,7 +176,7 @@ void func_80A6E8CC(EnHs* this, GlobalContext* globalCtx) {
 
     if ((func_8010BDBC(&globalCtx->msgCtx) == 5) && (func_80106BC8(globalCtx) != 0)) {
         func_8010B720(globalCtx, 0x10B3);
-        func_80A6E3A0(this, func_80A6E7BC);
+        EnHs_SetupAction(this, func_80A6E7BC);
         SkelAnime_ChangeAnim(&this->skelAnime, &D_06000528, 1.0f, 0.0f,
                              SkelAnime_GetFrameCount(&D_06000528.genericHeader), 0, 8.0f);
     }
@@ -198,14 +198,14 @@ void func_80A6E9AC(EnHs* this, GlobalContext* globalCtx) {
     if (func_8002F194(&this->actor, globalCtx) != 0) {
         if (func_8002F368(globalCtx) == 7) {
             player->actor.textId = 0x10B2;
-            func_80A6E3A0(this, func_80A6E8CC);
+            EnHs_SetupAction(this, func_80A6E8CC);
             SkelAnime_ChangeAnim(&this->skelAnime, &D_06000304, 1.0f, 0.0f,
                                  SkelAnime_GetFrameCount(&D_06000304.genericHeader), 0, 8.0f);
             this->unk_2AA = 0x28;
             func_80078884(0x4807);
         } else {
             player->actor.textId = 0x10B1;
-            func_80A6E3A0(this, func_80A6E6D8);
+            EnHs_SetupAction(this, func_80A6E6D8);
         }
     } else {
         tmp = this->actor.yawTowardsLink - this->actor.shape.rot.y;
@@ -240,7 +240,7 @@ void EnHs_Update(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-s32 func_80A6EC58(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
+s32 EnHs_OverrideLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     EnHs* this = THIS;
 
     switch (limbIndex) {
@@ -275,7 +275,7 @@ s32 func_80A6EC58(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* p
     return 0;
 }
 
-void func_80A6ED14(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
+void EnHs_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
     static Vec3f D_80A6EDFC = { 300.0f, 1000.0f, 0.0f };
 
     EnHs* this = THIS;
@@ -290,5 +290,5 @@ void EnHs_Draw(Actor* thisx, GlobalContext* globalCtx) {
 
     func_800943C8(globalCtx->state.gfxCtx);
     SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, this->skelAnime.dListCount,
-                     func_80A6EC58, func_80A6ED14, &this->actor);
+                     EnHs_OverrideLimbDraw, EnHs_PostLimbDraw, &this->actor);
 }

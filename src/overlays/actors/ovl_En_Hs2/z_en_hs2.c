@@ -124,7 +124,7 @@ void EnHs2_Update(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-s32 func_80A6F358(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
+s32 EnHs2_OverrideLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     EnHs2* this = THIS;
 
     switch (limbIndex) {
@@ -147,7 +147,7 @@ s32 func_80A6F358(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* p
     return 0;
 }
 
-void func_80A6F3E0(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
+void EnHs2_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
     static Vec3f D_80A6F4CC = { 300.0f, 1000.0f, 0.0f };
 
     EnHs2* this = THIS;
@@ -162,5 +162,5 @@ void EnHs2_Draw(Actor* thisx, GlobalContext* globalCtx) {
 
     func_800943C8(globalCtx->state.gfxCtx);
     SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, this->skelAnime.dListCount,
-                     func_80A6F358, func_80A6F3E0, &this->actor);
+                     EnHs2_OverrideLimbDraw, EnHs2_PostLimbDraw, &this->actor);
 }
