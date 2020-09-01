@@ -1114,36 +1114,32 @@ void EnHy_Update(Actor* thisx, GlobalContext* globalCtx) {
     func_80A70734(this, globalCtx);
 }
 
-#ifdef NON_MATCHING
-// Hacked up via permuter to try and match
-// currently only missing a stack var
-// without the hacks it's pretty bad,
-// a lot caused by the reused 0x80000000 for PHYSICAL_TO_VIRTUAL()
 s32 func_80A716B8(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     EnHy* this = THIS;
-    s32 new_var;
+    s32* ptr;
     Vec3s sp48;
     u8 idx;
-    s32* ptr;
+    u32 val;
+
+    // Required anywhere
+    if (1){};
 
     OPEN_DISPS(globalCtx->state.gfxCtx, "../z_en_hy.c", 2170);
 
     if (limbIndex == 15) {
 
         gSPSegment(oGfxCtx->polyOpa.p++, 0x06, globalCtx->objectCtx.status[this->unk_196].segment);
-        gSegments[6] = PHYSICAL_TO_VIRTUAL(globalCtx->objectCtx.status[this->unk_196].segment);
-        new_var = 0x80000000;
+        gSegments[6] = VIRTUAL_TO_PHYSICAL(globalCtx->objectCtx.status[this->unk_196].segment);
         idx = D_80A722D8[this->actor.params & 0x7F].unk_0;
         *dList = D_80A71F50[idx].unk_4;
 
         ptr = D_80A71F50[idx].unk_8;
         if (ptr != NULL) {
-            void* val = ptr[this->unk_218];
-            gSPSegment(oGfxCtx->polyOpa.p++, 0x0A,
-                       (void*)((((u32)gSegments[(((unsigned int)val) << 4) >> 28]) + new_var) +
-                               (((unsigned int)val) & 0x00ffffff)));
+            val = ptr[this->unk_218];
+            gSPSegment(oGfxCtx->polyOpa.p++, 0x0A, SEGMENTED_TO_VIRTUAL(val));
         }
-        gSegments[6] = PHYSICAL_TO_VIRTUAL(globalCtx->objectCtx.status[this->unk_198].segment);
+
+        gSegments[6] = VIRTUAL_TO_PHYSICAL(globalCtx->objectCtx.status[this->unk_198].segment);
     }
 
     if (limbIndex == 15) {
@@ -1166,14 +1162,8 @@ s32 func_80A716B8(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* p
     }
 
     CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_en_hy.c", 2228);
-    if (1) {};
-
     return 0;
 }
-#else
-s32 func_80A716B8(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx);
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_En_Hy/func_80A716B8.s")
-#endif
 
 void func_80A71A64(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
     EnHy* this = THIS;
