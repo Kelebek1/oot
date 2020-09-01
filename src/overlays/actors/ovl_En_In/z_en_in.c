@@ -1,3 +1,9 @@
+/*
+ * File: z_en_in.c
+ * Overlay: ovl_En_In
+ * Description: Ingo
+ */
+
 #include "z_en_in.h"
 
 #define FLAGS 0x00000019
@@ -64,12 +70,15 @@ static struct_D_80AA1678 D_80A7B878[] = {
     { 0x06014CA8, 1.0f, 0x00, 0.0f },
 };
 
-static AnimationHeader* D_80A7B918[] = { 0x060151C8, 0x06015DF0, 0x06016B3C, 0x06015814,
-                                         0x0601646C, 0x060175D0, 0x06017B58, 0x06018C38 };
+static AnimationHeader* D_80A7B918[] = {
+    0x060151C8, 0x06015DF0, 0x06016B3C, 0x06015814, 0x0601646C, 0x060175D0, 0x06017B58, 0x06018C38,
+};
 
-static Gfx* D_80A7B938[] = { 0x00000000, 0x00000000, 0x06013688, 0x060137C0, 0x06013910, 0x060132B8, 0x060133F0,
-                             0x06013540, 0x06013100, 0x06011758, 0x06012AC0, 0x06012BF0, 0x06012D20, 0x06012480,
-                             0x060125B0, 0x060126E0, 0x06011AD8, 0x06012350, 0x06012220, 0x06012120 };
+static Gfx* D_80A7B938[] = {
+    0x00000000, 0x00000000, 0x06013688, 0x060137C0, 0x06013910, 0x060132B8, 0x060133F0,
+    0x06013540, 0x06013100, 0x06011758, 0x06012AC0, 0x06012BF0, 0x06012D20, 0x06012480,
+    0x060125B0, 0x060126E0, 0x06011AD8, 0x06012350, 0x06012220, 0x06012120,
+};
 
 s32 func_80A78FB0(GlobalContext* globalCtx) {
     if (gSaveContext.eventChkInf[1] & 0x10) {
@@ -1003,17 +1012,17 @@ s32 EnIn_OverrideLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, 
     }
 
     if (limbIndex == 16) {
-        Matrix_Translate(1500.0f, 0.0f, 0.0f, 1);
+        Matrix_Translate(1500.0f, 0.0f, 0.0f, MTXMODE_APPLY);
         sp2C = this->unk_308.unk_08;
-        Matrix_RotateZ((sp2C.x / 32768.0f) * 3.1415927f, 1);
-        Matrix_RotateX((sp2C.y / 32768.0f) * 3.1415927f, 1);
-        Matrix_Translate(-1500.0f, 0.0f, 0.0f, 1);
+        Matrix_RotateZ((sp2C.x / 32768.0f) * M_PI, MTXMODE_APPLY);
+        Matrix_RotateX((sp2C.y / 32768.0f) * M_PI, MTXMODE_APPLY);
+        Matrix_Translate(-1500.0f, 0.0f, 0.0f, MTXMODE_APPLY);
     }
 
     if (limbIndex == 9) {
         sp2C = this->unk_308.unk_0E;
-        Matrix_RotateX((sp2C.x / 32768.0f) * 3.1415927f, 1);
-        Matrix_RotateY((sp2C.y / 32768.0f) * 3.1415927f, 1);
+        Matrix_RotateX((sp2C.x / 32768.0f) * M_PI, MTXMODE_APPLY);
+        Matrix_RotateY((sp2C.y / 32768.0f) * M_PI, MTXMODE_APPLY);
     }
 
     if ((limbIndex == 9) || (limbIndex == 10) || (limbIndex == 13)) {
@@ -1028,7 +1037,7 @@ void EnIn_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec
     EnIn* this = THIS;
     Vec3f sp38 = { 1600.0f, 0.0f, 0.0f };
 
-    OPEN_DISPS(globalCtx->state.gfxCtx, "../z_en_in.c", 0x91F);
+    OPEN_DISPS(globalCtx->state.gfxCtx, "../z_en_in.c", 2335);
 
     if (limbIndex == 16) {
         Matrix_MultVec3f(&sp38, &this->actor.posRot2.pos);
@@ -1043,7 +1052,7 @@ void EnIn_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec
         gSPDisplayList(oGfxCtx->polyOpa.p++, D_06007BF8);
     }
 
-    CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_en_in.c", 0x93D);
+    CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_en_in.c", 2365);
 }
 
 void EnIn_Draw(Actor* thisx, GlobalContext* globalCtx) {
@@ -1051,7 +1060,7 @@ void EnIn_Draw(Actor* thisx, GlobalContext* globalCtx) {
 
     EnIn* this = THIS;
 
-    OPEN_DISPS(globalCtx->state.gfxCtx, "../z_en_in.c", 0x950);
+    OPEN_DISPS(globalCtx->state.gfxCtx, "../z_en_in.c", 2384);
 
     if (this->actionFunc != func_80A79FB0) {
         func_80093D18(globalCtx->state.gfxCtx);
@@ -1061,5 +1070,5 @@ void EnIn_Draw(Actor* thisx, GlobalContext* globalCtx) {
                          EnIn_OverrideLimbDraw, EnIn_PostLimbDraw, &this->actor);
     }
 
-    CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_en_in.c", 0x970);
+    CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_en_in.c", 2416);
 }

@@ -9,17 +9,6 @@ struct EnIn;
 typedef void (*EnInActionFunc)(struct EnIn*, GlobalContext*);
 
 typedef struct {
-    union {
-        struct {
-            s16 unk_0;
-            s16 unk_2;
-            s16 unk_4;
-        };
-        s16 arr[3];
-    };
-} EnInStruct1;
-
-typedef struct {
     s16 unk_00;
     s16 unk_02;
     s16 unk_04;
@@ -32,7 +21,7 @@ typedef struct {
     s16 unk_12;
     s16 unk_14;
     s16 unk_16;
-} EnInStruct2;
+} EnInStruct1;
 
 typedef struct EnIn {
     /* 0x0000 */ Actor actor;
@@ -57,12 +46,7 @@ typedef struct EnIn {
     /* 0x02F0 */ Vec3f unk_2F0;
     /* 0x02FC */ Vec3f unk_2FC;
     /* 0x0308 */ struct_80034A14_arg1 unk_308;
-    ///* 0x030A */ char unk_30A[0x6];
-    ///* 0x0310 */ EnInStruct1 unk_310;
-    ///* 0x0316 */ EnInStruct1 unk_316;
-    ///* 0x031C */ f32 unk_31C;
-    ///* 0x0320 */ Vec3f unk_320;
-    /* 0x0330 */ EnInStruct2 unk_330[5];
+    /* 0x0330 */ EnInStruct1 unk_330[5];
 } EnIn; // size = 0x03A8
 
 extern const ActorInit En_In_InitVars;
