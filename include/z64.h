@@ -1234,7 +1234,9 @@ typedef struct GlobalContext {
     /* 0x11D30 */ s16 unk_11D30[2];
     /* 0x11D34 */ u8 nbTransitionActors;
     /* 0x11D38 */ TransitionActorEntry* transitionActorList;
-    /* 0x11D3C */ char unk_11D3C[0x10];
+    /* 0x11D3C */ char unk_11D3C[0x8];
+    /* 0x11D44 */ s32 (*unk_11D44)(struct GlobalContext*);
+    /* 0x11D48 */ char unk_11D48[0x4];
     /* 0x11D4C */ s32 (*unk_11D4C)(struct GlobalContext*, Actor*);
     /* 0x11D50 */ char unk_11D50[0x8];
     /* 0x11D58 */ void (*unk_11D58)(struct GlobalContext*, s32);
