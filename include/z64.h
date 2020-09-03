@@ -151,7 +151,9 @@ typedef struct {
     /* 0x0EF8 */ u16          infTable[30]; // "inf_table"
     /* 0x0F34 */ char         unk_F34[0x0004];
     /* 0x0F38 */ u32          worldMapAreaData; // "area_arrival"
-    /* 0x0F3C */ char         unk_F3C[0x0389];
+    /* 0x0F3C */ char         unk_F3C[0x0004];
+    /* 0x0F40 */ u8           unk_F40;
+    /* 0x0F41 */ char         unk_F41[0x0384];
     /* 0x12C5 */ u8           unk_12C5;
     /* 0x12C6 */ char         unk_12C6[0x0082];
     /* 0x1348 */ HorseData    horseData;
@@ -712,7 +714,8 @@ typedef struct {
     /* 0xE3F6 */ char   unk_E3F6[0x16];
     /* 0xE40C */ u16    unk_E40C;
     /* 0xE40E */ s16    unk_E40E;
-    /* 0xE410 */ char   unk_E410[0x08];
+    /* 0xE410 */ u8     unk_E410;
+    /* 0xE411 */ char   unk_E411[0x07];
 } MessageContext; // size = 0xE418
 
 typedef struct {
