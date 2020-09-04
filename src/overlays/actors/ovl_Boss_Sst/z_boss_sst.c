@@ -479,7 +479,7 @@ s16 D_80938CC4; // cam
 
 void BossSst_Init(BossSst* this, GlobalContext* globalCtx) {
     ColliderCylinder* collider2 = &this->collider2;
-    ColliderCylinder* collider1 = &this->collider1;
+    ColliderJntSph* collider1 = &this->collider1;
 
     Actor_ProcessInitChain(&this->actor, sInitChain);
     Collider_InitCylinder(globalCtx, collider2);
@@ -2963,60 +2963,55 @@ s32 func_80934628(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* p
     return 0;
 }
 
-#ifdef NON_EQUIVALENT
-// the loop
 void BossSst_Draw(Actor* thisx, GlobalContext* globalCtx) {
     BossSst* this = THIS;
-    BossSstStruct2* ptr;
-    BossSstStruct2* ptr2;
-    u32 i;
-    s32 idx;
-    u32 end;
-
-    GraphicsContext* gfxCtx = globalCtx->state.gfxCtx;
-    Gfx* dispRefs[4];
-
+    
     OPEN_DISPS(globalCtx->state.gfxCtx, "../z_boss_sst.c", 6563);
 
     func_80093D18(globalCtx->state.gfxCtx);
 
-    gDPSetPrimColor(gfxCtx->polyOpa.p++, 0, 0x80, D_80937464.r, D_80937464.g, D_80937464.b, 0xFF);
+    gDPSetPrimColor(oGfxCtx->polyOpa.p++, 0, 0x80, D_80937464.r, D_80937464.g, D_80937464.b, 0xFF);
 
     if (D_80937448 == 0) {
-        gSPSegment(gfxCtx->polyOpa.p++, 0x08, &D_80116280[2]);
+        gSPSegment(oGfxCtx->polyOpa.p++, 0x08, &D_80116280[2]);
     } else {
-        gDPSetEnvColor(gfxCtx->polyOpa.p++, D_80937468.r, D_80937468.g, D_80937468.b, 0x00);
-        gSPSegment(gfxCtx->polyOpa.p++, 0x08, D_80936990);
+        gDPSetEnvColor(oGfxCtx->polyOpa.p++, D_80937468.r, D_80937468.g, D_80937468.b, 0x00);
+        gSPSegment(oGfxCtx->polyOpa.p++, 0x08, D_80936990);
     }
 
     SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, this->skelAnime.dListCount,
                      func_809345A4, func_809345F0, &this->actor);
     if (this->unk_9D2 >= 2) {
+        BossSstStruct2* ptr;
+        BossSstStruct2* ptr2;
+        s32 i;
+        s32 idx;
+        s32 end;
+        s32 pad;
+
         func_80093D84(globalCtx->state.gfxCtx);
-        // s0 = ptr, for func_800CB650 arg1, func_800D1694
 
-        // ptr2 = &this->unk_9D4[(((this->unk_9D0 + 4) % 7) + 2) % 7];
-        // what = (this->unk_9D0 + 4) / 7;
-        // me = what * 0x1C;
+        end = this->unk_9D2 >> 1;
         idx = (this->unk_9D0 + 4) % 7;
-        end = this->unk_9D2 >> 2;
+        ptr = &this->unk_9D4[idx];
+        ptr2 = &this->unk_9D4[(idx + 2) % 7];
 
-        for (i = 0; i < end; i++, ptr = &this->unk_9D4[idx]) {
-            if (Math3D_Vec3fDistSq(&this->unk_9D4[(idx + 2) % 7].unk_00, &ptr->unk_00) > 900.0f) {
+        for (i = 0; i < end; i++) {
+            if (Math3D_Vec3fDistSq(&ptr2->unk_00, &ptr->unk_00) > 900.0f) {
                 func_800D1694(ptr->unk_00.x, ptr->unk_00.y, ptr->unk_00.z, &ptr->unk_0C);
                 Matrix_Scale(0.02f, 0.02f, 0.02f, 1);
 
-                gSPSegment(gfxCtx->polyXlu.p++, 0x08, D_809369A8);
-                gDPSetPrimColor(gfxCtx->polyXlu.p++, 0, 0, ((3 - i) * 10) + 20, ((3 - i) * 20) + 50,
-                                ((3 - i) * 30) + 70, 0);
+                gSPSegment(oGfxCtx->polyXlu.p++, 0x08, D_809369A8);
+                gDPSetPrimColor(oGfxCtx->polyXlu.p++, 0, 0, ((3 - i) * 10) + 20, 0, ((3 - i) * 20) + 50,
+                                ((3 - i) * 30) + 70);
 
-                gfxCtx->polyXlu.p =
+                oGfxCtx->polyXlu.p =
                     SkelAnime_DrawSV2(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl,
-                                      this->skelAnime.dListCount, func_80934628, NULL, ptr, gfxCtx->polyXlu.p);
+                                      this->skelAnime.dListCount, func_80934628, NULL, ptr, oGfxCtx->polyXlu.p);
             }
             idx = (idx + 5) % 7;
-            // what = (what + 5) % 7;
-            // ptr++;
+            ptr2 = ptr;
+            ptr = &this->unk_9D4[idx];
         }
     }
 
@@ -3024,9 +3019,6 @@ void BossSst_Draw(Actor* thisx, GlobalContext* globalCtx) {
 
     func_8093639C(&this->actor, globalCtx);
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Sst/BossSst_Draw.s")
-#endif
 
 s32 func_80934A44(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx,
                   Gfx** gfx) {
