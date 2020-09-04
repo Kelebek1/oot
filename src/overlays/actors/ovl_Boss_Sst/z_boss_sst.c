@@ -3179,25 +3179,25 @@ void func_809352DC(Actor* thisx, GlobalContext* globalCtx) {
     func_8093639C(&this->actor, globalCtx);
 }
 
-#ifdef NON_MATCHING
-// Multiply args flipped
 void func_80935764(BossSst* this) {
-    // f32 sp24[1];
-    Vec3f sp20;
-    f32 tmp;
+    s32 pad;
+    f32 sp24;
+    f32 sp20;
     s32 i;
     BossSstStruct1* ptr;
+    Vec3f* ptr2;
 
     this->unk_196 = 3;
-    sp20.x = Math_Sins(this->actor.shape.rot.y);
-    sp20.y = Math_Coss(this->actor.shape.rot.y);
+    sp20 = Math_Sins(this->actor.shape.rot.y);
+    sp24 = Math_Coss(this->actor.shape.rot.y);
 
     for (i = 0; i < 3; i++) {
         ptr = &this->unk_700[i];
+        ptr2 = &D_809378C4[i];
 
-        ptr->unk_00.x = (sp20.y * D_809378C4[i].x) + (this->actor.posRot.pos.x + (sp20.x * D_809378C4[i].z));
+        ptr->unk_00.x = (this->actor.posRot.pos.x + (sp20 * ptr2->z)) + (sp24 * ptr2->x);
         ptr->unk_00.y = 0.0f;
-        ptr->unk_00.z = (this->actor.posRot.pos.z + (sp20.y * D_809378C4[i].z)) - (D_809378C4[i].x * sp20.x);
+        ptr->unk_00.z = (this->actor.posRot.pos.z + (sp24 * ptr2->z)) - (sp20 * ptr2->x);
 
         ptr->unk_1E = 0x5AA;
         ptr->unk_24 = 0xFE;
@@ -3206,9 +3206,6 @@ void func_80935764(BossSst* this) {
 
     this->unk_700[3].unk_22 = -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Sst/func_80935764.s")
-#endif
 
 void func_80935890(BossSst* this) {
     this->unk_196 = 3;
