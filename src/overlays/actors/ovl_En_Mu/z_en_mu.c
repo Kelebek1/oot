@@ -40,7 +40,7 @@ const ActorInit En_Mu_InitVars = {
     (ActorFunc)EnMu_Draw,
 };
 
-void func_80AB0420(EnMu* this, EnMuActionFunc actionFunc) {
+void EnMu_SetupAction(EnMu* this, EnMuActionFunc actionFunc) {
     this->actionFunc = actionFunc;
 }
 
@@ -126,7 +126,7 @@ void EnMu_Init(Actor* thisx, GlobalContext* globalCtx) {
     this->actor.unk_1F = 6;
     Actor_SetScale(&this->actor, 0.01f);
     func_80AB0428(this, globalCtx);
-    func_80AB0420(this, func_80AB0724);
+    EnMu_SetupAction(this, func_80AB0724);
 }
 
 void EnMu_Destroy(Actor* thisx, GlobalContext* globalCtx) {
@@ -159,7 +159,7 @@ void EnMu_Update(Actor* thisx, GlobalContext* globalCtx) {
     this->actor.posRot2.pos.y = this->actor.posRot2.pos.y + 60.0f;
 }
 
-s32 func_80AB08A4(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
+s32 EnMu_OverrideLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     EnMu* this = THIS;
 
     if ((limbIndex == 5) || (limbIndex == 6) || (limbIndex == 7) || (limbIndex == 11) || (limbIndex == 12) ||
@@ -171,7 +171,7 @@ s32 func_80AB08A4(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* p
     return 0;
 }
 
-void func_80AB0994(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
+void EnMu_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx) {
 }
 
 Gfx* func_80AB09A8(GraphicsContext* gfxCtx, u8 r, u8 g, u8 b, u8 a) {
@@ -216,7 +216,7 @@ void EnMu_Draw(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     SkelAnime_DrawSV(globalCtx, this->skelAnime.skeleton, this->skelAnime.limbDrawTbl, this->skelAnime.dListCount,
-                     func_80AB08A4, func_80AB0994, &this->actor);
+                     EnMu_OverrideLimbDraw, EnMu_PostLimbDraw, &this->actor);
 
     CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_en_mu.c", 534);
 }
