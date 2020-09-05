@@ -523,6 +523,8 @@ f32 func_8003CA0C(GlobalContext*, CollisionContext*, CollisionPoly**, u32*, Acto
 f32 func_8003CB30(CollisionContext*, CollisionPoly*, Vec3f*, MtxF*);
 f32 func_8003CCA4(CollisionContext*, CollisionPoly**, s32*, Vec3f*);
 // ? func_8003CDD4(?);
+s32 func_8003D464(CollisionContext* colCtx, Vec3f* posResult, Vec3f* posNext, Vec3f* posPrev, f32 arg4,
+                  CollisionPoly** outPoly, f32 checkHeight);
 s32 func_8003D52C(CollisionContext*, Vec3f*, Vec3f*, Vec3f*, f32, CollisionPoly**, u32*, Actor*, f32);
 s32 func_8003D594(CollisionContext*, Vec3f*, Vec3f*, Vec3f*, f32, CollisionPoly**, u32*, Actor*, f32);
 // ? func_8003D600(?);
