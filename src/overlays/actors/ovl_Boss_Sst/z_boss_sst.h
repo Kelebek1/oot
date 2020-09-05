@@ -8,7 +8,6 @@ struct BossSst;
 
 typedef void (*BossSstActionFunc)(struct BossSst*, GlobalContext*);
 
-
 typedef struct {
     /* 0x0000 */ Vec3f unk_00;
     /* 0x0010 */ Vec3f unk_0C;
@@ -29,7 +28,6 @@ typedef struct {
     /* 0x0018 */ s16 unk_18;
     /* 0x001A */ char unk_1A[0x2];
 } BossSstStruct2; // size = 0x1C
-
 
 typedef struct BossSst {
     /* 0x0000 */ Actor actor;

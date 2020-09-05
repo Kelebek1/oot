@@ -1,7 +1,7 @@
 /*
  * File: z_boss_sst.c
  * Overlay: ovl_Boss_Sst
- * Description: Bongo Bongo's Hand
+ * Description: Bongo Bongo's Hands
  */
 
 #include "z_boss_sst.h"
@@ -154,26 +154,30 @@ extern Gfx D_06017EE0[];
 extern Gfx D_06017F80[];
 extern Gfx D_040184B0[];
 
-Gfx D_80936990[] = { gsDPPipeSync(),
-                     gsDPSetCombineLERP(NOISE, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, 0, 0, 0, 1, COMBINED, 0, SHADE, 0,
-                                        0, 0, 0, COMBINED),
-                     gsSPEndDisplayList() };
+static Gfx D_80936990[] = {
+    gsDPPipeSync(),
+    gsDPSetCombineLERP(NOISE, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, 0, 0, 0, 1, COMBINED, 0, SHADE, 0, 0, 0, 0,
+                       COMBINED),
+    gsSPEndDisplayList(),
+};
 
-Gfx D_809369A8[] = {
+static Gfx D_809369A8[] = {
     gsDPPipeSync(),
     gsDPSetCombineLERP(0, 0, 0, PRIMITIVE, 0, 0, 0, PRIMITIVE, COMBINED, 0, SHADE, 0, 0, 0, 0, COMBINED),
     gsDPSetRenderMode(AA_EN | Z_CMP | Z_UPD | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL | G_RM_PASS,
                       AA_EN | Z_CMP | Z_UPD | IM_RD | CLR_ON_CVG | CVG_DST_WRAP | ZMODE_XLU | FORCE_BL |
                           GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_1MA)),
-    gsSPEndDisplayList()
+    gsSPEndDisplayList(),
 };
 
-Vtx D_809369C8[] = { VTX(0x0190, 0x0190, 0x0000, 0x0800, 0x0000, 0xFF, 0xFF, 0xFF, 0xFF),
-                     VTX(0xFE70, 0x0190, 0x0000, 0x0000, 0x0000, 0xFF, 0xFF, 0xFF, 0xFF),
-                     VTX(0xFE70, 0xFE70, 0x0000, 0x0000, 0x1800, 0xFF, 0xFF, 0xFF, 0xFF),
-                     VTX(0x0190, 0xFE70, 0x0000, 0x0800, 0x1800, 0xFF, 0xFF, 0xFF, 0xFF) };
+static Vtx D_809369C8[] = {
+    VTX(0x0190, 0x0190, 0x0000, 0x0800, 0x0000, 0xFF, 0xFF, 0xFF, 0xFF),
+    VTX(0xFE70, 0x0190, 0x0000, 0x0000, 0x0000, 0xFF, 0xFF, 0xFF, 0xFF),
+    VTX(0xFE70, 0xFE70, 0x0000, 0x0000, 0x1800, 0xFF, 0xFF, 0xFF, 0xFF),
+    VTX(0x0190, 0xFE70, 0x0000, 0x0800, 0x1800, 0xFF, 0xFF, 0xFF, 0xFF),
+};
 
-u32 D_80936A08[] = {
+static u32 D_80936A08[] = {
     0x04040404, 0x04040404, 0x04040404, 0x04040404, 0x08080808, 0x08080808, 0x08080808, 0x08080808, 0x0C0C0C0C,
     0x0C0C0C0C, 0x0C0C0C0C, 0x0C0C0C0C, 0x10101010, 0x10101010, 0x10101010, 0x10101010, 0x14141414, 0x14141414,
     0x14141414, 0x14141414, 0x18181818, 0x18181818, 0x18181818, 0x18181818, 0x1C1C1C1C, 0x1C1C1C1C, 0x1C1C1C1C,
@@ -202,10 +206,10 @@ u32 D_80936A08[] = {
     0xE4E4E4E4, 0xE4E4E4E4, 0xE4E4E4E4, 0xE8E8E8E8, 0xE8E8E8E8, 0xE8E8E8E8, 0xE8E8E8E8, 0xECECECEC, 0xECECECEC,
     0xECECECEC, 0xECECECEC, 0xF0F0F0F0, 0xF0F0F0F0, 0xF0F0F0F0, 0xF0F0F0F0, 0xF4F4F4F4, 0xF4F4F4F4, 0xF4F4F4F4,
     0xF4F4F4F4, 0xF8F8F8F8, 0xF8F8F8F8, 0xF8F8F8F8, 0xF8F8F8F8, 0xFCFCFCFC, 0xFCFCFCFC, 0xFCFCFCFC, 0xFCFCFCFC,
-    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 };
 
-Gfx D_80936E08[] = {
+static Gfx D_80936E08[] = {
     gsDPPipeSync(),
     gsSPMatrix(0x01000000, G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
@@ -222,11 +226,13 @@ Gfx D_80936E08[] = {
     gsSPEndDisplayList(),
 };
 
-Vtx D_80936E90[] = { VTX(0xFF80, 0x0000, 0x004B, 0xFD81, 0xFF81, 0xA0, 0x97, 0xCD, 0xFF),
-                     VTX(0x0081, 0x0000, 0x004A, 0x066A, 0xFF5B, 0xA0, 0x97, 0xCD, 0xFF),
-                     VTX(0x0000, 0x0000, 0xFF6C, 0x0216, 0x0726, 0xA0, 0x97, 0xCD, 0xFF) };
+static Vtx D_80936E90[] = {
+    VTX(0xFF80, 0x0000, 0x004B, 0xFD81, 0xFF81, 0xA0, 0x97, 0xCD, 0xFF),
+    VTX(0x0081, 0x0000, 0x004A, 0x066A, 0xFF5B, 0xA0, 0x97, 0xCD, 0xFF),
+    VTX(0x0000, 0x0000, 0xFF6C, 0x0216, 0x0726, 0xA0, 0x97, 0xCD, 0xFF),
+};
 
-u32 D_80936EC0[] = {
+static u32 D_80936EC0[] = {
     0x00000000, 0x00000000, 0x01060907, 0x1215222F, 0x3129200D, 0x06030100, 0x00000000, 0x00000000, 0x00000000,
     0x00000101, 0x07203A46, 0x526B8591, 0x968E744C, 0x2C1B0F09, 0x00000000, 0x00000000, 0x00000000, 0x0003040F,
     0x235793B3, 0xC9D8E4E9, 0xE9E7D2B3, 0x8B704B29, 0x0F040000, 0x00000000, 0x00000000, 0x01061538, 0x6EA4DDF2,
@@ -255,46 +261,49 @@ u32 D_80936EC0[] = {
     0x00032154, 0x79B0D8F1, 0xF8FFFFFF, 0xFDFAF7EF, 0xE6D3B685, 0x4B1A0400, 0x00000000, 0x00000000, 0x0000030A,
     0x183D73AA, 0xD5ECF4F7, 0xF2E1CAB3, 0x9E7D5129, 0x0C010000, 0x00000000, 0x00000000, 0x00000000, 0x0003040C,
     0x274E6B73, 0x62544C43, 0x3A271706, 0x01000000, 0x00000000, 0x00000000, 0x00000000, 0x00000100, 0x060F1B15,
-    0x100C120F, 0x0C090401, 0x00000000, 0x00000000
+    0x100C120F, 0x0C090401, 0x00000000, 0x00000000,
 };
 
-Gfx D_809372C0[] = { gsDPPipeSync(),
-                     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
-                     gsDPLoadTextureBlock(D_80936EC0, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-                                          G_TX_NOMIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
-                     gsDPSetCombineLERP(NOISE, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0,
-                                        COMBINED, 0, 0, 0, COMBINED),
-                     gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2),
-                     gsSPClearGeometryMode(G_FOG | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
-                     gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
-                     gsSPVertex(D_80936E90, 3, 0),
-                     gsSP1Triangle(0, 1, 2, 0),
-                     gsSPEndDisplayList() };
+static Gfx D_809372C0[] = {
+    gsDPPipeSync(),
+    gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
+    gsDPLoadTextureBlock(D_80936EC0, G_IM_FMT_I, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP,
+                         G_TX_NOMIRROR | G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
+    gsDPSetCombineLERP(NOISE, ENVIRONMENT, PRIMITIVE, ENVIRONMENT, TEXEL0, 0, ENVIRONMENT, 0, 0, 0, 0, COMBINED, 0, 0,
+                       0, COMBINED),
+    gsDPSetRenderMode(G_RM_PASS, G_RM_AA_ZB_XLU_DECAL2),
+    gsSPClearGeometryMode(G_FOG | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR),
+    gsSPSetGeometryMode(G_CULL_BACK | G_LIGHTING),
+    gsSPVertex(D_80936E90, 3, 0),
+    gsSP1Triangle(0, 1, 2, 0),
+    gsSPEndDisplayList(),
+};
 
-Vec3f D_80937340 = { -50.0f, 0.0f, 0.0f };
-Vec3f D_8093734C = { 0.0f, 0.0f, 0.0f };
-Vec3f D_80937358 = { 100.0f, 100.0f, 0.0f };
-Vec3f D_80937364 = { 0.0f, 0.0f, 0.0f };
-Vec3f D_80937370 = { 0.0f, 0.0f, 0.0f };
+static Vec3f D_80937340 = { -50.0f, 0.0f, 0.0f };
+static Vec3f D_8093734C = { 0.0f, 0.0f, 0.0f };
+static Vec3f D_80937358 = { 100.0f, 100.0f, 0.0f };
+static Vec3f D_80937364 = { 0.0f, 0.0f, 0.0f };
+static Vec3f D_80937370 = { 0.0f, 0.0f, 0.0f };
 
-Vec3f D_8093737C[] = { { -100.0f, 300.0f, 0.0f }, { 100.0f, 300.0f, 100.0f }, { -50.0f, 600.0f, 100.0f },
-                       { 0.0f, 400.0f, 200.0f },  { 0.0f, 200.0f, 200.0f },   { -100.0f, 0.0f, 200.0f },
-                       { -200.0f, 0.0f, 100.0f }, { -110.0f, 180.0f, 730.0f } };
+static Vec3f D_8093737C[] = {
+    { -100.0f, 300.0f, 0.0f }, { 100.0f, 300.0f, 100.0f }, { -50.0f, 600.0f, 100.0f }, { 0.0f, 400.0f, 200.0f },
+    { 0.0f, 200.0f, 200.0f },  { -100.0f, 0.0f, 200.0f },  { -200.0f, 0.0f, 100.0f },  { -110.0f, 180.0f, 730.0f },
+};
 
-Vec3f D_809373DC[] = { { 200.0f, 800.0f, 800.0f },  { -200.0f, 700.0f, 1400.0f }, { 200.0f, 100.0f, 750.0f },
-                       { 0.0f, 200.0f, 900.0f },    { 0.0f, 200.0f, 900.0f },     { 300.0f, 400.0f, 1200.0f },
-                       { -100.0f, 200.0f, 800.0f }, { -100.0f, 200.0f, 800.0f } };
+static Vec3f D_809373DC[] = {
+    { 200.0f, 800.0f, 800.0f }, { -200.0f, 700.0f, 1400.0f }, { 200.0f, 100.0f, 750.0f },  { 0.0f, 200.0f, 900.0f },
+    { 0.0f, 200.0f, 900.0f },   { 300.0f, 400.0f, 1200.0f },  { -100.0f, 200.0f, 800.0f }, { -100.0f, 200.0f, 800.0f },
+};
 
-Vec3f D_8093743C = { 0.0f, 0.0f, 0.0f };
-u32 D_80937448 = 0;
+static Vec3f D_8093743C = { 0.0f, 0.0f, 0.0f };
+static u32 D_80937448 = 0;
 
 // Unreferenced
 static u32 D_8093744C[] = { 0, 0, 0, 0, 0, 0 };
 
-Color_RGBA8 D_80937464 = { 255, 255, 255, 255 };
-Color_RGBA8 D_80937468 = { 0, 0, 0, 255 };
-
-s32 D_8093746C[] = { 0x00000000, 0x00000000 };
+static Color_RGBA8 D_80937464 = { 255, 255, 255, 255 };
+static Color_RGBA8 D_80937468 = { 0, 0, 0, 255 };
+static s32 D_8093746C[] = { 0x00000000, 0x00000000 };
 
 const ActorInit Boss_Sst_InitVars = {
     ACTOR_BOSS_SST,
@@ -426,27 +435,21 @@ static ColliderCylinderInit sCylinderInit2 = {
     { 85, 1, 0, { 0, 0, 0 } },
 };
 
-CollisionCheckInfoInit D_80937824 = { 0x24, 0x0064, 0x0064, 0xC8 };
+static CollisionCheckInfoInit D_80937824 = { 0x24, 0x0064, 0x0064, 0xC8 };
 
-DamageTable D_8093782C = { 0x00, 0x02, 0x01, 0x02, 0x00, 0x02, 0x02, 0x02, 0x01, 0x02, 0x04,
-                           0x02, 0x34, 0x02, 0x04, 0x02, 0x02, 0x00, 0x34, 0x44, 0x00, 0x00,
-                           0x01, 0x04, 0x02, 0x02, 0x08, 0x04, 0x00, 0x00, 0x04, 0x00 };
+static DamageTable D_8093782C = {
+    0x00, 0x02, 0x01, 0x02, 0x00, 0x02, 0x02, 0x02, 0x01, 0x02, 0x04, 0x02, 0x34, 0x02, 0x04, 0x02,
+    0x02, 0x00, 0x34, 0x44, 0x00, 0x00, 0x01, 0x04, 0x02, 0x02, 0x08, 0x04, 0x00, 0x00, 0x04, 0x00,
+};
 
-AnimationHeader* D_8093784C[] = { 0x060002E8, 0x06005860 };
-
-AnimationHeader* D_80937854[] = { 0x06004EC4, 0x0600A434 };
-
-AnimationHeader* D_8093785C[] = { 0x06004FB4, 0x0600A524 };
-
-AnimationHeader* D_80937864[] = { 0x060050A8, 0x0600A618 };
-
-AnimationHeader* D_8093786C[] = { 0x0600529C, 0x0600A848 };
-
-AnimationHeader* D_80937874[] = { 0x0600539C, 0x0600A948 };
-
-AnimationHeader* D_8093787C[] = { 0x0600549C, 0x0600AA4C };
-
-AnimationHeader* D_80937884[] = { 0x06005588, 0x0600AB38 };
+static AnimationHeader* D_8093784C[] = { 0x060002E8, 0x06005860 };
+static AnimationHeader* D_80937854[] = { 0x06004EC4, 0x0600A434 };
+static AnimationHeader* D_8093785C[] = { 0x06004FB4, 0x0600A524 };
+static AnimationHeader* D_80937864[] = { 0x060050A8, 0x0600A618 };
+static AnimationHeader* D_8093786C[] = { 0x0600529C, 0x0600A848 };
+static AnimationHeader* D_80937874[] = { 0x0600539C, 0x0600A948 };
+static AnimationHeader* D_8093787C[] = { 0x0600549C, 0x0600AA4C };
+static AnimationHeader* D_80937884[] = { 0x06005588, 0x0600AB38 };
 
 static InitChainEntry sInitChain[] = {
     ICHAIN_S8(naviEnemyId, 41, ICHAIN_CONTINUE),
@@ -454,28 +457,12 @@ static InitChainEntry sInitChain[] = {
     ICHAIN_VEC3F_DIV1000(scale, 20, ICHAIN_STOP),
 };
 
-Color_RGBA8_n D_80937898 = { 80, 80, 150, 255 };
-Color_RGBA8_n D_8093789C = { 40, 40, 80, 255 };
-
-Color_RGBA8_n D_809378A0 = { 0, 0, 0, 255 };
-Color_RGBA8_n D_809378A4 = { 100, 100, 100, 0 };
-
-// Color_RGBA8_n D_8093789C = { 40, 40, 80, 255 };
-
-s32 D_809378A8 = 0;
-Vec3f D_809378AC = { 0.0f, 0.0f, 0.0f };
-Vec3f D_809378B8 = { 1000.0f, 0.0f, 0.0f };
-Vec3f D_809378C4[] = { { 0.0f, 0.0f, 340.0f }, { -160.0f, 0.0f, 250.0f }, { 160.0f, 0.0f, 250.0f } };
-
-BossSst* D_80938C90;    // Head?
-BossSst* D_80938C98[2]; // Hands?
-// BossSst* D_80938C98; // Hand 1
-// BossSst* D_80938C9C; // Hand 2
-BgSstFloor* D_80938CA0;
-Vec3f D_80938CA8[2];
-
-s16 D_80938CC0[2];
-s16 D_80938CC4; // cam
+static BossSst* D_80938C90;    // Head?
+static BossSst* D_80938C98[2]; // Hands
+static BgSstFloor* D_80938CA0;
+static Vec3f D_80938CA8[2];
+static s16 D_80938CC0[2];
+static s16 D_80938CC4; // cam
 
 void BossSst_Init(BossSst* this, GlobalContext* globalCtx) {
     ColliderCylinder* collider2 = &this->collider2;
@@ -1391,9 +1378,15 @@ void func_8092F894(BossSst* this) {
     this->actionFunc = func_8092F8F0;
 }
 
-#ifdef NON_MATCHING
-// RGBA assigns
 void func_8092F8F0(BossSst* this, GlobalContext* globalCtx) {
+    static Color_RGBA8_n D_80937898 = { 80, 80, 150, 255 };
+    static Color_RGBA8_n D_8093789C = { 40, 40, 80, 255 };
+    // Unreferenced
+    static Color_RGBA8_n D_809378A0[2] = {
+        { 0, 0, 0, 255 },
+        { 100, 100, 100, 0 },
+    };
+
     Vec3f sp7C;
     s32 i;
 
@@ -1438,9 +1431,6 @@ void func_8092F8F0(BossSst* this, GlobalContext* globalCtx) {
         func_8002949C(globalCtx, &sp7C, &D_80937898, &D_8093789C, 0, 0x3E8);
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Sst/func_8092F8F0.s")
-#endif
 
 void func_8092FBE4(BossSst* this) {
     D_8093746C[this->actor.params] = 0;
@@ -1931,6 +1921,8 @@ void func_809314F0(BossSst* this) {
 }
 
 void func_80931560(BossSst* this, GlobalContext* globalCtx) {
+    static s32 D_809378A8 = 0;
+
     Player* player = PLAYER;
 
     SkelAnime_FrameUpdateMatrix(&this->skelAnime);
@@ -2880,24 +2872,23 @@ void BossSst_Update(Actor* thisx, GlobalContext* globalCtx) {
     func_809360FC(this, globalCtx);
 }
 
-#ifdef NON_EQUIVALENT
-// D_80938CC0 wrong type?
 void func_80934338(Actor* thisx, GlobalContext* globalCtx) {
     BossSst* this = THIS;
+    s32 pad;
 
-    func_8002DBD0(&this->actor, &D_80938CA8[1], &D_80938C98[1]->actor.posRot.pos);
-    func_8002DBD0(&this->actor, &D_80938CA8[0], &D_80938C98[0]->actor.posRot.pos);
+    func_8002DBD0(thisx, &D_80938CA8[1], &D_80938C98[1]->actor.posRot.pos);
+    func_8002DBD0(thisx, &D_80938CA8[0], &D_80938C98[0]->actor.posRot.pos);
 
-    D_80938CC0[0] = D_80938C98[0]->actor.shape.rot.y - this->actor.shape.rot.y;
-    D_80938CC0[1] = D_80938C98[1]->actor.shape.rot.y - this->actor.shape.rot.y;
+    D_80938CC0[0] = D_80938C98[0]->actor.shape.rot.y - thisx->shape.rot.y;
+    D_80938CC0[1] = D_80938C98[1]->actor.shape.rot.y - thisx->shape.rot.y;
 
     func_80933EE0(this, globalCtx);
     this->actionFunc(this, globalCtx);
     if (this->unk_194 != 0) {
-        if ((globalCtx->actorCtx.unk_03 == 0) || (this->actor.dmgEffectTimer != 0)) {
-            this->actor.flags &= ~0x80;
+        if ((globalCtx->actorCtx.unk_03 == 0) || (thisx->dmgEffectTimer != 0)) {
+            thisx->flags &= ~0x80;
         } else {
-            this->actor.flags |= 0x80;
+            thisx->flags |= 0x80;
         }
     }
 
@@ -2917,13 +2908,13 @@ void func_80934338(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     func_809339F8(this);
-    if ((!this->unk_194 || ((this->actor.flags & 0x80) == 0x80)) &&
+    if ((!this->unk_194 || ((thisx->flags & 0x80) == 0x80)) &&
         ((this->actionFunc == func_8092DEA0) || (this->actionFunc == func_8092DFFC) ||
          (this->actionFunc == func_8092E3A0) || (this->actionFunc == func_8092E510) ||
          (this->actionFunc == func_8092E830) || (this->actionFunc == func_8092EA00))) {
-        this->actor.flags |= 1;
+        thisx->flags |= 1;
     } else {
-        this->actor.flags &= ~1;
+        thisx->flags &= ~1;
     }
 
     if (this->actionFunc == func_8092DFFC) {
@@ -2932,9 +2923,6 @@ void func_80934338(Actor* thisx, GlobalContext* globalCtx) {
 
     func_809360FC(this, globalCtx);
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Sst/func_80934338.s")
-#endif
 
 s32 func_809345A4(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot, Actor* thisx) {
     BossSst* this = THIS;
@@ -2965,7 +2953,7 @@ s32 func_80934628(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* p
 
 void BossSst_Draw(Actor* thisx, GlobalContext* globalCtx) {
     BossSst* this = THIS;
-    
+
     OPEN_DISPS(globalCtx->state.gfxCtx, "../z_boss_sst.c", 6563);
 
     func_80093D18(globalCtx->state.gfxCtx);
@@ -3088,6 +3076,9 @@ s32 func_80934A44(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* p
 }
 
 void func_80935238(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3s* rot, Actor* thisx, Gfx** gfx) {
+    static Vec3f D_809378AC = { 0.0f, 0.0f, 0.0f };
+    static Vec3f D_809378B8 = { 1000.0f, 0.0f, 0.0f };
+
     BossSst* this = THIS;
     Vec3f sp18;
 
@@ -3180,6 +3171,12 @@ void func_809352DC(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void func_80935764(BossSst* this) {
+    static Vec3f D_809378C4[] = {
+        { 0.0f, 0.0f, 340.0f },
+        { -160.0f, 0.0f, 250.0f },
+        { 160.0f, 0.0f, 250.0f },
+    };
+
     s32 pad;
     f32 sp24;
     f32 sp20;
