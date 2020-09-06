@@ -228,8 +228,8 @@ void BossGanondrof_Init(Actor* thisx, GlobalContext* globalCtx) {
     if (this->actor.params < 10) {
         this->actor.params = 1;
         this->actor.colChkInfo.health = 30;
-        this->unk_4CC = Lights_Insert(globalCtx, &globalCtx->lightCtx, &this->unk_4D0);
-        Lights_InitType0PositionalLight(&this->unk_4D0, this->actor.posRot.pos.x, this->actor.posRot.pos.y,
+        this->unk_4CC = LightContext_InsertLight(globalCtx, &globalCtx->lightCtx, &this->unk_4D0);
+        Lights_PointNoGlowSetInfo(&this->unk_4D0, this->actor.posRot.pos.x, this->actor.posRot.pos.y,
                                         this->actor.posRot.pos.z, 0xFF, 0xFF, 0xFF, 0xFF);
         BossGanondrof_StartInitialAction(this, globalCtx);
     } else {
@@ -246,7 +246,7 @@ void BossGanondrof_Init(Actor* thisx, GlobalContext* globalCtx) {
         Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_DOOR_WARP1, 14.0f, -33.0f, -3315.0f, 0, 0, 0, -1);
         Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_ITEM_B_HEART, 214.0f, -33.0f, -3315.0f, 0, 0, 0, 0);
     } else {
-        Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG, this->actor.posRot.pos.x,
+        Actor_SpawnAsChild(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG, this->actor.posRot.pos.x,
                             this->actor.posRot.pos.y, this->actor.posRot.pos.z, 0, 0, 0, this->actor.params);
     }
 }
@@ -259,7 +259,7 @@ void BossGanondrof_Destroy(Actor* thisx, GlobalContext* globalCtx) {
     Collider_DestroyCylinder(globalCtx, &this->collider1);
     Collider_DestroyCylinder(globalCtx, &this->collider2);
     if (this->actor.params == 1) {
-        Lights_Remove(globalCtx, &globalCtx->lightCtx, this->unk_4CC);
+        LightContext_RemoveLight(globalCtx, &globalCtx->lightCtx, this->unk_4CC);
     }
 
     osSyncPrintf("DT2\n");
@@ -278,7 +278,7 @@ void BossGanondrof_InitialAction(BossGanondrof* this, GlobalContext* globalCtx) 
 
     s32 pad;
     s16 i;
-    EnfHG* horse = (EnfHG*)this->actor.attachedB;
+    EnfHG* horse = (EnfHG*)this->actor.child;
     Vec3f sp88;
     Vec3f sp7C;
     Vec3f sp70;
@@ -322,10 +322,10 @@ void BossGanondrof_InitialAction(BossGanondrof* this, GlobalContext* globalCtx) 
 
     if (horse->unk_14C == 10) {
         SkelAnime_ChangeAnimTransitionStop(&this->skelAnime, &D_0600D99C, -7.0f);
-        tmpHorse = (EnfHG*)this->actor.attachedB;
-        Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
+        tmpHorse = (EnfHG*)this->actor.child;
+        Actor_SpawnAsChild(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
                             this->unk_200.y, this->unk_200.z, 0x32, 0, 0, 0x26);
-        this->actor.attachedB = &tmpHorse->actor;
+        this->actor.child = &tmpHorse->actor;
     }
 
     if (horse->unk_14C == 11) {
@@ -371,10 +371,8 @@ void BossGanondrof_StartPaintingAction(BossGanondrof* this) {
     this->actionFunc = BossGanondrof_PaintingAction;
 }
 
-#ifdef NON_MATCHING
-// Scale div
 void BossGanondrof_PaintingAction(BossGanondrof* this, GlobalContext* globalCtx) {
-    EnfHG* horse = (EnfHG*)this->actor.attachedB; // sp48;
+    EnfHG* horse = (EnfHG*)this->actor.child; // sp48;
     EnfHG* horse2;
 
     osSyncPrintf("RUN 1\n");
@@ -384,10 +382,10 @@ void BossGanondrof_PaintingAction(BossGanondrof* this, GlobalContext* globalCtx)
     if (horse->unk_14C == 1) {
         SkelAnime_ChangeAnimTransitionStop(&this->skelAnime, &D_0600D99C, -2.0f);
         this->actor.flags |= 1;
-        horse2 = (EnfHG*)this->actor.attachedB;
-        Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
+        horse2 = (EnfHG*)this->actor.child;
+        Actor_SpawnAsChild(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
                             this->unk_200.y, this->unk_200.z, 0x1E, 0, 0, 0x26);
-        this->actor.attachedB = &horse2->actor;
+        this->actor.child = &horse2->actor;
     } else if (horse->unk_14C == 3) {
         SkelAnime_ChangeAnimTransitionStop(&this->skelAnime, &D_06003080, -2.0f);
     } else if (horse->unk_14C == 4) {
@@ -410,16 +408,13 @@ void BossGanondrof_PaintingAction(BossGanondrof* this, GlobalContext* globalCtx)
         Audio_PlayActorSound2(&this->actor, NA_SE_EN_FANTOM_LAUGH);
         this->actor.naviEnemyId = 0x1A;
     } else {
-        horse->actor.scale.x /= 1.15f;
-        horse->actor.scale.y /= 1.15f;
-        horse->actor.scale.z /= 1.15f;
         horse->unk_14C = 0;
+        this->actor.scale.x = horse->actor.scale.x / 1.15f;
+        this->actor.scale.y = horse->actor.scale.y / 1.15f;
+        this->actor.scale.z = horse->actor.scale.z / 1.15f;
         osSyncPrintf("RUN 4\n");
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/non_matchings/overlays/actors/ovl_Boss_Ganondrof/BossGanondrof_PaintingAction.s")
-#endif
 
 void BossGanondrof_StartNormalAction(BossGanondrof* this, f32 arg1) {
     SkelAnime_ChangeAnimTransitionRepeat(&this->skelAnime, &D_06010060, arg1);
@@ -580,10 +575,10 @@ void BossGanondrof_StartThrowAction(BossGanondrof* this, GlobalContext* globalCt
         tmpf1 = 0x19;
     }
 
-    horse = (EnfHG*)this->actor.attachedB;
-    Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
+    horse = (EnfHG*)this->actor.child;
+    Actor_SpawnAsChild(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
                         this->unk_200.y, this->unk_200.z, tmpf1, 0, 0, 0x26);
-    this->actor.attachedB = &horse->actor;
+    this->actor.child = &horse->actor;
     this->throwCount++;
     Audio_PlayActorSound2(&this->actor, NA_SE_EN_FANTOM_STICK);
 }
@@ -616,10 +611,10 @@ void BossGanondrof_ThrowAction(BossGanondrof* this, GlobalContext* globalCtx) {
     }
 
     if (func_800A56C8(&this->skelAnime, this->unk_1A4) != 0) {
-        horse = (EnfHG*)this->actor.attachedB;
-        Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
+        horse = (EnfHG*)this->actor.child;
+        Actor_SpawnAsChild(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
                             this->unk_200.y, this->unk_200.z, this->slowPitch, 0, 0, 0x32);
-        this->actor.attachedB = &horse->actor;
+        this->actor.child = &horse->actor;
     }
 
     Math_SmoothScaleMaxS(&this->actor.shape.rot.y, this->actor.yawTowardsLink, 5, 0x7D0);
@@ -883,10 +878,10 @@ void BossGanondrof_ChargeAction(BossGanondrof* this, GlobalContext* globalCtx) {
     }
 
     if (!(this->floatAndParticleTimer & 7)) {
-        horse = (EnfHG*)this->actor.attachedB;
-        Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
+        horse = (EnfHG*)this->actor.child;
+        Actor_SpawnAsChild(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, this->unk_200.x,
                             this->unk_200.y, this->unk_200.z, 8, 1, 0, 0x26);
-        this->actor.attachedB = &horse->actor;
+        this->actor.child = &horse->actor;
     }
 }
 
@@ -1001,10 +996,10 @@ void BossGanondrof_DeathAction(BossGanondrof* this, GlobalContext* globalCtx) {
 
         case 3:
             if (this->animationTimer[1] == 1) {
-                horse2 = (EnfHG*)this->actor.attachedB;
-                Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, 14.0f, -30.0f,
+                horse2 = (EnfHG*)this->actor.child;
+                Actor_SpawnAsChild(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_FHG_FIRE, 14.0f, -30.0f,
                                     -3315.0f, 0x4000, 0, 0, 0x29);
-                this->actor.attachedB = &horse2->actor;
+                this->actor.child = &horse2->actor;
                 func_8010B680(globalCtx, 0x108E, NULL);
             }
 
@@ -1082,7 +1077,7 @@ void BossGanondrof_DeathAction(BossGanondrof* this, GlobalContext* globalCtx) {
             Math_SmoothScaleMaxF(&this->unk_360.z, -3145.0f, 0.05f, 2.0f);
             Math_SmoothScaleMaxF(&this->unk_36C.y, 20.0f, 0.05f, 1.0f);
             if (this->animationTimer[0] == 0) {
-                horse = (EnfHG*)this->actor.attachedB;
+                horse = (EnfHG*)this->actor.child;
                 camera->eye = this->unk_360;
                 camera->eyeNext = this->unk_360;
                 camera->at = this->unk_36C;
@@ -1091,7 +1086,7 @@ void BossGanondrof_DeathAction(BossGanondrof* this, GlobalContext* globalCtx) {
                 func_80064534(globalCtx, &globalCtx->csCtx);
                 func_8002DF54(globalCtx, &this->actor, 7);
                 Actor_Spawn(&globalCtx->actorCtx, globalCtx, ACTOR_ITEM_B_HEART, 14.0f, -33.0f, -3115.0f, 0, 0, 0, 0);
-                this->actor.attachedB = &horse->actor;
+                this->actor.child = &horse->actor;
                 this->killActor = 1;
                 horse->unk_14E = 1;
                 Flags_SetClear(globalCtx, globalCtx->roomCtx.curRoom.num);
@@ -1186,9 +1181,9 @@ void BossGanondrof_DeathAction(BossGanondrof* this, GlobalContext* globalCtx) {
 #ifdef NON_MATCHING
 // Branching
 void BossGanondrof_CollisionCheck(BossGanondrof* this, GlobalContext* globalCtx) {
-    ColliderBody* collider;
-    EnfHG* horse = (EnfHG*)this->actor.attachedB;
-    s32 pad;
+    ColliderBody* colliderBody;
+    ColliderCylinder* collider = &this->collider1;
+    EnfHG* horse = (EnfHG*)this->actor.child;
     u8 dmg;
     u8 sp22;
     u8 flags;
@@ -1200,30 +1195,30 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, GlobalContext* globalCtx)
         return;
     }
 
-    flags = this->collider1.base.acFlags;
-    if (((flags & 2) && ((s8)this->actor.colChkInfo.health > 0)) || this->volleyCount) {
-        collider = this->collider1.body.acHitItem;
+    flags = collider->base.acFlags;
+    if (((flags & 2) && ((s8)this->actor.colChkInfo.health > 0)) || (this->volleyCount != 0)) {
+        colliderBody = this->collider1.body.acHitItem;
+        if (this->collider1.body.acHitItem){};
         if (flags & 2) {
-            this->collider1.base.acFlags &= ~2;
+            this->collider1.base.acFlags = flags & ~2;
         }
-
         if (this->attackMode != 0) {
             // Blocks ranged attacks during blocking and charge animations. Due to an error, blocking animation still
             // vulnerable to other attacks.
             if ((flags & 2) && (this->actionFunc != BossGanondrof_StunnedAction) &&
-                (collider->toucher.flags & 0x1F8A4)) {
+                (colliderBody->toucher.flags & 0x1F8A4)) {
                 Audio_PlayActorSound2(&this->actor, NA_SE_PL_WALK_GROUND - SFX_FLAG);
                 osSyncPrintf("hit != 0 \n");
                 this->volleyCount = 0;
                 // PG takes 2 damage from all attacks, but must be finished with sword.
             } else if (this->actionFunc != BossGanondrof_ChargeAction) {
                 if (this->volleyCount == 0) {
-                    if (collider->toucher.flags & 0x80) {
+                    if (colliderBody->toucher.flags & 0x80) {
                         return;
                     }
 
                     sp22 = 0;
-                    dmg = func_800635D0(collider->toucher.flags);
+                    dmg = func_800635D0(colliderBody->toucher.flags);
                     if (dmg == 0) {
                         dmg = 2;
                     } else {
@@ -1258,7 +1253,7 @@ void BossGanondrof_CollisionCheck(BossGanondrof* this, GlobalContext* globalCtx)
             this->volleyCount = 0;
         } else {
             // This is for horse phase. He takes 2 damage from all ranged attacks.
-            if ((flags & 2) && (collider->toucher.flags & 0x1F8A4)) {
+            if ((flags & 2) && (colliderBody->toucher.flags & 0x1F8A4)) {
                 this->invincibilityTimer = 10;
                 this->actor.colChkInfo.health -= 2;
                 horse->unk_1DE = 20;
@@ -1295,7 +1290,7 @@ void BossGanondrof_Update(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     this->floatAndParticleTimer++;
-    horse = (EnfHG*)this->actor.attachedB;
+    horse = (EnfHG*)this->actor.child;
     osSyncPrintf("MOVE START EEEEEEEEEEEEEEEEEEEEEE%d\n", this->actor.params);
     this->actionFunc(this, globalCtx);
     for (i = 0; i < 5; i++) {
@@ -1359,7 +1354,7 @@ void BossGanondrof_Update(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     if (this->actor.params == 1) {
-        Lights_InitType0PositionalLight(&this->unk_4D0, this->unk_200.x, this->unk_200.y, this->unk_200.z, 0xFF, 0xFF,
+        Lights_PointNoGlowSetInfo(&this->unk_4D0, this->unk_200.x, this->unk_200.y, this->unk_200.z, 0xFF, 0xFF,
                                         0xFF, 0xC8);
     }
 }
@@ -1486,7 +1481,7 @@ void BossGanondrof_Draw(Actor* thisx, GlobalContext* globalCtx) {
     Graph_OpenDisps(dispRefs, globalCtx->state.gfxCtx, "../z_boss_ganondrof.c", 3716);
     osSyncPrintf("MOVE P = %x\n", this->actor.update);
     osSyncPrintf("STOP TIMER = %d ==============\n", this->actor.freezeTimer);
-    horse = (EnfHG*)this->actor.attachedB;
+    horse = (EnfHG*)this->actor.child;
     if (this->attackMode == 0) {
         // Not M_PI
         Matrix_RotateY((horse->unk_1E0 * 3.14159989357f) / 32768.0f, 1);
