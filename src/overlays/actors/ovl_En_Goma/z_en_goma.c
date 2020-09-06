@@ -392,7 +392,7 @@ void func_80A49D0C(EnGoma* this, GlobalContext* globalCtx) {
         (Math_SmoothScaleMaxMinF(&this->actor.scale.y, 0.0f, 0.5f, 0.00225f, 0.00001f) <= 0.001f)) {
         if (this->actor.params < 6) {
             // Warning, out of bounds
-            goma = (BossGoma*)this->actor.attachedA;
+            goma = (BossGoma*)this->actor.parent;
             goma->unk_1A4[this->actor.params] = -1;
         }
         Audio_PlaySoundGeneral(NA_SE_EN_EXTINCT, &this->actor.projectedPos, 4, &D_801333E0, &D_801333E0, &D_801333E8);
@@ -633,7 +633,7 @@ void func_80A4A6AC(EnGoma* this, GlobalContext* globalCtx) {
         } else {
             if (this->actor.params < 6) {
                 // Warning, out of bounds
-                goma = (BossGoma*)this->actor.attachedA;
+                goma = (BossGoma*)this->actor.parent;
                 goma->unk_1A4[this->actor.params] = -1;
             }
 
@@ -721,20 +721,19 @@ void EnGoma_Update(Actor* thisx, GlobalContext* globalCtx) {
 s32 EnGoma_OverrideLimbDraw(GlobalContext* globalCtx, s32 limbIndex, Gfx** dList, Vec3f* pos, Vec3s* rot,
                             Actor* thisx) {
     EnGoma* this = THIS;
-    GraphicsContext* gfxCtx = globalCtx->state.gfxCtx;
-    Gfx* dispRefs[4];
 
-    Graph_OpenDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_goma.c", 1976);
-    gDPSetEnvColor(gfxCtx->polyOpa.p++, (s16)this->unk_2E0[0], (s16)this->unk_2E0[1], (s16)this->unk_2E0[2], 255);
+    OPEN_DISPS(globalCtx->state.gfxCtx, "../z_en_goma.c", 1976);
+
+    gDPSetEnvColor(oGfxCtx->polyOpa.p++, (s16)this->unk_2E0[0], (s16)this->unk_2E0[1], (s16)this->unk_2E0[2], 255);
     if (limbIndex == 7) {
         rot->x += this->unk_2BA;
         rot->y += this->unk_2BC;
     } else if ((limbIndex == 3) && (this->unk_2C2)) {
-        gDPSetEnvColor(gfxCtx->polyOpa.p++, (s16)(Math_Rand_ZeroOne() * 255.0f), (s16)(Math_Rand_ZeroOne() * 255.0f),
+        gDPSetEnvColor(oGfxCtx->polyOpa.p++, (s16)(Math_Rand_ZeroOne() * 255.0f), (s16)(Math_Rand_ZeroOne() * 255.0f),
                        (s16)(Math_Rand_ZeroOne() * 255.0f), 255);
     }
 
-    Graph_CloseDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_goma.c", 2011);
+    CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_en_goma.c", 2011);
     return 0;
 }
 
@@ -754,15 +753,14 @@ void EnGoma_Draw(Actor* thisx, GlobalContext* globalCtx) {
     EnGoma* this = THIS;
     s16 tmp;
     Vec3f* tmpvec;
-    GraphicsContext* gfxCtx = globalCtx->state.gfxCtx;
-    Gfx* dispRefs[4];
 
-    Graph_OpenDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_goma.c", 2040);
+    OPEN_DISPS(globalCtx->state.gfxCtx, "../z_en_goma.c", 2040);
+
     func_80093D18(globalCtx->state.gfxCtx);
     switch (this->unk_2B8) {
         case 0:
             this->actor.naviEnemyId = 3;
-            tmpvec = &globalCtx->cameras[0].unk_80;
+            tmpvec = &globalCtx->mainCamera.unk_80;
             Matrix_Translate(this->actor.posRot.pos.x,
                              this->actor.posRot.pos.y + ((this->actor.shape.unk_08 * this->actor.scale.y) + tmpvec->y),
                              this->actor.posRot.pos.z, 0);
@@ -781,7 +779,7 @@ void EnGoma_Draw(Actor* thisx, GlobalContext* globalCtx) {
             // This one isn't quite M_PI
             tmp = (s16)(sinf(((this->unk_2C0 * 5.0f) * 3.1415f) / 180.0f) * 31.9f) + 0x1F;
 
-            gSPSegment(gfxCtx->polyOpa.p++, 0x08, func_80094E78(globalCtx->state.gfxCtx, 0, tmp));
+            gSPSegment(oGfxCtx->polyOpa.p++, 0x08, func_80094E78(globalCtx->state.gfxCtx, 0, tmp));
             Matrix_Push();
             Matrix_Scale(this->unk_2D0, 1.0f / this->unk_2D0, this->unk_2D0, 1);
             Matrix_RotateY(this->unk_2D8 * 0.15f, 1);
@@ -791,29 +789,29 @@ void EnGoma_Draw(Actor* thisx, GlobalContext* globalCtx) {
             Matrix_RotateY(-(this->unk_2D8 * 0.15f), 1);
             Matrix_Translate(0.0f, this->unk_2F0, 0.0f, 1);
             Matrix_RotateX(this->unk_2D4, 1);
-            gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_goma.c", 2101),
+            gSPMatrix(oGfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_goma.c", 2101),
                       G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-            gSPDisplayList(gfxCtx->polyOpa.p++, D_06002A70);
+            gSPDisplayList(oGfxCtx->polyOpa.p++, D_06002A70);
             Matrix_Pull();
             break;
 
         case 2:
-            gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_goma.c", 2107),
+            gSPMatrix(oGfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_goma.c", 2107),
                       G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-            gSPDisplayList(gfxCtx->polyOpa.p++, D_05000530);
+            gSPDisplayList(oGfxCtx->polyOpa.p++, D_05000530);
             break;
 
         case 3:
             if (this->unk_308) {
-                gSPSegment(gfxCtx->polyOpa.p++, 0x08, func_80A4AE60(globalCtx->state.gfxCtx));
-                gSPMatrix(gfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_goma.c", 2114),
+                gSPSegment(oGfxCtx->polyOpa.p++, 0x08, func_80A4AE60(globalCtx->state.gfxCtx));
+                gSPMatrix(oGfxCtx->polyOpa.p++, Matrix_NewMtx(globalCtx->state.gfxCtx, "../z_en_goma.c", 2114),
                           G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-                gSPDisplayList(gfxCtx->polyOpa.p++, this->unk_308);
+                gSPDisplayList(oGfxCtx->polyOpa.p++, this->unk_308);
             }
             break;
     }
 
-    Graph_CloseDisps(dispRefs, globalCtx->state.gfxCtx, "../z_en_goma.c", 2119);
+    CLOSE_DISPS(globalCtx->state.gfxCtx, "../z_en_goma.c", 2119);
 }
 
 void func_80A4B3AC(EnGoma* this, GlobalContext* globalCtx) {
@@ -835,7 +833,7 @@ void func_80A4B3F0(EnGoma* this, GlobalContext* globalCtx) {
 
     for (i = 0; i < 15; i++) {
         if (globalCtx) {};
-        Actor_SpawnAttached(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_GOMA,
+        Actor_SpawnAsChild(&globalCtx->actorCtx, &this->actor, globalCtx, ACTOR_EN_GOMA,
                             this->actor.posRot.pos.x + Math_Rand_CenteredFloat(10.0f),
                             (this->actor.posRot.pos.y + Math_Rand_CenteredFloat(10.0f)) + 15.0f,
                             this->actor.posRot.pos.z + Math_Rand_CenteredFloat(10.0f), 0.0f,
