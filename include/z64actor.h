@@ -206,6 +206,42 @@ typedef struct {
     /* 0x14 */ s32 unk_14;
 } struct_80032E24;
 
+typedef struct {
+    /* 0x00 */ f32 unk_00;
+    /* 0x04 */ f32 unk_04;
+    /* 0x08 */ f32 unk_08;
+    /* 0x0C */ f32 unk_0C;
+    /* 0x10 */ f32 unk_10;
+    /* 0x14 */ f32 unk_14;
+    /* 0x18 */ f32 unk_18;
+    /* 0x1C */ f32 unk_1C;
+    /* 0x20 */ f32 unk_20;
+    /* 0x24 */ f32 unk_24;
+    /* 0x28 */ f32 unk_28;
+    /* 0x2C */ f32 unk_2C;
+    /* 0x30 */ f32 unk_30;
+    /* 0x34 */ f32 unk_34;
+    /* 0x38 */ f32 unk_38;
+    /* 0x3C */ f32 unk_3C;
+    /* 0x40 */ f32 unk_40;
+    /* 0x44 */ Vec3s unk_44;
+    /* 0x4A */ Vec3s unk_4A[4];
+    /* 0x62 */ Vec3s unk_62[4];
+    /* 0x7A */ Vec3s unk_7A[2];
+    /* 0x86 */ Vec3s unk_86[2];
+    /* 0x92 */ u16 unk_92;
+    /* 0x94 */ u16 unk_94;
+    /* 0x98 */ LinkAnimetionEntry* unk_98;
+    /* 0x9C */ LinkAnimetionEntry* unk_9C;
+    /* 0xA0 */ LinkAnimetionEntry* unk_A0;
+    /* 0xA4 */ LinkAnimetionEntry* unk_A4;
+    /* 0xA8 */ LinkAnimetionEntry* unk_A8;
+    /* 0xAC */ LinkAnimetionEntry* unk_AC[4];
+    /* 0xBC */ LinkAnimetionEntry* unk_BC[2];
+    /* 0xC4 */ LinkAnimetionEntry* unk_C4[2];
+    /* 0xCC */ LinkAnimetionEntry* unk_CC[2];
+} AgeProperties; // size = 0xD4
+
 struct Player;
 
 typedef void (*PlayerActionFunc)(struct Player*, struct GlobalContext*);
@@ -277,7 +313,7 @@ typedef struct Player {
     /* 0x066C */ s32        unk_66C;
     /* 0x0670 */ u32        swordEffectId;
     /* 0x0674 */ PlayerActionFunc  actionFunc;
-    /* 0x0678 */ u32        ageProperties;
+    /* 0x0678 */ AgeProperties* ageProperties;
     /* 0x067C */ u32        stateFlags1;
     /* 0x0680 */ u32        stateFlags2;
     /* 0x0684 */ Actor*     unk_684;
@@ -345,16 +381,14 @@ typedef struct Player {
     /* 0x08B4 */ Struct_80090480_arg2 swordDimensions; // Trail active, tip, base?
     /* 0x08D0 */ Struct_80090480_arg2 unk_8D0;
     /* 0x08EC */ Struct_80090480_arg2 unk_8EC;
-    /* 0x0908 */ char       unk_908[0x04];
-    /* 0x090C */ f32        unk_90C;
-    /* 0x0910 */ char       unk_910[0x4C];
-    /* 0x095C */ Vec3f      unk_95C;
-    /* 0x0968 */ char       unk_968[0x78];
+    /* 0x0908 */ Vec3f      unk_908[18];
     /* 0x09E0 */ MtxF       mf_9E0;
     /* 0x0A20 */ MtxF       mf_A20;
     /* 0x0A60 */ char       unk_A60[0x08];
     /* 0x0A68 */ s8         unk_A68;
-    /* 0x0A69 */ char       unk_A6A[0x0F];
+    /* 0x0A69 */ char       unk_A6A[0x0A];
+    /* 0x0A73 */ u8         unk_A73;
+    /* 0x0A74 */ char       unk_A74[0x04];
 
     /* 0x0A78 */ s8         invincibilityTimer; // Take no damage if this value is nonzero
     // Positive induces red flashing, negative does not

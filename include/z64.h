@@ -884,7 +884,9 @@ typedef struct {
     /* 0x2A */ s8       unk_2A;
     /* 0x2B */ s8       unk_2B;
     /* 0x2C */ s8       unk_2C;
-    /* 0x2D */ char     unk_2D[0x5E];
+    /* 0x2D */ char     unk_2D[0x9];
+    /* 0x36 */ LightInfo unk_36;
+    /* 0x44 */ char     unk_44[0x48];
     /* 0x8C */ s16      unk_8C[3][3];
     /* 0x9E */ s16      unk_9E;
     /* 0xA0 */ s16      unk_A0;
@@ -895,7 +897,9 @@ typedef struct {
     /* 0xB0 */ f32      unk_B0;
     /* 0xB4 */ u8       nbLightSettings;
     /* 0xB8 */ UNK_PTR  lightSettingsList;
-    /* 0xBC */ char     unk_BC[0x03];
+    /* 0xBC */ u8       unk_BC;
+    /* 0xBD */ u8       unk_BD;
+    /* 0xBE */ u8       unk_BE;
     /* 0xBF */ u8       unk_BF;
     /* 0xC0 */ char     unk_C0[0x16];
     /* 0xD6 */ s16      unk_D6;
@@ -1256,7 +1260,7 @@ typedef struct GlobalContext {
     /* 0x11E04 */ UNK_PTR setupExitList;
     /* 0x11E08 */ Path* setupPathList;
     /* 0x11E0C */ ElfMessage* cUpElfMsgs;
-    /* 0x11E10 */ char unk_11E10[0x4];
+    /* 0x11E10 */ void* actorEffects;
     /* 0x11E14 */ u8 skyboxId;
     /* 0x11E15 */ s8 sceneLoadFlag; // "fade_direction"
     /* 0x11E16 */ s16 unk_11E16;

@@ -844,6 +844,7 @@ void func_80062DAC(GlobalContext* globalCtx, Vec3f* v, Vec3f* arg2);
 void func_80062E14(GlobalContext* globalCtx, Vec3f* arg1, Vec3f* arg2);
 s32 func_80062ECC(f32, f32, f32, Vec3f*, Vec3f*, Vec3f*, Vec3f*, Vec3f*);
 void SaveContext_Init(void);
+s32 func_800635D0(s32 arg0);
 // ? func_800636C0(?);
 void func_8006375C(s32 arg0, s32 arg1, float* d_80855320);
 // ? func_8006376C(?);
@@ -857,6 +858,7 @@ DebugDispObject* DebugDisplay_AddObject(f32 posX, f32 posY, f32 posZ, s16 rotX, 
                                         GraphicsContext* gfxCtx);
 void DebugDisplay_DrawObjects(GlobalContext* globalCtx);
 void func_8006450C(GlobalContext* globalCtx, CutsceneContext* csCtx);
+void func_80064520(GlobalContext* globalCtx, CutsceneContext* csCtx);
 void func_80064534(GlobalContext* globalCtx, CutsceneContext* csCtx);
 void func_80064558(GlobalContext* globalCtx, CutsceneContext* csCtx);
 void func_800645A0(GlobalContext* globalCtx, CutsceneContext* csCtx);
@@ -1268,7 +1270,7 @@ void func_800A43B8(GlobalContext* globalCtx, SkelAnime* skelAnime, LinkAnimetion
 s32 func_800A4530(SkelAnime* skelAnime, f32 arg1);
 void SkelAnime_Init(GlobalContext* globalCtx, SkelAnime* skelAnime, SkeletonHeader* skeletonHeaderSeg,
                     AnimationHeader* animationseg, Vec3s* limbDrawTable, Vec3s* arg5, s32 limbCount);
-void SkelAnime_InitSV(GlobalContext* globalCtx, SkelAnime* skelAnime, SkeletonHeader* skeletonHeaderSeg,
+s32 SkelAnime_InitSV(GlobalContext* globalCtx, SkelAnime* skelAnime, SkeletonHeader* skeletonHeaderSeg,
                       AnimationHeader* animationseg, Vec3s* limbDrawTable, Vec3s* arg5, s32 limbCount);
 void SkelAnime_InitSkin(GlobalContext* globalCtx, SkelAnime* skelAnime, SkeletonHeader* skeletonHeaderSeg,
                         AnimationHeader* animationseg);
